@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technical Projects — The Spatial Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#232323;
+    --ink:#f3f1ec;
+    --bold:#ffffff;
+    --muted:#bdb9b0;
+    --faint:#8a857b;
+    --amber:#c79a5a;
+    --rule:rgba(243,241,236,0.18);
+    --maxw:1180px;
+    --pad:clamp(22px,5vw,72px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Montserrat",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+
+  /* nav */
+  header{padding-top:clamp(24px,3vw,40px)}
+  nav{display:flex;justify-content:flex-end;gap:clamp(26px,4vw,56px);
+      font-family:"Montserrat",sans-serif;font-size:clamp(12px,1vw,14px);font-weight:500;
+      letter-spacing:.04em;color:var(--muted)}
+  nav a{position:relative;padding-bottom:3px;transition:color .3s}
+  nav a:hover{color:var(--bold)}
+  nav a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;
+    background:rgba(243,241,236,.35);transform:scaleX(0);transform-origin:left;transition:transform .35s ease}
+  nav a.active::after,nav a:hover::after{transform:scaleX(1)}
+
+  /* intro */
+  .intro{
+    text-align:center;
+    max-width:780px;
+    margin:clamp(36px,6vw,70px) auto clamp(40px,6vw,72px);
+    font-family:"Cormorant Garamond",serif;
+    font-weight:400;
+    font-size:clamp(23px,2.5vw,34px);
+    line-height:1.32;
+    color:var(--ink);
+  }
+
+  /* project list */
+  .projects{display:flex;flex-direction:column;gap:clamp(40px,5vw,72px)}
+  .project{
+    display:grid;
+    grid-template-columns:clamp(180px,22vw,250px) 1fr;
+    gap:clamp(26px,4vw,64px);
+    align-items:start;
+  }
+  .thumb{
+    width:100%;
+    aspect-ratio:1/1;
+    overflow:hidden;
+    background:#1a1a1a;
+    border:1px solid var(--rule);
+  }
+  .thumb img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .9s cubic-bezier(.2,.7,.2,1);
+  }
+  .project:hover .thumb img{transform:scale(1.05)}
+
+  .pinfo{padding-top:clamp(6px,1vw,16px)}
+  .pcat{
+    font-family:"Montserrat",sans-serif;
+    font-size:clamp(11px,1vw,13px);
+    font-weight:500;
+    letter-spacing:.02em;
+    color:var(--amber);
+    margin-bottom:clamp(12px,1.4vw,18px);
+  }
+  .pcat em{font-style:italic}
+  .ptitle{
+    font-family:"Cormorant Garamond",serif;
+    font-weight:600;
+    font-size:clamp(24px,3vw,40px);
+    line-height:1.1;
+    color:var(--bold);
+    margin-bottom:clamp(10px,1.2vw,16px);
+  }
+  .pdesc{
+    font-family:"Cormorant Garamond",serif;
+    font-weight:400;
+    font-size:clamp(17px,1.5vw,22px);
+    line-height:1.4;
+    color:var(--muted);
+    max-width:52ch;
+    margin-bottom:clamp(16px,1.8vw,26px);
+  }
+  .plink{
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(16px,1.4vw,21px);
+    color:var(--ink);
+    position:relative;
+    display:inline-block;
+    padding-bottom:2px;
+  }
+  .plink::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;
+    background:rgba(243,241,236,.5);transition:transform .35s ease;transform-origin:left}
+  .plink:hover::after{transform:scaleX(0)}
+
+  /* tools */
+  .tools{
+    text-align:center;
+    margin-top:clamp(70px,9vw,120px);
+  }
+  .tools h2{
+    font-family:"Cormorant Garamond",serif;
+    font-weight:400;
+    font-style:italic;
+    font-size:clamp(22px,2.4vw,32px);
+    color:var(--ink);
+    margin-bottom:clamp(28px,3.5vw,46px);
+  }
+  .tool-row{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:clamp(20px,3vw,46px);
+  }
+  .tool-row a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:clamp(52px,6vw,68px);
+    height:clamp(52px,6vw,68px);
+    border-radius:14px;
+    background:rgba(243,241,236,0.06);
+    transition:transform .28s ease,background .28s ease;
+  }
+  .tool-row a:hover{transform:translateY(-5px);background:rgba(243,241,236,0.12)}
+  .tool-row img{
+    width:72%;height:72%;object-fit:contain;display:block;
+    filter:saturate(1.05);
+  }
+  .tool-row a:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+
+  .disclaimer{
+    text-align:center;
+    max-width:760px;
+    margin:clamp(44px,5vw,70px) auto 0;
+    padding-top:clamp(20px,2.4vw,30px);
+    border-top:1px solid var(--rule);
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(12px,1.1vw,15px);
+    line-height:1.6;
+    color:var(--faint);
+    font-style:italic;
+  }
+
+  footer{
+    text-align:center;
+    padding:clamp(26px,4vw,46px) 20px clamp(48px,6vw,74px);
+    color:var(--faint);
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(13px,1.1vw,16px);
+    line-height:1.8;
+    letter-spacing:.02em;
+  }
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* responsive */
+  @media (max-width:680px){
+    .project{grid-template-columns:1fr;gap:18px}
+    .thumb{max-width:320px}
+    .pdesc{max-width:none}
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/professional-profile/professional-profile.html">Professional profile</a>
+        <a href="#" class="active">Technical projects&nbsp;→</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <p class="intro reveal">Analytical compendium on physical geography, human geography, and urban &amp; regional studies.</p>
+
+    <section class="projects" id="projectList"></section>
+
+    <!-- TOOLS -->
+    <section class="tools reveal">
+      <h2>Tools behind the work</h2>
+      <div class="tool-row">
+        <a href="https://www.esri.com/en-us/arcgis/products/arcgis-pro/overview" target="_blank" rel="noopener noreferrer" aria-label="ArcGIS Pro" title="ArcGIS Pro">
+          <img src="/assets/img/technical-projects/arcgispro_logo.png" alt="ArcGIS Pro logo">
+        </a>
+        <a href="https://qgis.org" target="_blank" rel="noopener noreferrer" aria-label="QGIS" title="QGIS">
+          <img src="/assets/img/technical-projects/qgis_logo.png" alt="QGIS logo">
+        </a>
+        <a href="https://grass.osgeo.org" target="_blank" rel="noopener noreferrer" aria-label="GRASS GIS" title="GRASS GIS">
+          <img src="/assets/img/technical-projects/grass_logo.png" alt="GRASS GIS logo">
+        </a>
+        <a href="https://saga-gis.sourceforge.io/en/index.html" target="_blank" rel="noopener noreferrer" aria-label="SAGA GIS" title="SAGA GIS">
+          <img src="/assets/img/technical-projects/saga_logo.png" alt="SAGA GIS logo">
+        </a>
+        <a href="https://www.python.org" target="_blank" rel="noopener noreferrer" aria-label="Python" title="Python">
+          <img src="/assets/img/technical-projects/python_logo.png" alt="Python logo">
+        </a>
+        <a href="https://www.whiteboxgeo.com" target="_blank" rel="noopener noreferrer" aria-label="Whitebox" title="Whitebox">
+          <img src="/assets/img/technical-projects/whitebox_logo.png" alt="Whitebox logo">
+        </a>
+      </div>
+      <p class="disclaimer">Tool logos are trademarks of their respective owners and are shown only to identify software used in these projects. This site is not affiliated with or endorsed by these organizations.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>© Izza Prasatya Arief</div>
+    <div>The Spatial Studio (Mekansal Studyo)</div>
+  </footer>
+
+<script>
+  const projects = [
+    {
+      img:"/assets/img/technical-projects/understanding_batanghari_floods.png",
+      cat:"Independent Work · 2026",
+      title:"Understanding Batanghari Floods",
+      desc:"Geomorphometric analysis of Batanghari River's sub-basins."
+    },
+    {
+      img:"/assets/img/technical-projects/hydro_geomorphological_risk_assessment.png",
+      cat:'Applied Geomorphology (<em>Uygulamalı Jeomorfoloji</em>) · 2024–2025',
+      title:"Hydro-geomorphological Risk Assessment",
+      desc:"Applied analysis of river basins in southwestern part of İznik Lake."
+    },
+    {
+      img:"/assets/img/technical-projects/optimal_housing_landscape_in_sragen.png",
+      cat:'Research Method in Geography (<em>Coğrafya\u2019da Araştırma Yöntemleri</em>) · 2024',
+      title:"Optimal Housing Landscapes in Sragen",
+      desc:"A LUCIS-Based suitability analysis for identifying optimal housing sites."
+    },
+    {
+      img:"/assets/img/technical-projects/delineating_cbd_in_south_tangerang_city.png",
+      cat:'Economic Geography (<em>Ekonomik Coğrafyası</em>) · 2024',
+      title:"Delineating CBD in South Tangerang",
+      desc:"Finding South Tangerang\u2019s socio-economic heart."
+    },
+    {
+      img:"/assets/img/technical-projects/urban_heat_island_intensity_in_bursa.png",
+      cat:'Graduation Project (<em>Bitirme Çalışması</em>) · 2023–2024',
+      title:"Urban Heat Island Intensity in Bursa",
+      desc:"Identifying priority cooling zones for green infrastructure planning in Bursa City."
+    },
+    {
+      img:"/assets/img/technical-projects/urban_growth_and_carbon_loss_in_bursa.png",
+      cat:'Natural Resources (<em>Doğal Kaynaklar</em>) · 2023',
+      title:"Urban Growth and Carbon Loss in Bursa",
+      desc:"The present and projected worth of carbon storage and sequestration in Bursa Province."
+    },
+    {
+      img:"/assets/img/technical-projects/solar_farm_site_selection_in_muaro_jambi.png",
+      cat:"Pertamina NRE · 2023",
+      title:"Solar Farm Site Selection in Muaro Jambi",
+      desc:"Land suitability & geospatial modeling for optimal solar pv in Muaro Jambi Regency."
+    },
+    {
+      img:"/assets/img/technical-projects/land_use_analysis_and_planning_in_23_nisan.png",
+      cat:'Geographical Field Works II (<em>Coğrafya\u2019da Arazi Çalışmaları II</em>) · 2023',
+      title:"Land-use Analysis and Planning in 23 Nisan",
+      desc:"Neighborhood scale zoning and development guidance for 23 Nisan Neighborhood in Nilüfer, Bursa."
+    },
+    {
+      img:"/assets/img/technical-projects/district_grouping_in_canakkale.png",
+      cat:'Geography of Coastal Region (<em>Kıyı Bölgeler Coğrafyası</em>) · 2022',
+      title:"District Grouping in Çanakkale",
+      desc:"An integrated typology and clustering analysis of districts in Çanakkale Province."
+    },
+    {
+      img:"/assets/img/technical-projects/from_garden_city_to_transit_city.png",
+      cat:'Land-use (<em>Arazi Kullanımı</em>) · 2022',
+      title:"From Garden City to Transit City",
+      desc:"Analyzing land use diversity in Jakarta\u2019s MRT corridors."
+    }
+  ];
+
+  const list = document.getElementById('projectList');
+  list.innerHTML = projects.map(p => `
+    <article class="project reveal">
+      <a class="thumb" href="#" aria-label="${p.title}">
+        <img src="${p.img}" alt="${p.title}" loading="lazy">
+      </a>
+      <div class="pinfo">
+        <div class="pcat">${p.cat}</div>
+        <h3 class="ptitle">${p.title}</h3>
+        <p class="pdesc">${p.desc}</p>
+        <a class="plink" href="#">View project →</a>
+      </div>
+    </article>
+  `).join('');
+
+  // reveal observer (after content injected)
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

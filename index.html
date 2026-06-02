@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Spatial Studio — A portfolio of spatial research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#232323;
+    --ink:#f4f1ea;
+    --muted:#bdb8ad;
+    --faint:#8d887d;
+    --rule:rgba(244,241,234,0.28);
+    --green:#b9d2a0;
+    --maxw:1280px;
+    --pad:clamp(20px,5vw,72px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Cormorant Garamond",serif;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+
+  /* ---------- Header / Nav ---------- */
+  header{padding-top:clamp(28px,4vw,46px)}
+  nav{
+    display:flex;justify-content:flex-end;gap:clamp(28px,5vw,64px);
+    font-size:clamp(17px,1.4vw,21px);
+    letter-spacing:.01em;
+  }
+  nav a{position:relative;padding-bottom:3px}
+  nav a::after{
+    content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;
+    background:var(--rule);transform-origin:left;transition:transform .4s ease;
+  }
+  nav a:hover::after{transform:scaleX(0)}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    display:grid;
+    grid-template-columns:minmax(280px,1fr) minmax(0,1.15fr);
+    gap:clamp(30px,5vw,70px);
+    align-items:start;
+    padding-top:clamp(60px,9vw,120px);
+    padding-bottom:clamp(70px,9vw,120px);
+  }
+  .hero-title{
+    font-weight:400;
+    font-size:clamp(58px,8vw,118px);
+    line-height:.96;
+    letter-spacing:-.01em;
+  }
+  .hero-sub{
+    margin-top:clamp(34px,5vw,70px);
+    font-size:clamp(19px,1.7vw,26px);
+    color:var(--muted);
+    font-weight:400;
+    letter-spacing:.01em;
+  }
+  .hero-strips{
+    width:100%;
+    display:block;
+    /* keep the natural look of the source image */
+    align-self:start;
+  }
+  .hero-strips img{width:100%;height:auto;display:block}
+
+  /* fade-up animation */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity 1s ease,transform 1s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* staggered hero load */
+  .ld{opacity:0;transform:translateY(24px);animation:rise 1.1s cubic-bezier(.2,.7,.2,1) forwards}
+  .ld.d1{animation-delay:.05s}
+  .ld.d2{animation-delay:.18s}
+  .ld.d3{animation-delay:.34s}
+  .ld.d4{animation-delay:.5s}
+  @keyframes rise{to{opacity:1;transform:none}}
+
+  /* ---------- Projects band ---------- */
+  .band{padding-bottom:clamp(40px,6vw,90px)}
+  .grid-row{width:100%;display:block}
+  .grid-row img{width:100%;height:auto;display:block}
+
+  .caption{
+    text-align:center;
+    max-width:920px;
+    margin:clamp(46px,6vw,80px) auto 0;
+    font-size:clamp(21px,1.9vw,29px);
+    line-height:1.4;
+    color:var(--muted);
+  }
+  .explore{
+    text-align:center;
+    margin:clamp(48px,6vw,86px) auto clamp(70px,9vw,130px);
+    font-size:clamp(20px,1.7vw,25px);
+  }
+  .explore a{position:relative;padding-bottom:4px}
+  .explore a::after{
+    content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;
+    background:var(--rule);transition:opacity .35s ease;
+  }
+  .explore a:hover::after{opacity:0}
+
+  /* ---------- Quote section ---------- */
+  .quote{
+    position:relative;
+    width:100%;
+    min-height:clamp(520px,70vh,820px);
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;
+    overflow:hidden;
+  }
+  .quote .bg{
+    position:absolute;inset:0;
+    background:url("images/green_map.png") center/cover no-repeat;
+    /* slight parallax-ready */
+  }
+  .quote .bg::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,var(--bg) 0%,rgba(35,35,35,0) 16%,rgba(35,35,35,0) 84%,var(--bg) 100%);
+  }
+  .quote-inner{position:relative;z-index:2;padding:0 24px;max-width:1120px}
+  .quote-text{
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(28px,4.2vw,58px);
+    line-height:1.18;
+    letter-spacing:.005em;
+  }
+  .quote-author{
+    margin-top:clamp(22px,3vw,40px);
+    font-size:clamp(22px,2.3vw,34px);
+    color:var(--ink);
+  }
+  .quote-source{
+    font-style:italic;
+    font-size:clamp(19px,2vw,30px);
+    color:var(--ink);
+    margin-top:2px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center;
+    padding:clamp(40px,6vw,70px) 20px clamp(48px,7vw,80px);
+    color:var(--faint);
+    font-size:clamp(15px,1.2vw,18px);
+    line-height:1.7;
+    letter-spacing:.02em;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:760px){
+    .hero{grid-template-columns:1fr;padding-top:48px}
+    nav{justify-content:space-between;gap:20px;font-size:16px}
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="/professional-profile/professional-profile.html" class="ld d1">Professional profile</a>
+        <a href="/technical_projects/technical_projects.html" class="ld d1">Technical projects&nbsp;→</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="wrap hero">
+    <div>
+      <h1 class="hero-title ld d2">The<br>Spatial<br>Studio</h1>
+      <p class="hero-sub ld d3">A portfolio of spatial research</p>
+    </div>
+    <div class="hero-strips ld d4">
+      <img src="assets/img/homepage/Homepage-Design_Pic-1.png" alt="Five vertical map studies in pastel tones">
+    </div>
+  </section>
+
+  <!-- PROJECTS BAND -->
+  <section class="band" id="work">
+    <div class="grid-row reveal">
+      <img src="assets/img/homepage/Homepage-Design_Pic-2.png" alt="Four spatial analysis maps: cadastral, terrain, environmental raster, urban fabric">
+    </div>
+    <div class="wrap">
+      <p class="caption reveal">Geomorphological analysis, hydrological modeling, environmental study, the analysis of space, territorial planning, and other geographical projects currated in one canvas.</p>
+      <p class="explore reveal"><a href="/technical_projects/technical_projects.html">Explore the work&nbsp;&nbsp;→</a></p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>© Izza Prasatya Arief</div>
+    <div>The Spatial Studio</div>
+  </footer>
+
+<script>
+  // Scroll reveal
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:0.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Subtle parallax on the quote map
+  const bg = document.getElementById('quoteBg');
+  const sec = bg.closest('.quote');
+  window.addEventListener('scroll',()=>{
+    const r = sec.getBoundingClientRect();
+    const vh = window.innerHeight;
+    if(r.top < vh && r.bottom > 0){
+      const p = (vh - r.top) / (vh + r.height);
+      bg.style.transform = 'translateY(' + ((p-0.5)*40).toFixed(1) + 'px) scale(1.06)';
+    }
+  },{passive:true});
+</script>
+</body>
+</html>
