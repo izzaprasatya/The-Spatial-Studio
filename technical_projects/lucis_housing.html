@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optimal Housing Landscape in Sragen — A LUCIS-Based Suitability Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a;
+  --ink-soft:#3d3d3d;
+  --muted:#6a6a6a;
+  --paper:#ffffff;
+  --bg:#fbfaf8;
+  --line:#e4e1da;
+  --line-soft:#efece6;
+  --accent:#1f5e3a;        /* land/green-planning tone */
+  --accent-soft:#e8f1ea;
+  --link:#1f6f7a;
+  --hl:#fff3cd;
+  --code-bg:#f5f3ee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+
+.layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:0;max-width:1180px;margin:0 auto}
+
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:46px 26px 46px 28px;border-right:1px solid var(--line);font-family:'JetBrains Mono',monospace}
+nav.toc .toc-head{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+nav.toc ul{list-style:none}
+nav.toc a{display:block;font-size:12.5px;line-height:1.45;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-left:2px solid transparent;border-radius:0 3px 3px 0;transition:.15s}
+nav.toc a:hover{color:var(--accent);background:var(--accent-soft)}
+nav.toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft);font-weight:600}
+
+main{background:var(--paper);min-height:100vh;padding:56px clamp(28px,5vw,72px) 90px;border-right:1px solid var(--line)}
+.doc{max-width:760px;margin:0 auto}
+
+h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.14;font-weight:700;letter-spacing:-.018em;margin:0 0 6px;text-wrap:balance}
+.subhead{font-size:1.12rem;font-weight:600;color:var(--accent);margin:0 0 6px}
+h2{font-size:1.55rem;font-weight:700;letter-spacing:-.012em;margin:54px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+p{margin:0 0 16px}
+strong{font-weight:600}
+em{font-style:italic}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid #cfe0e2}
+a:hover{border-bottom-color:var(--link)}
+
+.byline{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--muted);margin:14px 0 0}
+
+.kn{background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 1px;border-radius:1px;font-weight:600;white-space:nowrap}
+
+.abstract{font-size:.98rem;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:22px 26px;margin:22px 0 8px}
+.abstract .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.abstract p:last-child{margin-bottom:0}
+
+/* figures + placeholders */
+figure{margin:26px 0}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px;min-height:60px;background:repeating-linear-gradient(45deg,#fbfaf8,#fbfaf8 11px,#f4f2ec 11px,#f4f2ec 22px)}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:10px;text-align:center}
+figcaption b{color:var(--ink-soft);font-weight:600}
+.ph{border:1.5px dashed var(--line);border-radius:4px;background:repeating-linear-gradient(45deg,#fbfaf8,#fbfaf8 11px,#f4f2ec 11px,#f4f2ec 22px);min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted);text-align:center;padding:24px}
+.ph .pin{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--accent);background:var(--accent-soft);padding:4px 12px;border-radius:20px}
+.ph .pf{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:5px}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.5}
+caption{caption-side:top;text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:10px 14px 8px}
+th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{background:#f7f5f0;color:var(--ink);font-weight:600;border-bottom:1.5px solid var(--line)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#faf8f3}
+td.num{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap}
+
+blockquote{margin:26px 0;padding:18px 26px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 4px 4px 0;font-size:1.18rem;font-style:italic;color:var(--ink)}
+
+.note{font-size:.92rem;color:var(--muted);font-style:italic;margin:14px 0}
+
+footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--muted);padding:30px 0 0;margin-top:44px;border-top:1px solid var(--line)}
+
+.toc-toggle{display:none}
+@media(max-width:920px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:18px 22px}
+  nav.toc ul{display:none;margin-top:10px}
+  nav.toc.open ul{display:block}
+  .toc-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:none;border:none;font-family:'JetBrains Mono',monospace}
+  main{border-right:none;padding:34px 22px 70px}
+  body{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <nav class="toc" id="toc">
+    <button class="toc-toggle" id="tocToggle">▸ Contents</button>
+    <div class="toc-head" style="display:block">Contents</div>
+    <ul id="tocList">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#s1">1 · Problem Statement</a></li>
+      <li><a href="#s2">2 · Conceptual Framework</a></li>
+      <li><a href="#s3">3 · Emergence of a Priority Zone</a></li>
+      <li><a href="#s4">4 · Institutional Legitimacy</a></li>
+      <li><a href="#s5">5 · Intra-Zone Refinement</a></li>
+      <li><a href="#s6">6 · Functional Allocation</a></li>
+      <li><a href="#s7">7 · Spatial Structure</a></li>
+      <li><a href="#s8">8 · Locational Position</a></li>
+      <li><a href="#s9">9 · Conclusion</a></li>
+    </ul>
+  </nav>
+
+  <main>
+  <article class="doc">
+
+    <h1>Optimal Housing Landscape in Sragen</h1>
+    <p class="subhead">A LUCIS-Based Suitability Analysis for Identifying Optimal Housing Sites</p>
+
+    <h2 id="abstract">Abstract</h2>
+    <div class="abstract">
+      <span class="lab">Abstract</span>
+      <p>This study applies the Land Use Conflict Identification Strategy (LUCIS) to identify land in Sragen Regency that is simultaneously safe, accessible, and functionally integrated into the urban system. Rather than treating vacant land as inherently developable, the analysis frames housing-site selection as a spatial decision arising from the interaction of environmental capacity, human accessibility, and land-use conflict awareness. The procedure isolates a priority development zone of approximately <span class="kn">±11 hectares</span> at the southern edge of the Sragen urban core, evaluates its institutional legitimacy against the Detailed Spatial Plan (RDTR), refines it to a buildable parcel structure, and allocates the result across housing, shophouse, and green-space functions. The findings demonstrate that suitability is strongest where environmental feasibility, functional integration, and regulatory legitimacy align.</p>
+    </div>
+
+    <h2 id="s1">1. Problem Statement: Housing Land Is Not Simply Vacant Land</h2>
+    <p>In Sragen, the challenge is not to locate just any available parcel, but to identify land that is simultaneously safe, accessible, and functionally integrated into the urban system. Some land appears empty but is environmentally constrained. Other land is accessible but already tied to competing urban functions. Suitability, therefore, is not a visual guess; it is a spatial decision.</p>
+
+    <figure>
+      <img src="../assets/img/projects-content/lucis_housing/lucis_output.png" alt="Sragen Regency and the LUCIS-derived suitable areas for housing relative to the urban core and transport network." loading="lazy">
+      <figcaption><b>Figure 1.</b> Sragen Regency and the LUCIS-derived suitable areas for housing relative to the urban core and transport network.</figcaption>
+    </figure>
+
+    <h2 id="s2">2. Conceptual Framework: LUCIS Reads Land as a Layered Construct</h2>
+    <p>The Land Use Conflict Identification Strategy bridges physical and human geography, enabling space to be read not as a singular surface but as a synthesis of environmental constraints and socio-economic dynamics. The framework rests on three analytical dimensions:</p>
+    <div class="tbl">
+    <table>
+      <thead><tr><th style="width:34%">Dimension</th><th>Definition</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Environmental capacity</strong></td><td>Suitability depends on terrain, hazard exposure, and the physical ability of land to support settlement safely.</td></tr>
+        <tr><td><strong>Human accessibility</strong></td><td>Road access, educational facilities, health services, and the surrounding urban structure shape whether land can support daily life.</td></tr>
+        <tr><td><strong>Conflict awareness</strong></td><td>LUCIS identifies not only what is suitable, but what may compete with or contradict other land-use priorities.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3">3. Emergence of a Priority Zone</h2>
+    <p>Through the LUCIS approach, the analysis demonstrates that suitability is not merely a matter of physical geography, but the outcome of an encounter between environmental and human systems. From this process, a selected area of approximately <span class="kn">±11 hectares</span> emerges in the southern part of the Sragen urban core. It stands out not because it is isolated, but because it is spatially feasible and already connected to the broader city.</p>
+    <p>At this scale, the analytical question shifts from "where land is suitable" to "why this part of the city is the most coherent place for growth."</p>
+
+    <figure>
+      <img src="../assets/img/projects-content/lucis_housing/priority_zone.png" alt="The ±11 ha priority development zone emerging at the southern edge of the Sragen urban core." loading="lazy">
+      <figcaption><b>Figure 2.</b> The ±11 ha priority development zone emerging at the southern edge of the Sragen urban core.</figcaption>
+    </figure>
+
+    <h2 id="s4">4. Institutional Legitimacy: Suitability Reinforced by the RDTR</h2>
+    <p>The selected area is reinforced by the <strong>RDTR* of Sragen Regency 2021–2041</strong>. The site falls largely within a <strong>High-Density Residential Zone</strong>, while portions overlap with a <strong>City-Scale Commercial and Service Zone</strong>.</p>
+    <p>This overlap creates mixed-use opportunity, but also introduces institutional conditions. Development within the commercial and service zone is permitted conditionally, requiring stakeholder approval as well as environmental and traffic impact assessment.</p>
+    <p>Planning, in this sense, is not just spatial allocation. It is a negotiation between land, regulation, and future urban aspiration.</p>
+
+    <figure>
+      <img src="../assets/img/projects-content/lucis_housing/suitable_housing_area_2.png" alt="The selected site relative to RDTR Sragen Regency 2021–2041 zoning classes." loading="lazy">
+      <figcaption><b>Figure 3.</b> The selected site relative to RDTR Sragen Regency 2021–2041 zoning classes.</figcaption>
+    </figure>
+    <p class="note">* RDTR = Rencana Detail Tata Ruang (Detailed Spatial Plan).</p>
+
+    <h2 id="s5">5. Intra-Zone Refinement: Suitability Is Not Uniform</h2>
+    <p>At parcel scale, the analysis filters out fragmented edges, constrained pieces, and less coherent fragments. What remains is a buildable structure with enough continuity to support planned development. This is where LUCIS becomes practical: it moves from broad opportunity mapping to direct design and planning guidance.</p>
+
+    <figure>
+      <img src="../assets/img/projects-content/lucis_housing/planned_land_use.png" alt="Parcel-scale refinement of the selected zone into a coherent, buildable structure." loading="lazy">
+      <figcaption><b>Figure 4.</b> Parcel-scale refinement of the selected zone into a coherent, buildable structure.</figcaption>
+    </figure>
+
+    <h2 id="s6">6. Functional Allocation: The Selected Land Is Not Purely Residential</h2>
+    <p>The division into housing, shophouse area, and green space reflects an intentional effort to construct a living environment that is functional, socially responsive, and ecologically balanced.</p>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>Function</th><th>Area</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Housing development area</strong></td><td class="num"><span class="kn">102,757 m²</span></td><td>Allocated across 13 parcels as the dominant and structuring program.</td></tr>
+        <tr><td><strong>Shophouse development area</strong></td><td class="num"><span class="kn">4,421 m²</span></td><td>Distributed across 3 parcels as an economic interface between daily life and urban movement.</td></tr>
+        <tr><td><strong>Green space</strong></td><td class="num"><span class="kn">4,033 m²</span></td><td>Reserved as one integrated parcel for environmental balance and social use.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s7">7. Spatial Structure: Strength in Connection Rather Than Isolation</h2>
+    <p>In terms of spatial structure, the site demonstrates a strong relationship with the surrounding urban fabric. Its proximity to the city center allows it to function as an extension rather than an enclave.</p>
+    <p>Road infrastructure supports internal access and external integration, while the surrounding residential and service areas reinforce its role in the broader urban system. This is a compact and connected configuration, aligned with contemporary planning principles of proximity and accessibility.</p>
+
+    <figure>
+      <img src="../assets/img/projects-content/lucis_housing/planned_land_street.png" alt="The selected site and its integration with the surrounding road network." loading="lazy">
+      <figcaption><b>Figure 5.</b> The selected site and its integration with the surrounding road network.</figcaption>
+    </figure>
+
+    <h2 id="s8">8. Locational Position: Near Enough to Matter, Far Enough to Grow</h2>
+    <p>The selected site occupies a transitional position relative to the activity center of Sragen. It is not peripheral, but neither is it over-constrained by the urban core. This makes it particularly suitable for housing expansion. Its location allows the area to support everyday accessibility while still accommodating a meaningful development footprint.</p>
+
+    <figure>
+      <img src="../assets/img/projects-content/lucis_housing/distance_to_activity_center.png" alt="Transitional position of the housing sites relative to the Sragen city center." loading="lazy">
+      <figcaption><b>Figure 6.</b> Transitional position of the housing sites relative to the Sragen city center.</figcaption>
+    </figure>
+
+    <h2 id="s9">9. Conclusion</h2>
+    <blockquote>The city does not grow where land exists. It grows where conditions align.</blockquote>
+    <p>Through LUCIS, this project identifies land that is not simply available, but appropriate: environmentally feasible, functionally integrated, and institutionally legitimate. In Sragen, housing suitability emerges as a balance between safety and accessibility, between environmental capacity and urban life.</p>
+
+    <footer>© Izza Prasatya Arief — The Spatial Studio</footer>
+
+  </article>
+  </main>
+</div>
+
+<script>
+const links=[...document.querySelectorAll('#tocList a')];
+const map={};links.forEach(a=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)map[id]=a;});
+const spy=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=map[e.target.id];if(a)a.classList.add('active');}});
+},{rootMargin:'-10% 0px -75% 0px',threshold:0});
+Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el);});
+const t=document.getElementById('tocToggle'),n=document.getElementById('toc');
+t.addEventListener('click',()=>n.classList.toggle('open'));
+document.getElementById('tocList').addEventListener('click',e=>{if(e.target.tagName==='A')n.classList.remove('open');});
+</script>
+</body>
+</html>

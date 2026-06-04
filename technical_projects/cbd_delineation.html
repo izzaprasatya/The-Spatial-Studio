@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delineating CBD in South Tangerang — Finding the Socio-economic Heart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a;
+  --ink-soft:#3d3d3d;
+  --muted:#6a6a6a;
+  --paper:#ffffff;
+  --bg:#fbfaf8;
+  --line:#e4e1da;
+  --line-soft:#efece6;
+  --accent:#3a3a8c;        /* urban indigo */
+  --accent-soft:#e9e9f4;
+  --link:#1f6f7a;
+  --hl:#fff3cd;
+  --code-bg:#f5f3ee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+
+.layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:0;max-width:1180px;margin:0 auto}
+
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:46px 26px 46px 28px;border-right:1px solid var(--line);font-family:'JetBrains Mono',monospace}
+nav.toc .toc-head{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+nav.toc ul{list-style:none}
+nav.toc a{display:block;font-size:12.5px;line-height:1.45;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-left:2px solid transparent;border-radius:0 3px 3px 0;transition:.15s}
+nav.toc a.sub{padding-left:24px;font-size:11.5px;color:var(--muted)}
+nav.toc a:hover{color:var(--accent);background:var(--accent-soft)}
+nav.toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft);font-weight:600}
+
+main{background:var(--paper);min-height:100vh;padding:56px clamp(28px,5vw,72px) 90px;border-right:1px solid var(--line)}
+.doc{max-width:760px;margin:0 auto}
+
+h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.14;font-weight:700;letter-spacing:-.018em;margin:0 0 6px;text-wrap:balance}
+.subhead{font-size:1.12rem;font-weight:600;color:var(--accent);margin:0 0 6px}
+h2{font-size:1.55rem;font-weight:700;letter-spacing:-.012em;margin:54px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+h3{font-size:1.16rem;font-weight:600;margin:32px 0 10px;color:var(--ink);scroll-margin-top:24px}
+p{margin:0 0 16px}
+strong{font-weight:600}
+em{font-style:italic}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid #cfe0e2}
+a:hover{border-bottom-color:var(--link)}
+
+.byline{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--muted);margin:14px 0 0}
+
+.kn{background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 1px;border-radius:1px;font-weight:600;white-space:nowrap}
+
+.abstract{font-size:.98rem;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:22px 26px;margin:22px 0 8px}
+.abstract .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.abstract p:last-child{margin-bottom:0}
+
+figure{margin:26px 0}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:10px;text-align:center}
+figcaption b{color:var(--ink-soft);font-weight:600}
+
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:5px}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.5}
+caption{caption-side:top;text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:10px 14px 8px}
+th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{background:#f7f5f0;color:var(--ink);font-weight:600;border-bottom:1.5px solid var(--line)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#faf8f3}
+td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap}
+th.num{font-family:'Source Serif 4',serif;font-size:14px}
+tbody th{text-align:left;font-weight:600}
+
+ul.def{list-style:none;margin:18px 0;padding:0}
+ul.def li{padding:12px 0 12px 18px;border-left:2px solid var(--accent-soft);margin:0 0 10px}
+ul.def li strong{color:var(--accent)}
+
+blockquote{margin:26px 0;padding:18px 26px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 4px 4px 0;font-size:1.18rem;font-style:italic;color:var(--ink)}
+
+footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--muted);padding:30px 0 0;margin-top:44px;border-top:1px solid var(--line)}
+
+.toc-toggle{display:none}
+@media(max-width:920px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:18px 22px}
+  nav.toc ul{display:none;margin-top:10px}
+  nav.toc.open ul{display:block}
+  .toc-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:none;border:none;font-family:'JetBrains Mono',monospace}
+  main{border-right:none;padding:34px 22px 70px}
+  body{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <nav class="toc" id="toc">
+    <button class="toc-toggle" id="tocToggle">&#9656; Contents</button>
+    <div class="toc-head" style="display:block">Contents</div>
+    <ul id="tocList">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#s1">1 &middot; Where Are the CBDs?</a></li>
+      <li><a href="#s2">2 &middot; A Different Kind of CBD</a></li>
+      <li><a href="#s3">3 &middot; Three Urban Cores</a></li>
+      <li><a href="#s4">4 &middot; Urban Form</a></li>
+      <li><a href="#s5">5 &middot; Reality on the Ground</a></li>
+      <li><a href="#s6">6 &middot; Planning Framework</a></li>
+      <li><a class="sub" href="#s6-def">Service-Center Definitions</a></li>
+      <li><a href="#s7">7 &middot; Planning Implication</a></li>
+      <li><a href="#s8">8 &middot; Methodological Reflection</a></li>
+      <li><a href="#concl">Conclusion</a></li>
+    </ul>
+  </nav>
+
+  <main>
+  <article class="doc">
+
+    <h1>Delineating CBD in South Tangerang</h1>
+    <p class="subhead">Finding South Tangerang's Socio-economic Heart</p>
+
+    <h2 id="abstract">Abstract</h2>
+    <div class="abstract">
+      <span class="lab">Abstract</span>
+      <p>This study delineates the Central Business District (CBD) structure of South Tangerang through spatial analysis of weighted Points of Interest (POIs), building density, and road accessibility. Kernel Density Estimation (KDE) at an <span class="kn">800 m search radius</span> reveals that high-order economic activity does not converge into a single downtown but distributes across three primary clusters: Bintaro Jaya, Bumi Serpong Damai (BSD), and Alam Sutera. The pattern constitutes a polycentric CBD shaped by new-town development and developer-driven economic corridors. The delineated clusters correspond to formally designated service centers in the Detailed Spatial Plan (RDTR, Perwal No. 118/2022), confirming alignment between observed spatial structure and statutory planning. The analysis concludes that spatial policy should manage multiple nodes rather than reinforce a single core.</p>
+    </div>
+
+    <h2 id="s1">1. Where Are the CBDs?</h2>
+    <p>The results of the spatial analysis &mdash; weighted POIs, building density, and road accessibility &mdash; reveal that high-order activities converge into three primary clusters: <strong>Bintaro Jaya</strong>, <strong>Bumi Serpong Damai (BSD)</strong>, and <strong>Alam Sutera</strong>.</p>
+    <figure>
+      <img src="../assets/img/projects-content/cbd_delineation/map_1.png" alt="Composite socio-economic intensity surface across South Tangerang" loading="lazy">
+      <figcaption><b>Figure 1.</b> Composite socio-economic intensity surface (weighted POIs, building density, road accessibility) across South Tangerang.</figcaption>
+    </figure>
+
+    <h2 id="s2">2. A Different Kind of CBD</h2>
+    <p>These clusters do not form a single CBD as commonly imagined. Instead, they constitute a <strong>polycentric CBD</strong>, shaped by new-town development and economic corridors driven by major developers.</p>
+    <figure>
+      <img src="../assets/img/projects-content/cbd_delineation/map_2.png" alt="The three delineated CBD clusters forming a polycentric structure" loading="lazy">
+      <figcaption><b>Figure 2.</b> The three delineated CBD clusters forming a polycentric structure.</figcaption>
+    </figure>
+
+    <h2 id="s3">3. Three Urban Cores</h2>
+    <figure>
+      <img src="../assets/img/projects-content/cbd_delineation/map_3.png" alt="Delineated footprints of the three urban cores" loading="lazy">
+      <figcaption><b>Figure 3.</b> Delineated footprints of the three urban cores.</figcaption>
+    </figure>
+    <div class="tbl">
+    <table>
+      <caption>Comparative indicators for the three delineated cores.</caption>
+      <thead><tr><th>Indicator</th><th class="num">Bintaro Jaya</th><th class="num">Bumi Serpong Damai (BSD)</th><th class="num">Alam Sutera</th></tr></thead>
+      <tbody>
+        <tr><th>Population served</th><td class="num">31,054 people</td><td class="num"><span class="kn">42,556 people</span></td><td class="num">36,968 people</td></tr>
+        <tr><th>CBD area</th><td class="num">79.67 Ha</td><td class="num"><span class="kn">103.65 Ha</span></td><td class="num">102.69 Ha</td></tr>
+        <tr><th>Average building height</th><td class="num"><span class="kn">12 m</span></td><td class="num">10 m</td><td class="num">10 m</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s4">4. Urban Form</h2>
+    <p>The CBD morphology differs from classical models. Vertical development is limited, and economic activity is expressed through horizontally distributed commercial strips, dominated by modern shophouses and supported by arterial road networks.</p>
+    <figure>
+      <img src="../assets/img/projects-content/cbd_delineation/imagery_1.png" alt="Aerial imagery of the three cores showing horizontal commercial form" loading="lazy">
+      <figcaption><b>Figure 4.</b> Aerial imagery of the three cores showing horizontally distributed commercial form.</figcaption>
+    </figure>
+
+    <h2 id="s5">5. Reality on the Ground</h2>
+    <p>The spatial structure reveals a city shaped by infrastructure and accessibility, where mobility patterns are strongly car-oriented.</p>
+    <figure>
+      <img src="../assets/img/projects-content/cbd_delineation/imagery_2.png" alt="Ground-level conditions across the three cores" loading="lazy">
+      <figcaption><b>Figure 5.</b> Ground-level conditions across the three cores.</figcaption>
+    </figure>
+
+    <h2 id="s6">6. Planning Framework</h2>
+    <p>The clusters align with the Detailed Spatial Plan (RDTR) (Perwal No. 118/2022), corresponding to designated service centers:</p>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>Cluster</th><th>District</th><th>Designated service center</th></tr></thead>
+      <tbody>
+        <tr><th>Bintaro Jaya</th><td>Pondok Jaya District</td><td>PPK III</td></tr>
+        <tr><th>Bumi Serpong Damai (BSD)</th><td>Rawabuntu District</td><td>PPK II</td></tr>
+        <tr><th>Alam Sutera</th><td>Pakulonan District</td><td>Sub-PPK I</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>This confirms that the observed spatial patterns are consistent with formal planning structures.</p>
+    <figure>
+      <img src="../assets/img/projects-content/cbd_delineation/map_4.png" alt="Delineated clusters relative to RDTR designated service centers" loading="lazy">
+      <figcaption><b>Figure 6.</b> Delineated clusters relative to RDTR designated service centers (Perwal No. 118/2022).</figcaption>
+    </figure>
+
+    <h3 id="s6-def">Service-Center Definitions (Useful Note)</h3>
+    <ul class="def">
+      <li><strong>PPK II (City Service Center II):</strong> government activities, public services, trade and services at regional and national scales, and housing.</li>
+      <li><strong>PPK III (City Service Center III):</strong> public services, trade and services at regional and national scales, and housing.</li>
+      <li><strong>Sub-PPK I (Sub&ndash;City Service Center I):</strong> public services, trade and services, and housing.</li>
+    </ul>
+
+    <h2 id="s7">7. Planning Implication</h2>
+    <p>Spatial policy should not reinforce a single downtown. Instead, it must manage multiple nodes through Floor Area Ratio (FAR) control, building-height regulation, parking strategies, and improved accessibility systems.</p>
+
+    <h2 id="s8">8. Methodological Reflection</h2>
+    <p>CBD delineation is sensitive to weighting schemes, KDE radius (<span class="kn">800 m</span>), and data quality. Future work should incorporate sensitivity testing, mobility validation, and transit-based accessibility metrics.</p>
+
+    <h2 id="concl">Conclusion</h2>
+    <blockquote>South Tangerang is a developer-driven polycentric city, where economic intensity is distributed across nodes rather than concentrated in a single core.</blockquote>
+
+    <footer>&copy; Izza Prasatya Arief &mdash; The Spatial Studio</footer>
+
+  </article>
+  </main>
+</div>
+
+<script>
+const links=[...document.querySelectorAll('#tocList a')];
+const map={};links.forEach(a=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)map[id]=a;});
+const spy=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=map[e.target.id];if(a)a.classList.add('active');}});
+},{rootMargin:'-10% 0px -75% 0px',threshold:0});
+Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el);});
+const t=document.getElementById('tocToggle'),n=document.getElementById('toc');
+t.addEventListener('click',()=>n.classList.toggle('open'));
+document.getElementById('tocList').addEventListener('click',e=>{if(e.target.tagName==='A')n.classList.remove('open');});
+</script>
+</body>
+</html>

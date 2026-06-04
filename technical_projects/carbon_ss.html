@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urban Growth and Carbon Loss in Bursa — Carbon Sequestration Valuation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+MathJax = { tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] }, svg:{fontCache:'global'} };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+:root{
+  --ink:#1a1a1a;
+  --ink-soft:#3d3d3d;
+  --muted:#6a6a6a;
+  --paper:#ffffff;
+  --bg:#fbfaf8;
+  --line:#e4e1da;
+  --line-soft:#efece6;
+  --accent:#256145;        /* forest green */
+  --accent-soft:#e3efe7;
+  --link:#1f6f7a;
+  --hl:#fff3cd;
+  --code-bg:#f5f3ee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+
+.layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:0;max-width:1180px;margin:0 auto}
+
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:46px 26px 46px 28px;border-right:1px solid var(--line);font-family:'JetBrains Mono',monospace}
+nav.toc .toc-head{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+nav.toc ul{list-style:none}
+nav.toc a{display:block;font-size:12.5px;line-height:1.45;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-left:2px solid transparent;border-radius:0 3px 3px 0;transition:.15s}
+nav.toc a.sub{padding-left:24px;font-size:11.5px;color:var(--muted)}
+nav.toc a:hover{color:var(--accent);background:var(--accent-soft)}
+nav.toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft);font-weight:600}
+
+main{background:var(--paper);min-height:100vh;padding:56px clamp(28px,5vw,72px) 90px;border-right:1px solid var(--line)}
+.doc{max-width:760px;margin:0 auto}
+
+h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.14;font-weight:700;letter-spacing:-.018em;margin:0 0 6px;text-wrap:balance}
+.subhead{font-size:1.12rem;font-weight:600;color:var(--accent);margin:0 0 6px}
+h2{font-size:1.55rem;font-weight:700;letter-spacing:-.012em;margin:54px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+h3{font-size:1.16rem;font-weight:600;margin:26px 0 6px;color:var(--ink);scroll-margin-top:24px}
+p{margin:0 0 16px}
+strong{font-weight:600}
+em{font-style:italic}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid #cfe0e2}
+a:hover{border-bottom-color:var(--link)}
+
+.byline{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--muted);margin:14px 0 0}
+
+.kn{background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 1px;border-radius:1px;font-weight:600;white-space:nowrap}
+
+.abstract{font-size:.98rem;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:22px 26px;margin:22px 0 8px}
+.abstract .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.abstract p:last-child{margin-bottom:0}
+
+figure{margin:26px 0}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:10px;text-align:center}
+figcaption b{color:var(--ink-soft);font-weight:600}
+
+.eq{margin:14px 0;padding:8px 4px;overflow-x:auto}
+.eqvars{font-size:.95rem;color:var(--ink-soft);margin:6px 0 4px}
+
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:5px}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.5}
+caption{caption-side:top;text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:10px 14px 8px}
+th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{background:#f7f5f0;color:var(--ink);font-weight:600;border-bottom:1.5px solid var(--line)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#faf8f3}
+tbody th{text-align:left;font-weight:600;white-space:nowrap}
+
+.findings{margin:18px 0}
+.findings .f{padding:14px 0;border-bottom:1px dashed var(--line)}
+.findings .f:last-child{border-bottom:none}
+.findings .f strong:first-child{color:var(--accent);display:block;font-size:1.02rem;margin-bottom:2px}
+.findings .f p{margin:0;font-size:.98rem}
+
+ul.plain{margin:14px 0 16px 22px}
+ul.plain li{margin:0 0 7px}
+
+.callout{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:16px 22px;margin:20px 0;font-size:.97rem;color:var(--ink-soft)}
+.callout strong{color:var(--accent)}
+
+blockquote{margin:26px 0;padding:18px 26px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 4px 4px 0;font-size:1.18rem;font-style:italic;color:var(--ink)}
+
+footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--muted);padding:30px 0 0;margin-top:44px;border-top:1px solid var(--line)}
+
+.toc-toggle{display:none}
+@media(max-width:920px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:18px 22px}
+  nav.toc ul{display:none;margin-top:10px}
+  nav.toc.open ul{display:block}
+  .toc-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:none;border:none;font-family:'JetBrains Mono',monospace}
+  main{border-right:none;padding:34px 22px 70px}
+  body{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <nav class="toc" id="toc">
+    <button class="toc-toggle" id="tocToggle">&#9656; Contents</button>
+    <div class="toc-head" style="display:block">Contents</div>
+    <ul id="tocList">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#s1">1 &middot; Approach</a></li>
+      <li><a href="#s2">2 &middot; Baseline &amp; Transition</a></li>
+      <li><a href="#s3">3 &middot; Key Spatial Findings</a></li>
+      <li><a href="#s4">4 &middot; Carbon Dynamics Insight</a></li>
+      <li><a href="#s5">5 &middot; Economic Valuation</a></li>
+      <li><a href="#s6">6 &middot; Planning Interpretation</a></li>
+      <li><a href="#concl">Conclusion</a></li>
+    </ul>
+  </nav>
+
+  <main>
+  <article class="doc">
+
+    <h1>Urban Growth and Carbon Loss in Bursa</h1>
+    <p class="subhead">The Present and Projected Worth of Carbon Sequestration in Bursa</p>
+
+    <h2 id="abstract">Abstract</h2>
+    <div class="abstract">
+      <span class="lab">Abstract</span>
+      <p>This study assesses how projected urban expansion in Bursa reshapes land cover and, through that transition, the landscape's carbon storage and its economic value. A MOLUSCE land-cover change simulation (<span class="kn">2000&ndash;2036</span>) is integrated with InVEST carbon modeling and a review of statutory spatial plans. The analysis identifies forest decline as the dominant driver of carbon loss &mdash; despite relatively small spatial change &mdash; while grassland and agricultural expansion fail to compensate. Carbon stock changes are translated into monetary terms using an unadjusted, market-linked valuation proxied by the EU ETS price, reflecting the absence of an explicit carbon price in T&uuml;rkiye. The findings argue that effective climate mitigation depends on protecting forests, concentrating urban growth within planned zones, and safeguarding productive landscapes.</p>
+    </div>
+
+    <figure>
+      <img src="../assets/img/projects-content/carbon_ss/map_1.png" alt="The Bursa metropolitan landscape, study context" loading="lazy">
+      <figcaption><b>Figure 1.</b> The Bursa metropolitan landscape, study context.</figcaption>
+    </figure>
+
+    <h2 id="s1">1. Approach</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th style="width:22%">Component</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><th>Approach</th><td>MOLUSCE simulation (2000&ndash;2036) integrated with InVEST carbon modeling and spatial plan review.</td></tr>
+        <tr><th>Focus</th><td>Urban expansion, forest loss, and carbon stock transition across metropolitan and rural systems.</td></tr>
+        <tr><th>Output</th><td>Land-cover prediction, gain&ndash;loss mapping, and carbon change assessment.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s2">2. Baseline Landscape Structure and Land-Cover Transition</h2>
+    <p>The landscape is organized around three structural components:</p>
+    <ul class="plain">
+      <li><strong>Urban core</strong> &mdash; the metropolitan activity center with high development pressure.</li>
+      <li><strong>Agricultural activity</strong> &mdash; productive land forming the economic backbone.</li>
+      <li><strong>Forest blocks</strong> &mdash; the primary carbon reservoirs with the highest ecological value.</li>
+    </ul>
+    <figure>
+      <img src="../assets/img/projects-content/carbon_ss/map_2.png" alt="Land cover in 2000 and predicted land cover in 2036" loading="lazy">
+      <figcaption><b>Figure 2.</b> Land cover in 2000 (left) and predicted land cover in 2036 (right).</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/img/projects-content/carbon_ss/map_3.png" alt="Carbon storage in 2000 and 2036" loading="lazy">
+      <figcaption><b>Figure 3.</b> Carbon storage in 2000 (left) and 2036 (right).</figcaption>
+    </figure>
+
+    <h2 id="s3">3. Key Spatial Findings</h2>
+    <div class="findings">
+      <div class="f"><strong>Urban expansion</strong><p>Growth consolidates along high-accessibility corridors, reshaping land-cover composition toward built-up dominance.</p></div>
+      <div class="f"><strong>Forest decline</strong><p>Reduction in forest cover drives the majority of carbon loss despite relatively small spatial change.</p></div>
+      <div class="f"><strong>Fragmentation</strong><p>Peri-urban zones and forest edges experience increasing ecological fragmentation and edge effects.</p></div>
+      <div class="f"><strong>Landscape transition</strong><p>Grassland and agricultural expansion occurs but does not compensate for forest carbon loss.</p></div>
+    </div>
+    <figure>
+      <img src="../assets/img/projects-content/carbon_ss/chart_1.png" alt="Carbon storage by land-cover class, 2000 vs 2036" loading="lazy">
+      <figcaption><b>Figure 4.</b> Carbon storage by land-cover class, 2000 vs. 2036.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/img/projects-content/carbon_ss/chart_2.png" alt="Area change by land-cover class, 2000 to 2036" loading="lazy">
+      <figcaption><b>Figure 5.</b> Area change by land-cover class, 2000&ndash;2036.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/img/projects-content/carbon_ss/map_4.png" alt="Spatial distribution of carbon storage gain and loss, 2000 to 2036" loading="lazy">
+      <figcaption><b>Figure 6.</b> Spatial distribution of carbon storage gain and loss, 2000&ndash;2036.</figcaption>
+    </figure>
+
+    <h2 id="s4">4. Carbon Dynamics Insight</h2>
+    <p>Each land-cover class plays a distinct role in the carbon budget:</p>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>Land cover</th><th>Carbon role</th><th>Impact</th></tr></thead>
+      <tbody>
+        <tr><th>Forest</th><td>Very high carbon density</td><td>Primary driver of carbon loss when converted.</td></tr>
+        <tr><th>Agriculture</th><td>Moderate carbon</td><td>Minor contribution; vulnerable to urban pressure.</td></tr>
+        <tr><th>Grassland</th><td>Low carbon</td><td>Limited compensation for carbon loss.</td></tr>
+        <tr><th>Unused land</th><td>Very low carbon</td><td>Potential reserve for development or restoration.</td></tr>
+        <tr><th>Urban</th><td>Minimal carbon</td><td>Dominant driver of land-cover transformation.</td></tr>
+        <tr><th>Water</th><td>Variable carbon storage</td><td>Ecological regulator, not a carbon driver.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s5">5. Economic Valuation of Carbon Change</h2>
+    <p>The change in carbon stock per land-cover class is converted into monetary terms using a market-linked unit value. The economic value of carbon change is:</p>
+    <div class="eq">$$\Delta V = \Delta C \times P_{c}$$</div>
+    <p class="eqvars">where $\Delta V$ is the change in carbon value (&euro;), $\Delta C$ is the change in stored carbon expressed as CO&#8322;-equivalent (tCO&#8322;e), and $P_c$ is the carbon unit price (&euro; per tCO&#8322;e).</p>
+    <p>Stored carbon is converted to CO&#8322;-equivalent using the molecular-weight ratio of carbon dioxide to carbon:</p>
+    <div class="eq">$$\Delta C_{\text{CO}_2e} = \Delta C_{\text{C}} \times \frac{44}{12}$$</div>
+    <div class="callout"><strong>Valuation note.</strong> The carbon values are based on an unadjusted, market-linked valuation using the EU ETS price as a proxy, because the OECD reports that T&uuml;rkiye does not levy an explicit carbon price. Instead, its Net Effective Carbon Rate averaged <strong>&euro;9.37 per tCO&#8322;e</strong> (in real 2023 euros) in 2023.</div>
+    <figure>
+      <img src="../assets/img/projects-content/carbon_ss/chart_3.png" alt="Economic value change in carbon storage by land-cover class, 2000 to 2036" loading="lazy">
+      <figcaption><b>Figure 7.</b> Economic value change in carbon storage by land-cover class, 2000&ndash;2036 (&euro;).</figcaption>
+    </figure>
+
+    <h2 id="s6">6. Planning Interpretation</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th style="width:28%">Zone</th><th>Interpretation</th></tr></thead>
+      <tbody>
+        <tr><th>Metropolitan core</th><td>Growth expected but must remain controlled and contained.</td></tr>
+        <tr><th>Agricultural districts</th><td>High risk of productivity loss due to land conversion.</td></tr>
+        <tr><th>Tourism &amp; heritage areas</th><td>Require selective and conservation-oriented development.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="concl">Conclusion</h2>
+    <blockquote>Effective climate mitigation depends on protecting forests, concentrating urban growth within planned zones, and safeguarding productive landscapes.</blockquote>
+
+    <footer>&copy; Izza Prasatya Arief &mdash; The Spatial Studio</footer>
+
+  </article>
+  </main>
+</div>
+
+<script>
+const links=[...document.querySelectorAll('#tocList a')];
+const map={};links.forEach(a=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)map[id]=a;});
+const spy=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=map[e.target.id];if(a)a.classList.add('active');}});
+},{rootMargin:'-10% 0px -75% 0px',threshold:0});
+Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el);});
+const t=document.getElementById('tocToggle'),n=document.getElementById('toc');
+t.addEventListener('click',()=>n.classList.toggle('open'));
+document.getElementById('tocList').addEventListener('click',e=>{if(e.target.tagName==='A')n.classList.remove('open');});
+</script>
+</body>
+</html>

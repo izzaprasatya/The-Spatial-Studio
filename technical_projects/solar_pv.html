@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar Farm Site Selection in Muaro Jambi — Land Suitability &amp; Geospatial Modeling</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+MathJax = { tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] }, svg:{fontCache:'global'} };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+:root{
+  --ink:#1a1a1a;
+  --ink-soft:#3d3d3d;
+  --muted:#6a6a6a;
+  --paper:#ffffff;
+  --bg:#fbfaf8;
+  --line:#e4e1da;
+  --line-soft:#efece6;
+  --accent:#b3791f;        /* solar amber/gold */
+  --accent-soft:#fbf0db;
+  --link:#1f6f7a;
+  --hl:#fff3cd;
+  --code-bg:#f5f3ee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+
+.layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:0;max-width:1180px;margin:0 auto}
+
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:46px 26px 46px 28px;border-right:1px solid var(--line);font-family:'JetBrains Mono',monospace}
+nav.toc .toc-head{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+nav.toc ul{list-style:none}
+nav.toc a{display:block;font-size:12.5px;line-height:1.45;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-left:2px solid transparent;border-radius:0 3px 3px 0;transition:.15s}
+nav.toc a.sub{padding-left:24px;font-size:11.5px;color:var(--muted)}
+nav.toc a:hover{color:var(--accent);background:var(--accent-soft)}
+nav.toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft);font-weight:600}
+
+main{background:var(--paper);min-height:100vh;padding:56px clamp(28px,5vw,72px) 90px;border-right:1px solid var(--line)}
+.doc{max-width:760px;margin:0 auto}
+
+h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.14;font-weight:700;letter-spacing:-.018em;margin:0 0 6px;text-wrap:balance}
+.subhead{font-size:1.12rem;font-weight:600;color:var(--accent);margin:0 0 6px}
+h2{font-size:1.55rem;font-weight:700;letter-spacing:-.012em;margin:54px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+h3{font-size:1.16rem;font-weight:600;margin:30px 0 8px;color:var(--ink);scroll-margin-top:24px}
+p{margin:0 0 16px}
+strong{font-weight:600}
+em{font-style:italic}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid #cfe0e2}
+a:hover{border-bottom-color:var(--link)}
+
+.byline{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--muted);margin:14px 0 0}
+
+.kn{background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 1px;border-radius:1px;font-weight:600;white-space:nowrap}
+
+.abstract{font-size:.98rem;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:22px 26px;margin:22px 0 8px}
+.abstract .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.abstract p:last-child{margin-bottom:0}
+
+figure{margin:26px 0}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:10px;text-align:center}
+figcaption b{color:var(--ink-soft);font-weight:600}
+
+.eq{margin:14px 0;padding:8px 4px;overflow-x:auto}
+.eqvars{font-size:.95rem;color:var(--ink-soft);margin:6px 0 4px}
+
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:5px}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.5}
+caption{caption-side:top;text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:10px 14px 8px}
+th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{background:#f7f5f0;color:var(--ink);font-weight:600;border-bottom:1.5px solid var(--line)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#faf8f3}
+td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap}
+th.num{font-family:'Source Serif 4',serif;font-size:14px}
+tbody th{text-align:left;font-weight:600;white-space:nowrap}
+td.win{background:var(--hl);font-weight:600}
+tr.total th,tr.total td{border-top:1.5px solid var(--line);background:#faf7f0;font-weight:600}
+
+blockquote{margin:26px 0;padding:18px 26px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 4px 4px 0;font-size:1.12rem;font-style:italic;color:var(--ink)}
+
+footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--muted);padding:30px 0 0;margin-top:44px;border-top:1px solid var(--line)}
+
+.toc-toggle{display:none}
+@media(max-width:920px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:18px 22px}
+  nav.toc ul{display:none;margin-top:10px}
+  nav.toc.open ul{display:block}
+  .toc-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:none;border:none;font-family:'JetBrains Mono',monospace}
+  main{border-right:none;padding:34px 22px 70px}
+  body{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <nav class="toc" id="toc">
+    <button class="toc-toggle" id="tocToggle">&#9656; Contents</button>
+    <div class="toc-head" style="display:block">Contents</div>
+    <ul id="tocList">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#s1">1 &middot; Study Area</a></li>
+      <li><a href="#s2">2 &middot; Solar Resource Modeling</a></li>
+      <li><a class="sub" href="#s2-1">2.1 Global Irradiation</a></li>
+      <li><a class="sub" href="#s2-2">2.2 Peak Sun Hours</a></li>
+      <li><a href="#s3">3 &middot; Capacity &amp; Energy Yield</a></li>
+      <li><a class="sub" href="#s3-1">3.1 Installed Capacity</a></li>
+      <li><a class="sub" href="#s3-2">3.2 Annual Energy Production</a></li>
+      <li><a class="sub" href="#s3-3">3.3 Site Results</a></li>
+      <li><a href="#s4">4 &middot; Interpretation</a></li>
+      <li><a href="#s5">5 &middot; Strategic Insight</a></li>
+    </ul>
+  </nav>
+
+  <main>
+  <article class="doc">
+
+    <h1>Solar Farm Site Selection in Muaro Jambi</h1>
+    <p class="subhead">Land Suitability &amp; Geospatial Modeling for Optimal Solar PV</p>
+
+    <h2 id="abstract">Abstract</h2>
+    <div class="abstract">
+      <span class="lab">Abstract</span>
+      <p>This study evaluates four candidate sites for utility-scale solar photovoltaic (PV) development in Muaro Jambi Regency, in the southwestern part of Jambi Province near Jambi City. Solar resource potential was modeled geospatially, and the results indicate consistently high and uniform irradiation (<span class="kn">~6.6 kWh/m&sup2;/day</span>) with a stable <span class="kn">7-hour Peak Sun Hour</span> across all sites. Because solar resource quality is effectively uniform, it is not the limiting factor; instead, land scale becomes the key determinant of project feasibility and energy output. Area I emerges as the primary development anchor with the largest extent and highest production potential (<span class="kn">~48.6 GWh/year</span>), Area II as a strong secondary candidate for phased expansion, and Areas III and IV as viable strategic reserves. Collectively, the four sites offer a total potential of <strong>57.77 MWp</strong> and <strong>~108.6 GWh/year</strong>.</p>
+    </div>
+
+    <figure>
+      <img src="../assets/img/projects-content/solar_pv/map_1.png" alt="Candidate solar-farm parcels in Muaro Jambi over satellite imagery" loading="lazy">
+      <figcaption><b>Figure 1.</b> Candidate solar-farm parcels in Muaro Jambi over satellite imagery.</figcaption>
+    </figure>
+
+    <h2 id="s1">1. Study Area</h2>
+    <p>The identified area lies in Muaro Jambi Regency, in the southwestern part near Jambi City.</p>
+    <figure>
+      <img src="../assets/img/projects-content/solar_pv/map_2.png" alt="Location of the candidate area within Muaro Jambi Regency, near Jambi City" loading="lazy">
+      <figcaption><b>Figure 2.</b> Location of the candidate area within Muaro Jambi Regency, near Jambi City.</figcaption>
+    </figure>
+
+    <h2 id="s2">2. Solar Resource Modeling</h2>
+    <p>Solar radiation was modeled to estimate the incoming solar energy available at each site. Following the clear-sky model implemented in the GRASS GIS <code>r.sun</code> module, global irradiation is computed as the sum of three components &mdash; beam (direct), diffuse, and ground-reflected radiation &mdash; using the digital elevation model together with derived slope, aspect, and latitude surfaces.</p>
+
+    <h3 id="s2-1">2.1 Global Irradiation ($G$)</h3>
+    <div class="eq">$$G = B + D + R$$</div>
+    <p class="eqvars">where $G$ is global irradiation (Wh&middot;m&#8315;&sup2;&middot;day&#8315;&sup1;), $B$ is the beam (direct) component, $D$ is the diffuse component, and $R$ is the ground-reflected component.</p>
+    <p>For real-sky conditions, the clear-sky beam and diffuse components are reduced by atmospheric coefficients that account for cloudiness and other attenuation:</p>
+    <div class="eq">$$B_{\text{real}} = B_{\text{clear}} \cdot c_{bh}, \qquad D_{\text{real}} = D_{\text{clear}} \cdot c_{dh}$$</div>
+    <p class="eqvars">where $c_{bh}$ and $c_{dh}$ are the beam and diffuse reduction coefficients (values between 0 and 1). The model also employs the Linke atmospheric turbidity factor and the ground albedo coefficient.</p>
+
+    <h3 id="s2-2">2.2 Peak Sun Hours (PSH)</h3>
+    <p>Peak Sun Hours express daily irradiation in equivalent hours at the reference irradiance of 1,000 W&middot;m&#8315;&sup2; (1 kW&middot;m&#8315;&sup2;):</p>
+    <div class="eq">$$\text{PSH} = \frac{G \;[\mathrm{Wh \cdot m^{-2} \cdot day^{-1}}]}{1000 \;[\mathrm{W \cdot m^{-2}}]}$$</div>
+    <p class="eqvars">At ~6.6 kWh/m&sup2;/day, this yields the stable ~7-hour PSH reported across all sites.</p>
+    <figure>
+      <img src="../assets/img/projects-content/solar_pv/map_3.png" alt="Geospatial inputs and outputs: slope, modeled irradiation, and insolation time" loading="lazy">
+      <figcaption><b>Figure 3.</b> Geospatial inputs and outputs: slope, modeled irradiation, and insolation time across the candidate parcels.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/img/projects-content/solar_pv/map_4.png" alt="The four candidate parcels with modeled solar and capacity statistics" loading="lazy">
+      <figcaption><b>Figure 4.</b> The four candidate parcels with modeled solar and capacity statistics.</figcaption>
+    </figure>
+
+    <h2 id="s3">3. Capacity and Energy Yield Estimation</h2>
+
+    <h3 id="s3-1">3.1 Installed Capacity ($P$)</h3>
+    <p>Installed PV capacity scales with usable land area and a per-area power density:</p>
+    <div class="eq">$$P = A \times \rho$$</div>
+    <p class="eqvars">where $P$ is installed capacity (MWp), $A$ is the usable site area, and $\rho$ is the capacity (power) density per unit area. The tabulated values correspond to a density of approximately <strong>0.05 MWp/ha</strong> (i.e. ~20 ha per MWp).</p>
+
+    <h3 id="s3-2">3.2 Annual Energy Production ($E$)</h3>
+    <p>Annual energy yield is estimated from installed capacity, the daily Peak Sun Hours, and a performance ratio that captures system losses:</p>
+    <div class="eq">$$E = P \times \text{PSH} \times 365 \times PR$$</div>
+    <p class="eqvars">where $E$ is annual energy production (MWh/year), $P$ is installed capacity (MWp), $\text{PSH}$ is the daily peak sun hours (h/day), $365$ converts to an annual sum, and $PR$ is the dimensionless performance ratio (typically 0.75&ndash;0.85).</p>
+
+    <h3 id="s3-3">3.3 Site Results</h3>
+    <div class="tbl">
+    <table>
+      <caption>Modeled solar resource, capacity, and yield per candidate area. Shaded = peak value.</caption>
+      <thead><tr><th>Area</th><th class="num">Irradiation (Wh/m&sup2;/day)</th><th class="num">Area (ha)</th><th class="num">Capacity (MWp)</th><th class="num">Production (MWh/year)</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><th>Area I</th><td class="num">6592.86</td><td class="num win">517.09</td><td class="num win">25.85</td><td class="num win">48,593.14</td><td>Anchor site</td></tr>
+        <tr><th>Area II</th><td class="num">6612.57</td><td class="num">252.73</td><td class="num">12.64</td><td class="num">23,789.32</td><td>Expansion</td></tr>
+        <tr><th>Area III</th><td class="num">~6600</td><td class="num">220.61</td><td class="num">11.03</td><td class="num">20,712.56</td><td>Support</td></tr>
+        <tr><th>Area IV</th><td class="num">~6600</td><td class="num">164.96</td><td class="num">8.25</td><td class="num">15,481.08</td><td>Support</td></tr>
+        <tr class="total"><th>Total</th><td class="num">&mdash;</td><td class="num">1,155.39</td><td class="num">57.77</td><td class="num">108,576.10</td><td>&mdash;</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <figure>
+      <img src="../assets/img/projects-content/solar_pv/chart_1.png" alt="Installed capacity by area in MWp" loading="lazy">
+      <figcaption><b>Figure 5.</b> Installed capacity by area (MWp).</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/img/projects-content/solar_pv/chart_2.png" alt="Estimated annual energy production by area in MWh per year" loading="lazy">
+      <figcaption><b>Figure 6.</b> Estimated annual energy production by area (MWh/year).</figcaption>
+    </figure>
+
+    <h2 id="s4">4. Interpretation</h2>
+    <p>The solar radiation modeling indicates that all candidate sites possess consistently high and uniform solar potential, with irradiation around 6.6 kWh/m&sup2;/day and a stable 7-hour Peak Sun Hour. This suggests that solar resource quality is not the limiting factor; instead, land scale becomes the key determinant of project feasibility and energy output.</p>
+    <p>Among the four areas, <strong>Area I</strong> clearly emerges as the primary development anchor, offering the largest land extent and highest production potential (~48.6 GWh/year). <strong>Area II</strong> follows as a strong secondary candidate, combining excellent irradiation with substantial capacity, making it ideal for phased expansion. <strong>Areas III and IV</strong> remain viable but secondary, functioning as strategic reserves or incremental development zones due to their smaller scale.</p>
+
+    <h2 id="s5">5. Strategic Insight</h2>
+    <blockquote>This analysis demonstrates that in high-potential regions, site prioritization shifts from resource availability to spatial scale, infrastructure efficiency, and land economics, highlighting the importance of integrating geospatial modeling with development strategy.</blockquote>
+
+    <footer>&copy; Izza Prasatya Arief &mdash; The Spatial Studio</footer>
+
+  </article>
+  </main>
+</div>
+
+<script>
+const links=[...document.querySelectorAll('#tocList a')];
+const map={};links.forEach(a=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)map[id]=a;});
+const spy=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=map[e.target.id];if(a)a.classList.add('active');}});
+},{rootMargin:'-10% 0px -75% 0px',threshold:0});
+Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el);});
+const t=document.getElementById('tocToggle'),n=document.getElementById('toc');
+t.addEventListener('click',()=>n.classList.toggle('open'));
+document.getElementById('tocList').addEventListener('click',e=>{if(e.target.tagName==='A')n.classList.remove('open');});
+</script>
+</body>
+</html>

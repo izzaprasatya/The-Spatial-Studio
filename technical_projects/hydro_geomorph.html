@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hydro-geomorphological Risk Assessment — River Basins SW of Lake İznik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+MathJax = { tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] }, svg:{fontCache:'global'} };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+:root{
+  --ink:#1a1a1a;
+  --ink-soft:#3d3d3d;
+  --muted:#6a6a6a;
+  --paper:#ffffff;
+  --bg:#fbfaf8;
+  --line:#e4e1da;
+  --line-soft:#efece6;
+  --accent:#1a5a6e;        /* hydro blue-teal */
+  --accent-soft:#e4f0f2;
+  --link:#1f6f7a;
+  --hl:#fff3cd;
+  --code-bg:#f5f3ee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+
+.layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:0;max-width:1180px;margin:0 auto}
+
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:46px 26px 46px 28px;border-right:1px solid var(--line);font-family:'JetBrains Mono',monospace}
+nav.toc .toc-head{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+nav.toc ul{list-style:none}
+nav.toc a{display:block;font-size:12.5px;line-height:1.45;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-left:2px solid transparent;border-radius:0 3px 3px 0;transition:.15s}
+nav.toc a.sub{padding-left:24px;font-size:11.5px;color:var(--muted)}
+nav.toc a:hover{color:var(--accent);background:var(--accent-soft)}
+nav.toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft);font-weight:600}
+
+main{background:var(--paper);min-height:100vh;padding:56px clamp(28px,5vw,72px) 90px;border-right:1px solid var(--line)}
+.doc{max-width:760px;margin:0 auto}
+
+h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.14;font-weight:700;letter-spacing:-.018em;margin:0 0 6px;text-wrap:balance}
+.subhead{font-size:1.12rem;font-weight:600;color:var(--accent);margin:0 0 6px}
+h2{font-size:1.55rem;font-weight:700;letter-spacing:-.012em;margin:54px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+h3{font-size:1.16rem;font-weight:600;margin:32px 0 10px;color:var(--ink);scroll-margin-top:24px}
+p{margin:0 0 16px}
+strong{font-weight:600}
+em{font-style:italic}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid #cfe0e2}
+a:hover{border-bottom-color:var(--link)}
+
+.byline{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--muted);margin:14px 0 0}
+
+.kn{background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 1px;border-radius:1px;font-weight:600;white-space:nowrap}
+
+.abstract{font-size:.98rem;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:22px 26px;margin:22px 0 8px}
+.abstract .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.abstract p:last-child{margin-bottom:0}
+
+figure{margin:26px 0}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:10px;text-align:center}
+figcaption b{color:var(--ink-soft);font-weight:600}
+
+.eq{margin:14px 0;padding:8px 4px;overflow-x:auto}
+.eqvars{font-size:.95rem;color:var(--ink-soft);margin:6px 0 4px}
+.ref-inline{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);font-style:normal}
+
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:5px}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.5}
+caption{caption-side:top;text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:10px 14px 8px}
+th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{background:#f7f5f0;color:var(--ink);font-weight:600;border-bottom:1.5px solid var(--line)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#faf8f3}
+td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap}
+td.win{background:var(--hl);font-weight:600}
+
+blockquote{margin:26px 0;padding:18px 26px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 4px 4px 0;font-size:1.18rem;font-style:italic;color:var(--ink)}
+
+footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--muted);padding:30px 0 0;margin-top:44px;border-top:1px solid var(--line)}
+
+.toc-toggle{display:none}
+@media(max-width:920px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:18px 22px}
+  nav.toc ul{display:none;margin-top:10px}
+  nav.toc.open ul{display:block}
+  .toc-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:none;border:none;font-family:'JetBrains Mono',monospace}
+  main{border-right:none;padding:34px 22px 70px}
+  body{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <nav class="toc" id="toc">
+    <button class="toc-toggle" id="tocToggle">&#9656; Contents</button>
+    <div class="toc-head" style="display:block">Contents</div>
+    <ul id="tocList">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#s1">1 &middot; The Study Area</a></li>
+      <li><a class="sub" href="#s1-1">1.1 Basin Structure</a></li>
+      <li><a href="#s2">2 &middot; The S&ouml;l&ouml;z Basin</a></li>
+      <li><a href="#s3">3 &middot; Field Hydraulic Measurements</a></li>
+      <li><a class="sub" href="#s3-1">3.1 Cross-sectional Area</a></li>
+      <li><a class="sub" href="#s3-2">3.2 Mean Flow Velocity</a></li>
+      <li><a class="sub" href="#s3-3">3.3 Hydraulic Radius</a></li>
+      <li><a href="#s4">4 &middot; Hydrological Behaviour</a></li>
+      <li><a class="sub" href="#s4-1">4.1 Flow Dynamics</a></li>
+      <li><a href="#s5">5 &middot; Where Risk Emerges</a></li>
+      <li><a class="sub" href="#s5-1">5.1 Channel Constriction</a></li>
+      <li><a class="sub" href="#s5-2">5.2 Flash-Flood Potential</a></li>
+      <li><a href="#s6">6 &middot; Slope &amp; Tectonic Control</a></li>
+      <li><a class="sub" href="#s6-1">6.1 Slope and Aspect</a></li>
+      <li><a class="sub" href="#s6-2">6.2 Aspect &amp; Microclimate</a></li>
+      <li><a href="#s7">7 &middot; Planning Implications</a></li>
+      <li><a href="#s8">8 &middot; Brief Gallery</a></li>
+    </ul>
+  </nav>
+
+  <main>
+  <article class="doc">
+
+    <h1>Hydro-geomorphological Risk Assessment</h1>
+    <p class="subhead">Applied Analysis of River Basins in the Southwestern Part of &#304;znik Lake</p>
+
+    <h2 id="abstract">Abstract</h2>
+    <div class="abstract">
+      <span class="lab">Abstract</span>
+      <p>Six basins located in the southwest of Lake &#304;znik were analyzed using DEM-based hydrology, field observation, and geomorphological interpretation. The study integrates terrain analysis (slope, aspect, stream ordering, longitudinal profiles) with field hydraulic measurement and structural-geologic context to evaluate hydro-geomorphological risk. The analysis identifies the <span class="kn">S&ouml;l&ouml;z Basin</span> as the most extensive and geomorphologically active system, and isolates the <span class="kn">G&uuml;rle and Yenig&uuml;rle</span> basins as the principal sites of engineered flood risk, where channel constriction by built infrastructure sharply reduces conveyance capacity. The findings translate into basin-specific planning implications for flood mitigation, channel-capacity intervention, and sediment management.</p>
+    </div>
+
+    <figure>
+      <img src="../assets/img/projects-content/hydro_geomorph/map_1.png" alt="Hydrographic context of the southwestern margin of Lake Iznik" loading="lazy">
+      <figcaption><b>Figure 1.</b> Hydrographic context of the southwestern margin of Lake &#304;znik.</figcaption>
+    </figure>
+
+    <h2 id="s1">1. The Study Area</h2>
+    <p>Six basins in the southwest of Lake &#304;znik were analyzed using DEM-based hydrology, field observation, and geomorphological interpretation.</p>
+    <figure>
+      <img src="../assets/img/projects-content/hydro_geomorph/map_2.png" alt="The six delineated study basins over shaded relief" loading="lazy">
+      <figcaption><b>Figure 2.</b> The six delineated study basins over shaded relief.</figcaption>
+    </figure>
+
+    <h3 id="s1-1">1.1 Basin Structure</h3>
+    <p>The study area ranges from <span class="kn">83 m to 1,280 m</span> elevation, creating strong relief and active erosion processes. Among all basins, <strong>S&ouml;l&ouml;z</strong> stands out as the most extensive and geomorphologically active system.</p>
+
+    <h2 id="s2">2. The S&ouml;l&ouml;z Basin: A Mature and Integrated Drainage System</h2>
+    <p>S&ouml;l&ouml;z reaches <span class="kn">5th-order (Strahler)</span>, indicating a highly developed drainage network with multiple tributaries and a large contributing area. Sediment transport operates across broader spatial scales, supported by a mature and continuous channel system.</p>
+    <figure>
+      <img src="../assets/img/projects-content/hydro_geomorph/map_3.png" alt="Strahler stream-order network of the Soloz Basin" loading="lazy">
+      <figcaption><b>Figure 3.</b> Strahler stream-order network of the S&ouml;l&ouml;z Basin (up to 5th order).</figcaption>
+    </figure>
+    <p>The S&ouml;l&ouml;z main channel exhibits a wide range of sediment sizes, from fine clay particles to coarse cobbles and boulders, indicating a poorly sorted fluvial system. Bedload transport processes such as rolling, sliding, and saltation are actively shaping the channel, reflecting a relatively high-energy flow regime.</p>
+    <p>The clarity of the water during observation suggests that suspended load is not dominant at that moment, implying that sediment transport is primarily concentrated in the bedload fraction. However, this condition likely varies seasonally, particularly during peak discharge events.</p>
+    <p>The presence of large clasts within the channel indicates strong transport capacity during high-flow periods, likely associated with episodic discharge peaks rather than constant flow. This suggests that the S&ouml;l&ouml;z main channel operates under a dynamic regime where geomorphic work is concentrated during short-duration, high-intensity flow events.</p>
+    <figure>
+      <img src="../assets/img/projects-content/hydro_geomorph/field_photos_1.png" alt="Soloz main channel bed material and low-flow conditions" loading="lazy">
+      <figcaption><b>Figure 4.</b> S&ouml;l&ouml;z main channel showing poorly sorted bed material and clear low-flow conditions.</figcaption>
+    </figure>
+
+    <h2 id="s3">3. Field Hydraulic Measurements</h2>
+    <p>For each basin's main channel, cross-sectional area, mean flow velocity, and discharge were determined at the surveyed location. Discharge follows the continuity relation:</p>
+    <div class="eq">$$Q = A \times V$$</div>
+    <p class="eqvars">where $Q$ is discharge (m&sup3;/s), $A$ is cross-sectional area (m&sup2;), and $V$ is mean flow velocity (m/s).</p>
+    <div class="tbl">
+    <table>
+      <caption>Surveyed hydraulic measurements per basin main channel. Shaded = peak value.</caption>
+      <thead><tr><th>Main channel location</th><th class="num">$A$ (m&sup2;)</th><th class="num">$V$ (m/s)</th><th class="num">$Q$ (m&sup3;/s)</th></tr></thead>
+      <tbody>
+        <tr><td>G&uuml;rle</td><td class="num">9.00</td><td class="num">8.94</td><td class="num">80.47</td></tr>
+        <tr><td>Yenig&uuml;rle</td><td class="num">15.68</td><td class="num">10.27</td><td class="num">160.97</td></tr>
+        <tr><td>G&ouml;lyaka</td><td class="num">17.09</td><td class="num">11.04</td><td class="num">188.53</td></tr>
+        <tr><td>Dutluca</td><td class="num">14.18</td><td class="num">8.97</td><td class="num">127.10</td></tr>
+        <tr><td>S&ouml;l&ouml;z</td><td class="num win">113.43</td><td class="num">7.83</td><td class="num win">887.95</td></tr>
+        <tr><td>Pa&#351;ap&#305;nar</td><td class="num">12.46</td><td class="num win">12.23</td><td class="num">152.38</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="s3-1">3.1 Cross-sectional Area of the Channel ($A$)</h3>
+    <p>The cross-sectional area depends on the surveyed channel shape. In this field study, two idealized geometries were used: <strong>trapezoidal</strong> and <strong>square (rectangular)</strong>.</p>
+    <p><strong>Rectangular / square channel:</strong></p>
+    <div class="eq">$$A = w \times d$$</div>
+    <p class="eqvars">where $w$ is the channel (bed) width (m) and $d$ is the flow depth (m). For a square section, $w = d$.</p>
+    <p><strong>Trapezoidal channel:</strong></p>
+    <div class="eq">$$A = \left( b + z\,d \right) d$$</div>
+    <p class="eqvars">equivalently written using both bank slopes as</p>
+    <div class="eq">$$A = \frac{(b + T)}{2}\, d$$</div>
+    <p class="eqvars">where $b$ is the bottom (bed) width (m), $d$ is the flow depth (m), $T$ is the top width of the water surface (m), and $z$ is the side-slope ratio (horizontal:vertical). The two forms are equivalent because $T = b + 2zd$.</p>
+
+    <h3 id="s3-2">3.2 Mean Flow Velocity ($V$) &mdash; Manning's Equation</h3>
+    <div class="eq">$$V = \frac{R^{2/3}\, S^{1/2}}{n}$$</div>
+    <p class="eqvars">where $R$ is the hydraulic radius (m), $S$ is the channel slope (dimensionless), and $n$ is the Manning roughness coefficient (s&middot;m$^{-1/3}$).</p>
+
+    <h3 id="s3-3">3.3 Hydraulic Radius ($R$)</h3>
+    <div class="eq">$$R = \frac{A}{P}$$</div>
+    <p class="eqvars">where $A$ is the cross-sectional area (m&sup2;) and $P$ is the wetted perimeter (m) &mdash; the length of channel boundary in contact with the water.</p>
+    <p class="eqvars">For the surveyed shapes, the wetted perimeter is:</p>
+    <div class="eq">$$P_{\text{rectangular}} = b + 2d \qquad\qquad P_{\text{trapezoidal}} = b + 2d\sqrt{1 + z^{2}}$$</div>
+
+    <h2 id="s4">4. Hydrological Behaviour</h2>
+    <p>Higher-order basins integrate flow from multiple tributaries, resulting in more persistent discharge. Lower-order basins respond rapidly to rainfall, producing short but intense peak flows.</p>
+    <figure>
+      <img src="../assets/img/projects-content/hydro_geomorph/map_4.png" alt="Drainage-network ordering under Strahler and Shreve schemes" loading="lazy">
+      <figcaption><b>Figure 5.</b> Drainage-network ordering of the study basins under the Strahler (left) and Shreve (right) schemes.</figcaption>
+    </figure>
+
+    <h3 id="s4-1">4.1 Flow Dynamics</h3>
+    <p>Longitudinal profiles show steep gradients, especially in G&uuml;rle and Yenig&uuml;rle, where elevation drops sharply over short distances.</p>
+    <figure>
+      <img src="../assets/img/projects-content/hydro_geomorph/chart_1.png" alt="Longitudinal river profiles for the six basins" loading="lazy">
+      <figcaption><b>Figure 6.</b> Longitudinal river profiles (elevation vs. distance) for the six basins.</figcaption>
+    </figure>
+
+    <h2 id="s5">5. Where Risk Emerges</h2>
+    <blockquote>Risk is not only natural. It is engineered.</blockquote>
+
+    <h3 id="s5-1">5.1 Channel Constriction</h3>
+    <p>In G&uuml;rle and Yenig&uuml;rle, streams are locally narrowed by bridges and covered channels, reducing flow capacity and increasing flood risk. Field observations show channel-width reductions from <span class="kn">over 15 m</span> upstream to <span class="kn">less than 6 m</span> within settlement areas.</p>
+    <figure>
+      <img src="../assets/img/projects-content/hydro_geomorph/field_photos_2.png" alt="Taban Stream Gurle abrupt constriction at crossings" loading="lazy">
+      <figcaption><b>Figure 7.</b> Taban Stream, G&uuml;rle: abrupt constriction from ~5.2 m upstream to 1.8&ndash;2 m at bridge/culvert crossings.</figcaption>
+    </figure>
+    <p>This section of Taban Stream in G&uuml;rle illustrates a critical interface between natural fluvial processes and built infrastructure. While the upstream channel retains a width of approximately 5.2 m, it is abruptly constricted to 1.8&ndash;2 m at bridge and culvert crossings within the G&uuml;rle settlement. Such artificial narrowing reduces hydraulic capacity and increases susceptibility to backwater effects, debris blockage, and localized flooding during peak-flow conditions. The site highlights how small-scale infrastructure decisions can significantly amplify flood risk in steep, responsive catchments.</p>
+    <figure>
+      <img src="../assets/img/projects-content/hydro_geomorph/field_photos_3.png" alt="Karanlik Stream Yenigurle progressive narrowing" loading="lazy">
+      <figcaption><b>Figure 8.</b> Karanl&#305;k Stream, Yenig&uuml;rle: progressive narrowing from ~15 m upstream to 7.2 m in the settlement and 5.7 m near the downstream bridge.</figcaption>
+    </figure>
+    <p>The image sequence shows the main channel of Karanl&#305;k Stream in Yenig&uuml;rle from upstream to downstream. The stream is approximately 15 m wide in the upstream section, but narrows to 7.2 m within the settlement and further to 5.7 m near the downstream bridge crossing. This reduction indicates a significant loss of conveyance capacity as the stream passes through built-up areas. Such progressive constriction &mdash; as in G&uuml;rle &mdash; increases the likelihood of backwater effects, overtopping, and localized flooding during high-flow events, especially where infrastructure and bank modifications interfere with the stream's natural geometry.</p>
+    <figure>
+      <img src="../assets/img/projects-content/hydro_geomorph/map_5.png" alt="Field observation points and channel types" loading="lazy">
+      <figcaption><b>Figure 9.</b> Field observation points and channel types across the six basins.</figcaption>
+    </figure>
+
+    <h3 id="s5-2">5.2 Flash-Flood Potential</h3>
+    <p>Short basin length and steep slopes result in rapid runoff concentration, producing fast-rising water levels with limited warning time. High stream power can mobilize sediment and debris, further blocking culverts and bridges.</p>
+    <figure>
+      <img src="../assets/img/projects-content/hydro_geomorph/map_6.png" alt="Oblique terrain views with main-channel length and relief" loading="lazy">
+      <figcaption><b>Figure 10.</b> Oblique terrain views of each basin with main-channel length and relief.</figcaption>
+    </figure>
+
+    <h2 id="s6">6. Slope &amp; Tectonic Control</h2>
+    <p>Basin morphology is influenced by the Avdan-G&uuml;rle and Gemlik fault systems, shaping slope distribution and drainage orientation.</p>
+
+    <h3 id="s6-1">6.1 Slope and Aspect (GIS Derivation)</h3>
+    <p>Slope and aspect are first-order derivatives of the DEM surface, computed from the rate of change of elevation $z$ in the $x$ and $y$ directions. Let $\dfrac{\partial z}{\partial x} = f_x$ and $\dfrac{\partial z}{\partial y} = f_y$ be the partial derivatives of elevation, estimated from the 3&times;3 moving window around each cell.</p>
+    <p><strong>Slope</strong> (steepest rate of change of elevation):</p>
+    <div class="eq">$$\text{Slope}_{\text{rad}} = \arctan \sqrt{\left(\frac{\partial z}{\partial x}\right)^{2} + \left(\frac{\partial z}{\partial y}\right)^{2}}$$</div>
+    <p class="eqvars">Expressed in degrees:</p>
+    <div class="eq">$$\text{Slope}_{\deg} = \arctan\!\left( \sqrt{f_x^{2} + f_y^{2}} \right) \times \frac{180}{\pi}$$</div>
+    <p class="eqvars">Expressed as percent rise:</p>
+    <div class="eq">$$\text{Slope}_{\%} = \sqrt{f_x^{2} + f_y^{2}} \times 100$$</div>
+    <p><strong>Aspect</strong> (down-slope compass direction of the steepest descent), in degrees clockwise from north:</p>
+    <div class="eq">$$\text{Aspect} = \arctan\!2\left( f_y,\; -f_x \right) \times \frac{180}{\pi}$$</div>
+    <p class="eqvars">The raw result is converted to the 0&ndash;360&deg; compass convention:</p>
+    <div class="eq">$$\text{Aspect}_{\text{compass}} = \begin{cases} 90 - \text{Aspect}, & \text{Aspect} < 90 \\[4pt] 360 - \text{Aspect} + 90, & \text{Aspect} \geq 90 \end{cases}$$</div>
+    <p class="eqvars">Cells with zero slope (flat) are assigned an aspect of &minus;1.</p>
+    <figure>
+      <img src="../assets/img/projects-content/hydro_geomorph/map_7_8.png" alt="Slope in degrees and average slope per basin" loading="lazy">
+      <figcaption><b>Figure 11 &amp; 12.</b> Slope (degrees) across the study basins, with mean slope per basin; and average slope value per basin.</figcaption>
+    </figure>
+
+    <h3 id="s6-2">6.2 Aspect &amp; Microclimate</h3>
+    <p>North-facing slopes are cooler and more humid, while S&ouml;l&ouml;z differs with east- and south-facing dominance, indicating warmer conditions and distinct surface processes.</p>
+    <figure>
+      <img src="../assets/img/projects-content/hydro_geomorph/map_9_10.png" alt="Slope aspect cardinal classes and majority aspect per basin" loading="lazy">
+      <figcaption><b>Figure 13 &amp; 14.</b> Slope aspect (cardinal classes) across the study basins; and majority aspect class in each basin.</figcaption>
+    </figure>
+
+    <h2 id="s7">7. Planning Implications</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th style="width:26%">Basin</th><th>Priority intervention</th></tr></thead>
+      <tbody>
+        <tr><td><strong>G&uuml;rle</strong></td><td>High-priority flood mitigation.</td></tr>
+        <tr><td><strong>Yenig&uuml;rle</strong></td><td>Channel-capacity intervention needed.</td></tr>
+        <tr><td><strong>S&ouml;l&ouml;z</strong></td><td>Large-scale sediment management.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s8">8. Brief Gallery</h2>
+    <figure>
+      <img src="../assets/img/projects-content/hydro_geomorph/photo_gallery.png" alt="Selected images from the field campaign" loading="lazy">
+      <figcaption><b>Figure 15.</b> Selected images from the field campaign.</figcaption>
+    </figure>
+
+    <footer>&copy; Izza Prasatya Arief &mdash; The Spatial Studio</footer>
+
+  </article>
+  </main>
+</div>
+
+<script>
+const links=[...document.querySelectorAll('#tocList a')];
+const map={};links.forEach(a=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)map[id]=a;});
+const spy=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=map[e.target.id];if(a)a.classList.add('active');}});
+},{rootMargin:'-10% 0px -75% 0px',threshold:0});
+Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el);});
+const t=document.getElementById('tocToggle'),n=document.getElementById('toc');
+t.addEventListener('click',()=>n.classList.toggle('open'));
+document.getElementById('tocList').addEventListener('click',e=>{if(e.target.tagName==='A')n.classList.remove('open');});
+</script>
+</body>
+</html>

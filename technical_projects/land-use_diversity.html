@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Garden City to Transit City — Land-use Diversity in Jakarta's MRT Corridor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+MathJax = { tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] }, svg:{fontCache:'global'} };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+:root{
+  --ink:#1a1a1a;
+  --ink-soft:#3d3d3d;
+  --muted:#6a6a6a;
+  --paper:#ffffff;
+  --bg:#fbfaf8;
+  --line:#e4e1da;
+  --line-soft:#efece6;
+  --accent:#b21f2d;        /* MRT Jakarta red */
+  --accent-soft:#fae5e7;
+  --link:#1f6f7a;
+  --hl:#fff3cd;
+  --code-bg:#f5f3ee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+
+.layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:0;max-width:1180px;margin:0 auto}
+
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:46px 26px 46px 28px;border-right:1px solid var(--line);font-family:'JetBrains Mono',monospace}
+nav.toc .toc-head{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+nav.toc ul{list-style:none}
+nav.toc a{display:block;font-size:12.5px;line-height:1.45;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-left:2px solid transparent;border-radius:0 3px 3px 0;transition:.15s}
+nav.toc a:hover{color:var(--accent);background:var(--accent-soft)}
+nav.toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft);font-weight:600}
+
+main{background:var(--paper);min-height:100vh;padding:56px clamp(28px,5vw,72px) 90px;border-right:1px solid var(--line)}
+.doc{max-width:760px;margin:0 auto}
+
+h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.14;font-weight:700;letter-spacing:-.018em;margin:0 0 6px;text-wrap:balance}
+.subhead{font-size:1.12rem;font-weight:600;color:var(--accent);margin:0 0 6px}
+h2{font-size:1.55rem;font-weight:700;letter-spacing:-.012em;margin:54px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+p{margin:0 0 16px}
+strong{font-weight:600}
+em{font-style:italic}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid #cfe0e2}
+a:hover{border-bottom-color:var(--link)}
+
+.byline{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--muted);margin:14px 0 0}
+
+.kn{background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 1px;border-radius:1px;font-weight:600;white-space:nowrap}
+
+.abstract{font-size:.98rem;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:22px 26px;margin:22px 0 8px}
+.abstract .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.abstract p:last-child{margin-bottom:0}
+
+figure{margin:26px 0;text-align:center}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px;margin:0 auto}
+figure.narrow img{max-width:440px}
+figure.mid img{max-width:560px}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:10px;text-align:center}
+figcaption b{color:var(--ink-soft);font-weight:600}
+
+.eq{margin:14px 0;padding:8px 4px;overflow-x:auto}
+.eqvars{font-size:.95rem;color:var(--ink-soft);margin:6px 0 4px}
+
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:5px}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.5}
+caption{caption-side:top;text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:10px 14px 8px}
+th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{background:#f7f5f0;color:var(--ink);font-weight:600;border-bottom:1.5px solid var(--line)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#faf8f3}
+tbody th{text-align:left;font-weight:600;white-space:nowrap}
+.tier-hi th{color:#1f7a4d}
+.tier-bal th{color:#b3791f}
+.tier-lo th{color:#b21f2d}
+
+ul.plain{margin:14px 0 16px 22px}
+ul.plain li{margin:0 0 7px}
+
+.note{font-size:.9rem;color:var(--muted);font-style:italic;background:var(--bg);border:1px dashed var(--line);border-radius:4px;padding:10px 16px;margin:14px 0}
+
+blockquote{margin:26px 0;padding:18px 26px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 4px 4px 0;font-size:1.12rem;font-style:italic;color:var(--ink)}
+
+footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--muted);padding:30px 0 0;margin-top:44px;border-top:1px solid var(--line)}
+
+.toc-toggle{display:none}
+@media(max-width:920px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:18px 22px}
+  nav.toc ul{display:none;margin-top:10px}
+  nav.toc.open ul{display:block}
+  .toc-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:none;border:none;font-family:'JetBrains Mono',monospace}
+  main{border-right:none;padding:34px 22px 70px}
+  body{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <nav class="toc" id="toc">
+    <button class="toc-toggle" id="tocToggle">&#9656; Contents</button>
+    <div class="toc-head" style="display:block">Contents</div>
+    <ul id="tocList">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#s1">1 &middot; Concept &amp; Rationale</a></li>
+      <li><a href="#s2">2 &middot; Method: Land-use Entropy</a></li>
+      <li><a href="#s3">3 &middot; Results Along the Corridor</a></li>
+      <li><a href="#s4">4 &middot; TOD Classification</a></li>
+      <li><a href="#s5">5 &middot; The Bendungan Hilir Anomaly</a></li>
+      <li><a href="#s6">6 &middot; Planning Implications</a></li>
+      <li><a href="#s7">7 &middot; Conclusion</a></li>
+    </ul>
+  </nav>
+
+  <main>
+  <article class="doc">
+
+    <h1>From Garden City to Transit City</h1>
+    <p class="subhead">Land-use Diversity in Jakarta's MRT Corridor</p>
+
+    <h2 id="abstract">Abstract</h2>
+    <div class="abstract">
+      <span class="lab">Abstract</span>
+      <p>This project evaluates the readiness of Jakarta's MRT corridor for Transit-Oriented Development (TOD) by measuring land-use diversity (entropy) within a <span class="kn">900-meter radius</span> of its <span class="kn">13 stations</span>. The findings reveal that nodes such as Blok M and ASEAN exhibit the highest entropy, indicating a mature mix of functions that supports a vibrant, walkable urban life. Bendungan Hilir presents a notable anomaly with lower-than-expected entropy, attributed to the dominance of large-scale office blocks and the station's location on the edge of the more diverse Bendungan Hilir "kampung." This suggests that the statistical metric may be skewed by coarse-grained commercial land use that overlooks vertical functional mixing. The analysis classifies stations along an urban transition spectrum and argues that TOD strategies must be tailored to the spatial character of each node.</p>
+    </div>
+
+    <figure>
+      <img src="../assets/img/projects-content/land-use_diversity/map_1.png" alt="Land-use fabric along Jakarta's MRT corridor" loading="lazy">
+      <figcaption><b>Figure 1.</b> Land-use fabric along Jakarta's MRT corridor.</figcaption>
+    </figure>
+
+    <h2 id="s1">1. Concept and Rationale</h2>
+    <p>The project reframes Jakarta's transit infrastructure through the historical lens of "Garden City to Transit City": bridging modern infrastructure with the historical human-scale ideals of Jakarta's past, the MRT serves as a catalyst for weaving the city into a more walkable, humane, and connected urban fabric. Land-use diversity is used as the principal measurable proxy for this walkable, mixed-function character.</p>
+    <p>The 13 stations analyzed, from north to south, are: Bundaran HI, Dukuh Atas, Setiabudi, Bendungan Hilir, Istora, Senayan, ASEAN, Blok M, Blok A, Haji Nawi, Cipete Raya, Fatmawati, and Lebak Bulus.</p>
+
+    <h2 id="s2">2. Method: Land-use Entropy</h2>
+    <p>Land-use diversity within each station's 900 m catchment is quantified using the Shannon entropy index, normalized to a 0&ndash;1 scale so stations with different numbers of land-use classes remain comparable.</p>
+    <div class="eq">$$H = -\sum_{i=1}^{n} p_i \ln(p_i)$$</div>
+    <p class="eqvars">where $H$ is the Shannon entropy, $p_i$ is the proportion of land area in land-use class $i$, and $n$ is the number of land-use classes present within the catchment.</p>
+    <p>The normalized (relative) entropy expresses diversity as a fraction of the maximum possible for $n$ classes:</p>
+    <div class="eq">$$H_{\text{rel}} = \frac{-\sum_{i=1}^{n} p_i \ln(p_i)}{\ln(n)}$$</div>
+    <p class="eqvars">where $H_{\text{rel}} = 1$ indicates a perfectly even mix of all classes (maximum diversity) and $H_{\text{rel}} = 0$ indicates complete dominance by a single class. The class proportion is:</p>
+    <div class="eq">$$p_i = \frac{A_i}{\sum_{i=1}^{n} A_i}$$</div>
+    <p class="eqvars">where $A_i$ is the area of land-use class $i$ within the 900 m station catchment.</p>
+    <figure class="narrow">
+      <img src="../assets/img/projects-content/land-use_diversity/map_2.png" alt="Land-use composition within the 900 m catchment of each MRT station" loading="lazy">
+      <figcaption><b>Figure 2.</b> Land-use composition within the 900 m catchment of each MRT station.</figcaption>
+    </figure>
+
+    <h2 id="s3">3. Results: Entropy Along the Corridor</h2>
+    <p>Higher-entropy stations exhibit a mature functional mix supporting walkable, mixed-use activity; lower-entropy stations are dominated by a single function (typically residential or office).</p>
+    <figure>
+      <img src="../assets/img/projects-content/land-use_diversity/graphic_1.png" alt="MRT stations symbolized by land-use entropy value along the corridor" loading="lazy">
+      <figcaption><b>Figure 3.</b> MRT stations symbolized by land-use entropy value along the corridor.</figcaption>
+    </figure>
+
+    <h2 id="s4">4. TOD Performance Classification</h2>
+    <p>Stations are grouped into three performance tiers based on their entropy:</p>
+    <div class="tbl">
+    <table>
+      <thead><tr><th style="width:28%">Tier</th><th>Stations</th></tr></thead>
+      <tbody>
+        <tr class="tier-hi"><th>High Performance</th><td>Blok M, ASEAN, Dukuh Atas, Istora</td></tr>
+        <tr class="tier-bal"><th>Balanced</th><td>Senayan, Dukuh Atas, Bundaran HI, Lebak Bulus, Bendungan Hilir</td></tr>
+        <tr class="tier-lo"><th>Low Diversity</th><td>Fatmawati, Haji Nawi, Cipete Raya, Blok A</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="note">Dukuh Atas appears in both the High Performance and Balanced groupings as shown on the source poster; confirm the intended single classification.</p>
+    <p>These tiers map onto an urban transition spectrum of three archetypes:</p>
+    <div class="tbl">
+    <table>
+      <thead><tr><th style="width:30%">Archetype</th><th>Characteristics</th></tr></thead>
+      <tbody>
+        <tr><th>Everyday Urbanism</th><td>Residential; low commerce; low diversity.</td></tr>
+        <tr><th>Hybrid TOD</th><td>Mixed-use; balanced functions; high accessibility.</td></tr>
+        <tr><th>Corporate CBD</th><td>Office dominance; high density; low experiential diversity.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <figure class="mid">
+      <img src="../assets/img/projects-content/land-use_diversity/graphic_2.png" alt="TOD performance classification and the urban transition spectrum" loading="lazy">
+      <figcaption><b>Figure 4.</b> TOD performance classification and the urban transition spectrum.</figcaption>
+    </figure>
+
+    <h2 id="s5">5. Discussion: The Bendungan Hilir Anomaly</h2>
+    <p>Bendungan Hilir presents a lower-than-expected entropy despite its central, activity-rich location. Two factors explain the anomaly: the dominance of large-scale office blocks, and the station's position on the edge of the more diverse Bendungan Hilir <em>kampung</em>. This indicates a methodological limitation: an area-based entropy metric computed on coarse-grained commercial parcels can overlook <strong>vertical functional mixing</strong> (multiple functions stacked within a single building footprint), under-representing true experiential diversity.</p>
+
+    <h2 id="s6">6. Planning Implications</h2>
+    <p>TOD strategies must be tailored to the specific spatial character of each station to transform the MRT from a mere transit line into a "layered living space":</p>
+    <ul class="plain">
+      <li><strong>High-entropy nodes:</strong> prioritize enhancing pedestrian safety and inter-block connectivity to manage high activity intensity.</li>
+      <li><strong>Lower-entropy areas:</strong> shift focus toward diversifying the functional mix and refining the urban grain so that daily needs are reachable on foot.</li>
+    </ul>
+    <p>By bridging modern infrastructure with the historical human-scale ideals of Jakarta's past, the MRT can act as a catalyst for a more walkable, humane, and connected urban fabric.</p>
+
+    <h2 id="s7">7. Conclusion</h2>
+    <p>Land-use entropy provides an interpretable, measurable proxy for TOD readiness across Jakarta's MRT corridor, distinguishing mature mixed-use nodes from single-function ones. The Bendungan Hilir case shows that the metric must be read with awareness of grain and verticality. Used carefully, the entropy-based classification offers a defensible evidence base for station-specific TOD interventions along the urban transition spectrum.</p>
+
+    <blockquote>Not a transit line, but a layered living space. Entropy turns each station into its own design brief.</blockquote>
+
+    <footer>&copy; Izza Prasatya Arief &mdash; The Spatial Studio</footer>
+
+  </article>
+  </main>
+</div>
+
+<script>
+const links=[...document.querySelectorAll('#tocList a')];
+const map={};links.forEach(a=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)map[id]=a;});
+const spy=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=map[e.target.id];if(a)a.classList.add('active');}});
+},{rootMargin:'-10% 0px -75% 0px',threshold:0});
+Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el);});
+const t=document.getElementById('tocToggle'),n=document.getElementById('toc');
+t.addEventListener('click',()=>n.classList.toggle('open'));
+document.getElementById('tocList').addEventListener('click',e=>{if(e.target.tagName==='A')n.classList.remove('open');});
+</script>
+</body>
+</html>

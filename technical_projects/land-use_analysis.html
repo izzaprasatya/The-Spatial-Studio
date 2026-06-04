@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Land-use Analysis and Planning in 23 Nisan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+MathJax = { tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] }, svg:{fontCache:'global'} };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+:root{
+  --ink:#1a1a1a;
+  --ink-soft:#3d3d3d;
+  --muted:#6a6a6a;
+  --paper:#ffffff;
+  --bg:#fbfaf8;
+  --line:#e4e1da;
+  --line-soft:#efece6;
+  --accent:#1a6e6e;        /* civic teal */
+  --accent-soft:#e2f0f0;
+  --link:#1f6f7a;
+  --hl:#fff3cd;
+  --good:#1f7a4d;
+  --warn:#b3471f;
+  --code-bg:#f5f3ee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+
+.layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:0;max-width:1180px;margin:0 auto}
+
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:46px 26px 46px 28px;border-right:1px solid var(--line);font-family:'JetBrains Mono',monospace}
+nav.toc .toc-head{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+nav.toc ul{list-style:none}
+nav.toc a{display:block;font-size:12.5px;line-height:1.45;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-left:2px solid transparent;border-radius:0 3px 3px 0;transition:.15s}
+nav.toc a:hover{color:var(--accent);background:var(--accent-soft)}
+nav.toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft);font-weight:600}
+
+main{background:var(--paper);min-height:100vh;padding:56px clamp(28px,5vw,72px) 90px;border-right:1px solid var(--line)}
+.doc{max-width:760px;margin:0 auto}
+
+h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.14;font-weight:700;letter-spacing:-.018em;margin:0 0 6px;text-wrap:balance}
+.subhead{font-size:1.12rem;font-weight:600;color:var(--accent);margin:0 0 6px}
+h2{font-size:1.55rem;font-weight:700;letter-spacing:-.012em;margin:54px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+p{margin:0 0 16px}
+strong{font-weight:600}
+em{font-style:italic}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid #cfe0e2}
+a:hover{border-bottom-color:var(--link)}
+
+.byline{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--muted);margin:14px 0 0}
+
+.kn{background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 1px;border-radius:1px;font-weight:600;white-space:nowrap}
+
+.abstract{font-size:.98rem;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:22px 26px;margin:22px 0 8px}
+.abstract .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.abstract p:last-child{margin-bottom:0}
+
+figure{margin:26px 0;text-align:center}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px;margin:0 auto}
+figure.legend img{max-width:420px}
+figure.half img{max-width:560px}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:10px;text-align:center}
+figcaption b{color:var(--ink-soft);font-weight:600}
+
+.eq{margin:14px 0;padding:8px 4px;overflow-x:auto}
+.eqvars{font-size:.95rem;color:var(--ink-soft);margin:6px 0 4px}
+
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:5px}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.5}
+caption{caption-side:top;text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:10px 14px 8px}
+th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{background:#f7f5f0;color:var(--ink);font-weight:600;border-bottom:1.5px solid var(--line)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#faf8f3}
+tbody th{text-align:left;font-weight:600;white-space:nowrap}
+td.val{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap}
+
+blockquote{margin:26px 0;padding:18px 26px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 4px 4px 0;font-size:1.12rem;font-style:italic;color:var(--ink)}
+
+footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--muted);padding:30px 0 0;margin-top:44px;border-top:1px solid var(--line)}
+
+.toc-toggle{display:none}
+@media(max-width:920px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:18px 22px}
+  nav.toc ul{display:none;margin-top:10px}
+  nav.toc.open ul{display:block}
+  .toc-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:none;border:none;font-family:'JetBrains Mono',monospace}
+  main{border-right:none;padding:34px 22px 70px}
+  body{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <nav class="toc" id="toc">
+    <button class="toc-toggle" id="tocToggle">&#9656; Contents</button>
+    <div class="toc-head" style="display:block">Contents</div>
+    <ul id="tocList">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#s1">1 &middot; Planning Overview</a></li>
+      <li><a href="#s2">2 &middot; Accessibility Structure</a></li>
+      <li><a href="#s3">3 &middot; Green Space Performance</a></li>
+      <li><a href="#s4">4 &middot; Critical Gap: Healthcare</a></li>
+      <li><a href="#s5">5 &middot; Planned Land Use</a></li>
+      <li><a href="#s6">6 &middot; Key Metrics</a></li>
+      <li><a href="#s7">7 &middot; Conclusion</a></li>
+    </ul>
+  </nav>
+
+  <main>
+  <article class="doc">
+
+    <h1>Land-use Analysis and Planning in 23 Nisan</h1>
+    <div class="subhead">Neighborhood Scale Zoning and Development Guidance for 23 Nisan Neighborhood in Nilüfer, Bursa.</div>
+
+    <h2 id="abstract">Abstract</h2>
+    <div class="abstract">
+      <span class="lab">Abstract</span>
+      <p>This study evaluates the land-use structure, accessibility, and ecological provision of the 23 Nisan Neighborhood at the neighborhood scale. Spatial analysis of existing and planned land use is combined with an <span class="kn">800 m service-area</span> accessibility assessment and green-space accounting against regulatory standards. The neighborhood demonstrates a balanced planning structure: residential density (<span class="kn">21.36% discontinuous urban fabric</span>) is supported by a sufficient mix of public services and open space, and green-space provision (<span class="kn">12.57 m&sup2;/person</span>) exceeds the regulatory minimum. The principal deficiency is healthcare accessibility, which covers only <span class="kn">89.30%</span> of the area. Targeted intervention in healthcare access would elevate the plan from compliant to fully inclusive.</p>
+    </div>
+
+    <figure class="half">
+      <img src="../assets/img/projects-content/land-use_analysis/map_1.png" alt="The 23 Nisan Neighborhood fabric from satellite imagery" loading="lazy">
+      <figcaption><b>Figure 1.</b> The 23 Nisan Neighborhood fabric from satellite imagery.</figcaption>
+    </figure>
+
+    <h2 id="s1">1. Planning Overview</h2>
+    <p>23 Nisan Neighborhood demonstrates a balanced planning structure, where residential density is supported by a sufficient mix of public services and open space. While the area remains moderately dense (21.36% discontinuous urban fabric), the presence of schools, health facilities, and sports infrastructure reflects a deliberate effort to sustain livability at the neighborhood scale.</p>
+    <figure class="half">
+      <img src="../assets/img/projects-content/land-use_analysis/map_2.png" alt="Existing land use of the 23 Nisan Neighborhood" loading="lazy">
+      <figcaption><b>Figure 2.</b> Existing land use of the 23 Nisan Neighborhood.</figcaption>
+    </figure>
+    <figure class="legend">
+      <img src="../assets/img/projects-content/land-use_analysis/map_2_legend.png" alt="Figure 2 legend" loading="lazy">
+      <figcaption><b>Figure 2 Legend.</b></figcaption>
+    </figure>
+
+    <h2 id="s2">2. Accessibility Structure</h2>
+    <p>Accessibility analysis reveals a highly effective service distribution. Within an 800 m radius, primary schools, parks, and sports facilities achieve near-universal coverage (<span class="kn">~100%</span>), indicating that key daily needs are spatially well-integrated into the neighborhood fabric.</p>
+    <p>The service-area coverage for each facility type is computed as the share of neighborhood area (or population) falling within the 800 m walkable catchment of that service:</p>
+    <div class="eq">$$\text{Coverage}_i = \frac{A_{\text{served},\,i}}{A_{\text{total}}} \times 100\%$$</div>
+    <p class="eqvars">where $A_{\text{served},\,i}$ is the area within the 800 m service radius of facility type $i$, and $A_{\text{total}}$ is the total neighborhood area.</p>
+    <figure class="half">
+      <img src="../assets/img/projects-content/land-use_analysis/map_3.png" alt="Planned street network underpinning the accessibility analysis" loading="lazy">
+      <figcaption><b>Figure 3.</b> Planned street network underpinning the accessibility analysis.</figcaption>
+    </figure>
+
+    <h2 id="s3">3. Green Space Performance</h2>
+    <p>The plan performs strongly in ecological provision, delivering 12.57 m&sup2; of green space per capita, exceeding regulatory standards. With 10.18% of total area allocated to green space, the neighborhood secures both environmental quality and recreational capacity, which is an essential counterbalance to its residential density.</p>
+    <p>Green space per capita and green-space ratio are defined as:</p>
+    <div class="eq">$$\text{Green space per capita} = \frac{A_{\text{green}}}{P}, \qquad \text{Green space ratio} = \frac{A_{\text{green}}}{A_{\text{total}}} \times 100\%$$</div>
+    <p class="eqvars">where $A_{\text{green}}$ is the total green-space area, $P$ is the resident population, and $A_{\text{total}}$ is the total neighborhood area.</p>
+    <figure class="half">
+      <img src="../assets/img/projects-content/land-use_analysis/map_4.png" alt="Planned green spaces across the neighborhood" loading="lazy">
+      <figcaption><b>Figure 4.</b> Planned green spaces across the neighborhood.</figcaption>
+    </figure>
+
+    <h2 id="s4">4. Critical Gap: Healthcare Access</h2>
+    <p>A notable exception lies in healthcare accessibility, which covers only <span class="kn">89.30%</span> of the area, leaving gaps in the northwest and northeast. Addressing this through additional service points or improved connectivity will be crucial to achieving full inclusivity.</p>
+    <figure class="half">
+      <img src="../assets/img/projects-content/land-use_analysis/map_5.png" alt="Healthcare service-area coverage showing under-served pockets" loading="lazy">
+      <figcaption><b>Figure 5.</b> Healthcare service-area coverage, showing under-served pockets (89.30% coverage).</figcaption>
+    </figure>
+
+    <h2 id="s5">5. Planned Land Use</h2>
+    <figure class="half">
+      <img src="../assets/img/projects-content/land-use_analysis/map_6.png" alt="Planned land use of the 23 Nisan Neighborhood" loading="lazy">
+      <figcaption><b>Figure 6.</b> Planned land use of the 23 Nisan Neighborhood.</figcaption>
+    </figure>
+    <figure class="half">
+      <img src="../assets/img/projects-content/land-use_analysis/map_5_legend.png" alt="Figure 6 legend" loading="lazy">
+      <figcaption><b>Figure 6 Legend.</b></figcaption>
+    </figure>
+
+    <h2 id="s6">6. Key Metrics</h2>
+    <div class="tbl">
+    <table>
+      <thead><tr><th style="width:28%">Indicator</th><th>Value</th><th>Interpretation</th></tr></thead>
+      <tbody>
+        <tr><th>Total area</th><td class="val">1,429,200.68 m&sup2;</td><td>Neighborhood scale</td></tr>
+        <tr><th>Population</th><td class="val">11,577</td><td>Moderate density</td></tr>
+        <tr><th>Urban fabric (21.36%)</th><td class="val">269,100.12 m&sup2;</td><td>Moderately dense</td></tr>
+        <tr><th>Green space</th><td class="val">145,554 m&sup2;</td><td>Strong ecological provision</td></tr>
+        <tr><th>Green space per capita</th><td class="val"><span class="kn">12.57 m&sup2;/person</span></td><td>Above standard (10 m&sup2;)</td></tr>
+        <tr><th>Green space ratio</th><td class="val"><span class="kn">10.18%</span></td><td>Above minimum threshold (8.10%)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s7">7. Conclusion</h2>
+    <p>Overall, 23 Nisan represents a well-performing, evidence-based neighborhood model, where density, accessibility, and ecological provision are largely in equilibrium. Targeted improvements in healthcare access could elevate it from a compliant plan to a truly inclusive and resilient urban environment.</p>
+
+    <blockquote>From compliant to truly inclusive: closing the healthcare-access gap is the one move that completes the plan.</blockquote>
+
+    <footer>&copy; Izza Prasatya Arief &mdash; The Spatial Studio</footer>
+
+  </article>
+  </main>
+</div>
+
+<script>
+const links=[...document.querySelectorAll('#tocList a')];
+const map={};links.forEach(a=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)map[id]=a;});
+const spy=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=map[e.target.id];if(a)a.classList.add('active');}});
+},{rootMargin:'-10% 0px -75% 0px',threshold:0});
+Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el);});
+const t=document.getElementById('tocToggle'),n=document.getElementById('toc');
+t.addEventListener('click',()=>n.classList.toggle('open'));
+document.getElementById('tocList').addEventListener('click',e=>{if(e.target.tagName==='A')n.classList.remove('open');});
+</script>
+</body>
+</html>

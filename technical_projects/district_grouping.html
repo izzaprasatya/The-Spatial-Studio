@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>District Grouping in &Ccedil;anakkale — Typology &amp; Clustering Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+MathJax = { tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] }, svg:{fontCache:'global'} };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+:root{
+  --ink:#1a1a1a;
+  --ink-soft:#3d3d3d;
+  --muted:#6a6a6a;
+  --paper:#ffffff;
+  --bg:#fbfaf8;
+  --line:#e4e1da;
+  --line-soft:#efece6;
+  --accent:#1c4f7c;        /* strait / maritime blue */
+  --accent-soft:#e5edf4;
+  --link:#1f6f7a;
+  --hl:#fff3cd;
+  --code-bg:#f5f3ee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+
+.layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:0;max-width:1180px;margin:0 auto}
+
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:46px 26px 46px 28px;border-right:1px solid var(--line);font-family:'JetBrains Mono',monospace}
+nav.toc .toc-head{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+nav.toc ul{list-style:none}
+nav.toc a{display:block;font-size:12.5px;line-height:1.45;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-left:2px solid transparent;border-radius:0 3px 3px 0;transition:.15s}
+nav.toc a.sub{padding-left:24px;font-size:11.5px;color:var(--muted)}
+nav.toc a:hover{color:var(--accent);background:var(--accent-soft)}
+nav.toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft);font-weight:600}
+
+main{background:var(--paper);min-height:100vh;padding:56px clamp(28px,5vw,72px) 90px;border-right:1px solid var(--line)}
+.doc{max-width:760px;margin:0 auto}
+
+h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.14;font-weight:700;letter-spacing:-.018em;margin:0 0 6px;text-wrap:balance}
+.subhead{font-size:1.12rem;font-weight:600;color:var(--accent);margin:0 0 6px}
+h2{font-size:1.55rem;font-weight:700;letter-spacing:-.012em;margin:54px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+h3{font-size:1.16rem;font-weight:600;margin:30px 0 8px;color:var(--ink);scroll-margin-top:24px}
+p{margin:0 0 16px}
+strong{font-weight:600}
+em{font-style:italic}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid #cfe0e2}
+a:hover{border-bottom-color:var(--link)}
+
+.byline{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--muted);margin:14px 0 0}
+
+.kn{background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 1px;border-radius:1px;font-weight:600;white-space:nowrap}
+
+.abstract{font-size:.98rem;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:22px 26px;margin:22px 0 8px}
+.abstract .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.abstract p:last-child{margin-bottom:0}
+
+figure{margin:26px 0;text-align:center}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px;margin:0 auto;max-width:620px}
+figure.wide img{max-width:720px}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:10px;text-align:center}
+figcaption b{color:var(--ink-soft);font-weight:600}
+
+.eq{margin:14px 0;padding:8px 4px;overflow-x:auto}
+.eqvars{font-size:.95rem;color:var(--ink-soft);margin:6px 0 4px}
+
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:5px}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.5}
+caption{caption-side:top;text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:10px 14px 8px}
+th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{background:#f7f5f0;color:var(--ink);font-weight:600;border-bottom:1.5px solid var(--line)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#faf8f3}
+tbody th{text-align:left;font-weight:600}
+td.method{font-weight:600;color:var(--accent);white-space:nowrap;border-top:1.5px solid var(--line)}
+tr.grp-start td,tr.grp-start th{border-top:1.5px solid var(--line)}
+td.pair{font-family:'JetBrains Mono',monospace;font-size:13px}
+
+ul.plain{margin:14px 0 16px 22px}
+ul.plain li{margin:0 0 7px}
+ul.arrow{list-style:none;margin:14px 0 16px 0;padding:0}
+ul.arrow li{padding:10px 0 10px 16px;border-left:2px solid var(--accent-soft);margin:0 0 8px}
+ul.arrow li strong{color:var(--accent)}
+
+blockquote{margin:26px 0;padding:18px 26px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 4px 4px 0;font-size:1.12rem;font-style:italic;color:var(--ink)}
+
+footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--muted);padding:30px 0 0;margin-top:44px;border-top:1px solid var(--line)}
+
+.toc-toggle{display:none}
+@media(max-width:920px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:18px 22px}
+  nav.toc ul{display:none;margin-top:10px}
+  nav.toc.open ul{display:block}
+  .toc-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:none;border:none;font-family:'JetBrains Mono',monospace}
+  main{border-right:none;padding:34px 22px 70px}
+  body{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <nav class="toc" id="toc">
+    <button class="toc-toggle" id="tocToggle">&#9656; Contents</button>
+    <div class="toc-head" style="display:block">Contents</div>
+    <ul id="tocList">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#s1">1 &middot; Expert Typology</a></li>
+      <li><a href="#s2">2 &middot; Data-driven Clustering</a></li>
+      <li><a class="sub" href="#s2-1">2.1 K-Means Clustering</a></li>
+      <li><a class="sub" href="#s2-2">2.2 Ward Hierarchical</a></li>
+      <li><a class="sub" href="#s2-3">2.3 Clustering Results</a></li>
+      <li><a href="#s3">3 &middot; Synthesis</a></li>
+      <li><a class="sub" href="#s3-1">3.1 Consolidated Typology</a></li>
+      <li><a href="#s4">4 &middot; Conclusion</a></li>
+    </ul>
+  </nav>
+
+  <main>
+  <article class="doc">
+
+    <h1>District Grouping in &Ccedil;anakkale</h1>
+    <p class="subhead">An Integrated Typology and Clustering Analysis of Districts in &Ccedil;anakkale Province</p>
+
+    <h2 id="abstract">Abstract</h2>
+    <div class="abstract">
+      <span class="lab">Abstract</span>
+      <p>This study develops a spatial typology of the districts of &Ccedil;anakkale Province by combining an expert-driven qualitative classification with two data-driven clustering methods (K-Means and Ward hierarchical clustering). &Ccedil;anakkale's spatial structure reveals a clear duality shaped by geography: coastal and strait-oriented districts versus inland highland districts. This divide reflects fundamental differences in accessibility, economic function, and physical terrain. While the expert typology provides a narrative understanding of spatial roles &mdash; highlighting strategic corridors, productive coastal zones, and service centers &mdash; the clustering models confirm that these patterns are strongly embedded in the data, with coastal presence, terrain ruggedness, and urban intensity emerging as the primary structuring forces.</p>
+    </div>
+
+    <figure>
+      <img src="../assets/img/projects-content/district_grouping/map_1.png" alt="The districts of Canakkale Province" loading="lazy">
+      <figcaption><b>Figure 1.</b> The districts of &Ccedil;anakkale Province.</figcaption>
+    </figure>
+
+    <h2 id="s1">1. Expert Typology</h2>
+    <p>The expert classification organizes districts into six spatial groups according to their key characteristics, driving factors, and resulting planning implications.</p>
+    <div class="tbl">
+    <table>
+      <thead><tr><th>Spatial group</th><th>Key characteristics</th><th>Driving factors</th><th>Planning implications</th></tr></thead>
+      <tbody>
+        <tr><th>Strait Corridor</th><td>Strategic, highly connected</td><td>Narrow geography, transport flows</td><td>Logistics, defense, connectivity</td></tr>
+        <tr><th>Marmara Coast</th><td>Economically integrated</td><td>Proximity to Marmara networks</td><td>Production, trade, regional integration</td></tr>
+        <tr><th>Aegean Lowland</th><td>Agricultural + settlement mix</td><td>Flat terrain, fertile land</td><td>Agro-economy, balanced development</td></tr>
+        <tr><th>Rugged Aegean</th><td>Dispersed, less accessible</td><td>Hilly terrain, peripheral location</td><td>Tourism niche, ecological planning</td></tr>
+        <tr><th>Inland Highlands</th><td>Isolated, physically constrained</td><td>Elevation, slope</td><td>Forestry, resilience, infrastructure access</td></tr>
+        <tr><th>Urban Center</th><td>Service hub (&Ccedil;anakkale Merkez)</td><td>Population density, centrality</td><td>Urban services, governance, regional anchor</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <figure>
+      <img src="../assets/img/projects-content/district_grouping/map_2.png" alt="Expert typology of Canakkale districts" loading="lazy">
+      <figcaption><b>Figure 2.</b> Expert typology of &Ccedil;anakkale districts.</figcaption>
+    </figure>
+
+    <h2 id="s2">2. Data-driven Clustering</h2>
+    <p>Two unsupervised clustering methods were applied to the district feature set to test whether the expert typology is reflected in measurable spatial attributes.</p>
+
+    <h3 id="s2-1">2.1 K-Means Clustering</h3>
+    <p>K-Means partitions districts into $k$ clusters by minimizing the within-cluster sum of squared distances between each district's feature vector and its assigned cluster centroid:</p>
+    <div class="eq">$$\underset{\mathbf{S}}{\arg\min} \sum_{i=1}^{k} \sum_{\mathbf{x} \in S_i} \lVert \mathbf{x} - \boldsymbol{\mu}_i \rVert^{2}$$</div>
+    <p class="eqvars">where $S_i$ is the set of districts in cluster $i$, $\mathbf{x}$ is a district's feature vector, and $\boldsymbol{\mu}_i$ is the centroid (mean feature vector) of cluster $i$.</p>
+    <figure>
+      <img src="../assets/img/projects-content/district_grouping/map_3.png" alt="Data-driven clustering of districts K-Means" loading="lazy">
+      <figcaption><b>Figure 3.</b> Data-driven clustering of districts (K-Means).</figcaption>
+    </figure>
+
+    <h3 id="s2-2">2.2 Ward Hierarchical Clustering</h3>
+    <p>Ward's method builds a hierarchy by successively merging the pair of clusters whose union produces the smallest increase in total within-cluster variance. The merge cost between clusters $A$ and $B$ is:</p>
+    <div class="eq">$$\Delta(A,B) = \frac{n_A\, n_B}{n_A + n_B}\, \lVert \boldsymbol{\mu}_A - \boldsymbol{\mu}_B \rVert^{2}$$</div>
+    <p class="eqvars">where $n_A$ and $n_B$ are the numbers of districts in clusters $A$ and $B$, and $\boldsymbol{\mu}_A$, $\boldsymbol{\mu}_B$ are their centroids.</p>
+    <figure class="wide">
+      <img src="../assets/img/projects-content/district_grouping/graphic_1.png" alt="Ward hierarchical clustering dendrogram" loading="lazy">
+      <figcaption><b>Figure 4.</b> Ward hierarchical clustering dendrogram of &Ccedil;anakkale districts.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/img/projects-content/district_grouping/map_4.png" alt="Data-driven clustering of districts Ward" loading="lazy">
+      <figcaption><b>Figure 5.</b> Data-driven clustering of districts (Ward).</figcaption>
+    </figure>
+
+    <h3 id="s2-3">2.3 Clustering Results</h3>
+    <div class="tbl">
+    <table>
+      <thead><tr><th style="width:16%">Method</th><th>Key pattern identified</th><th>Interpretation</th></tr></thead>
+      <tbody>
+        <tr class="grp-start"><td class="method" rowspan="3">K-Means</td><td>3 dominant groups</td><td>Coast vs inland vs urban outlier</td></tr>
+        <tr><td>Merkez as outlier</td><td>Strong urban centrality</td></tr>
+        <tr><td>Coastal districts merged</td><td>Shared economic &amp; geographic traits</td></tr>
+        <tr class="grp-start"><td class="method" rowspan="5">Ward</td><td>Clear district pairings</td><td>Functional similarity</td></tr>
+        <tr><td class="pair">Gelibolu &ndash; Eceabat</td><td>Strait corridor system</td></tr>
+        <tr><td class="pair">Ezine &ndash; Bozcaada</td><td>Agrarian coastal linkage</td></tr>
+        <tr><td class="pair">G&ouml;k&ccedil;eada &ndash; Ayvac&#305;k</td><td>Rugged/peripheral Aegean</td></tr>
+        <tr><td class="pair">Yenice &ndash; &Ccedil;an &ndash; Bayrami&ccedil;</td><td>Strong inland cluster; late merge with coast confirms the inland&ndash;coastal divide</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="s3">3. Synthesis</h2>
+    <p>While the expert typology provides a narrative understanding of spatial roles &mdash; highlighting strategic corridors, productive coastal zones, and service centers &mdash; the clustering models (K-Means and Ward) confirm that these patterns are strongly embedded in the data. Coastal presence, terrain ruggedness, and urban intensity emerge as the primary structuring forces.</p>
+    <p>Together, both approaches suggest a simple but powerful planning logic:</p>
+    <ul class="arrow">
+      <li><strong>Coastal and strait areas &rarr;</strong> connectivity, maritime economy, tourism</li>
+      <li><strong>Inland highlands &rarr;</strong> agriculture, forestry, accessibility, resilience</li>
+      <li><strong>&Ccedil;anakkale Merkez &rarr;</strong> service hub with distinct urban functions</li>
+    </ul>
+    <p>This synthesis demonstrates that spatial patterns are interpretable, measurable, and policy-relevant.</p>
+
+    <h3 id="s3-1">3.1 Consolidated Zone Typology</h3>
+    <div class="tbl">
+    <table>
+      <thead><tr><th style="width:32%">Zone type</th><th>Strategic direction</th></tr></thead>
+      <tbody>
+        <tr><th>Coastal / Strait</th><td>Maritime economy, logistics, tourism</td></tr>
+        <tr><th>Inland Highlands</th><td>Agro-forestry, resilience, accessibility</td></tr>
+        <tr><th>Urban Center</th><td>Services, governance, regional coordination</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <figure>
+      <img src="../assets/img/projects-content/district_grouping/map_5.png" alt="The three consolidated planning zones" loading="lazy">
+      <figcaption><b>Figure 6.</b> The three consolidated planning zones: Coastal/Strait, Inland Highlands, and Urban Center.</figcaption>
+    </figure>
+
+    <h2 id="s4">4. Conclusion</h2>
+    <p>&Ccedil;anakkale's spatial structure reveals a clear, measurable duality shaped by geography. The convergence of expert judgment and two independent clustering methods on the same coastal&ndash;inland&ndash;urban structure indicates that the typology is robust rather than arbitrary, providing a defensible evidence base for differentiated regional planning across the province.</p>
+
+    <footer>&copy; Izza Prasatya Arief &mdash; The Spatial Studio</footer>
+
+  </article>
+  </main>
+</div>
+
+<script>
+const links=[...document.querySelectorAll('#tocList a')];
+const map={};links.forEach(a=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)map[id]=a;});
+const spy=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=map[e.target.id];if(a)a.classList.add('active');}});
+},{rootMargin:'-10% 0px -75% 0px',threshold:0});
+Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el);});
+const t=document.getElementById('tocToggle'),n=document.getElementById('toc');
+t.addEventListener('click',()=>n.classList.toggle('open'));
+document.getElementById('tocList').addEventListener('click',e=>{if(e.target.tagName==='A')n.classList.remove('open');});
+</script>
+</body>
+</html>
