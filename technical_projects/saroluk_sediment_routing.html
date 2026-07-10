@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sediment Routing from the Şaroluk Lignite Mine — A Terrain-Based Pollution-Risk Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+MathJax = { tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] }, svg:{fontCache:'global'} };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+:root{
+  --ink:#1a1a1a;
+  --ink-soft:#3d3d3d;
+  --muted:#6a6a6a;
+  --paper:#ffffff;
+  --bg:#fbfaf8;
+  --line:#e4e1da;
+  --line-soft:#efece6;
+  --accent:#2f6b3a;        /* mine-earth green */
+  --accent-soft:#eaf3ea;
+  --link:#1f6f7a;
+  --hl:#fff3cd;
+  --hl-line:#f0d98a;
+  --code-bg:#f5f3ee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- LAYOUT ---------- */
+.layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:0;max-width:1180px;margin:0 auto}
+
+/* TOC sidebar */
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:46px 26px 46px 28px;border-right:1px solid var(--line);font-family:'JetBrains Mono',monospace}
+nav.toc .toc-head{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+nav.toc ul{list-style:none}
+nav.toc li{margin:0}
+nav.toc a{display:block;font-size:12.5px;line-height:1.45;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-left:2px solid transparent;border-radius:0 3px 3px 0;transition:.15s}
+nav.toc a:hover{color:var(--accent);background:var(--accent-soft)}
+nav.toc a.sub{padding-left:24px;font-size:11.5px;color:var(--muted)}
+nav.toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft);font-weight:600}
+
+/* article */
+main{background:var(--paper);min-height:100vh;padding:56px clamp(28px,5vw,72px) 90px;border-right:1px solid var(--line)}
+.doc{max-width:760px;margin:0 auto}
+
+/* ---------- TYPOGRAPHY ---------- */
+h1{font-size:clamp(1.9rem,4vw,2.7rem);line-height:1.12;font-weight:700;letter-spacing:-.018em;margin:0 0 8px;text-wrap:balance}
+h2{font-size:1.62rem;font-weight:700;letter-spacing:-.012em;margin:54px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+h3{font-size:1.18rem;font-weight:600;margin:34px 0 10px;color:var(--ink);scroll-margin-top:24px}
+h4{font-size:1rem;font-weight:600;margin:22px 0 6px}
+p{margin:0 0 16px}
+strong{font-weight:600}
+em{font-style:italic}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid #cfe0e2}
+a:hover{border-bottom-color:var(--link)}
+
+.subhead{color:var(--muted);font-size:1.05rem;margin:0 0 18px}
+.byline{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--muted);margin:14px 0 0}
+.byline .doi{color:var(--muted)}
+
+/* key-number highlight */
+.kn{background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 1px;border-radius:1px;font-weight:600;white-space:nowrap}
+
+/* abstract */
+.abstract{font-size:.98rem;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:22px 26px;margin:22px 0 8px}
+.abstract .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.abstract p:last-child{margin-bottom:0}
+
+/* figures */
+figure{margin:26px 0}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:10px}
+figcaption b{color:var(--ink-soft);font-weight:600}
+
+/* equation blocks */
+.eq{margin:14px 0;padding:10px 4px;overflow-x:auto}
+.eqvars{font-size:.95rem;color:var(--ink-soft);margin:6px 0 4px}
+.ref-inline{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);font-style:normal}
+
+/* tables */
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:5px}
+table{border-collapse:collapse;width:100%;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.4}
+caption{caption-side:top;text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:10px 12px 8px}
+th,td{padding:8px 12px;text-align:right;border-bottom:1px solid var(--line-soft)}
+th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}
+thead th{background:#f7f5f0;color:var(--ink);font-weight:600;border-bottom:1.5px solid var(--line);position:sticky;top:0;white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#faf8f3}
+td.win{background:var(--hl);font-weight:600}
+.cell-strong{font-weight:600;color:var(--accent)}
+
+/* description tables (left-aligned text col) */
+table.desc td:nth-child(3),table.desc th:nth-child(3){text-align:left;white-space:normal;font-family:'Source Serif 4',serif;font-size:14px;line-height:1.55}
+
+/* interpretation list (markdown bold-lead paragraphs) */
+.notes p{margin:0 0 14px}
+.notes p strong:first-child{color:var(--accent)}
+
+/* findings ordered list */
+ol.fnd{margin:18px 0 18px 0;padding-left:26px}
+ol.fnd li{margin:0 0 13px;padding-left:6px}
+ol.fnd li strong:first-child{color:var(--accent)}
+
+/* ranked findings */
+.ranked p{margin:0 0 14px}
+.ranked p strong:first-child{color:var(--accent)}
+
+/* references */
+.refs{font-size:13.5px;line-height:1.6;color:var(--ink-soft)}
+.refs p{margin:0 0 11px;padding-left:24px;text-indent:-24px}
+.refs a{font-size:12.5px;word-break:break-word}
+
+hr.soft{border:none;border-top:1px solid var(--line);margin:40px 0}
+
+footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--muted);padding:30px 0 0;margin-top:44px;border-top:1px solid var(--line)}
+
+/* mobile */
+.toc-toggle{display:none}
+@media(max-width:920px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:18px 22px}
+  nav.toc ul{display:none;margin-top:10px}
+  nav.toc.open ul{display:block}
+  .toc-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:none;border:none;font-family:'JetBrains Mono',monospace}
+  main{border-right:none;padding:34px 22px 70px}
+  body{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <nav class="toc" id="toc">
+    <button class="toc-toggle" id="tocToggle">▸ Contents</button>
+    <div class="toc-head" style="display:block">Contents</div>
+    <ul id="tocList">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#intro">1 · Introduction &amp; Motivation</a></li>
+      <li><a href="#method">2 · Methodology</a></li>
+      <li><a href="#theory">3 · Theoretical Framework</a></li>
+      <li><a class="sub" href="#t-fill">3.1 Depression Filling &amp; Flow Direction</a></li>
+      <li><a class="sub" href="#t-order">3.2 Strahler Stream Order</a></li>
+      <li><a class="sub" href="#t-slope">3.3 Slope, Aspect &amp; Curvature</a></li>
+      <li><a class="sub" href="#t-acc">3.4 Upslope Contributing Area</a></li>
+      <li><a class="sub" href="#t-ls">3.5 LS Factor</a></li>
+      <li><a href="#results">4 · Results</a></li>
+      <li><a class="sub" href="#r-terrain">4.1 Terrain &amp; Climate Parameters</a></li>
+      <li><a class="sub" href="#r-length">4.2 Sediment Routing Distance</a></li>
+      <li><a class="sub" href="#r-settle">4.3 Settlement Exposure</a></li>
+      <li><a class="sub" href="#r-interp">4.4 Interpretation</a></li>
+      <li><a href="#discussion">5 · Discussion</a></li>
+      <li><a href="#conclusions">6 · Conclusions</a></li>
+      <li><a class="sub" href="#reco">6.1 Recommendation</a></li>
+      <li><a href="#refs">Key References</a></li>
+    </ul>
+  </nav>
+
+  <main>
+  <article class="doc">
+
+    <h1>Sediment Routing from the Şaroluk Lignite Mine</h1>
+    <p class="subhead">A Terrain-Based Pollution-Risk Assessment of the Keçidere Catchment</p>
+    <figure>
+      <img src="../assets/img/projects-content/sediment_routing/map_1.png" alt="The lignite mine." loading="lazy">
+      <figcaption><b>Figure 1.</b> The lignite mine, operated by Mansuroğlu Madencilik, at the head of the Keçidere catchment.</figcaption>
+    </figure>
+
+    <h2 id="abstract">Abstract</h2>
+    <div class="abstract">
+      <span class="lab">Abstract</span>
+      <p>The Şaroluk Linyit Ocağı (Şaroluk Lignite Mine) sits at the head of the Keçidere catchment, a tributary system that drains northward into the Gönen River and, ultimately, into the Gönen Çayı Deltası Sulak Alanı Koruma Alanı (a protected river-delta wetland on the Marmara coast). This project applies terrain-based hydrological modelling to assess the pollution risk that exposed mine-spoil sediment poses to communities and ecosystems along this flow path. A digital elevation model derived from ALOS PALSAR was processed in SAGA GIS to delineate the catchment, extract the stream network, and compute per-cell slope, aspect, curvature, and the Desmet and Govers (1996) LS factor as an index of erosion and sediment-mobilisation potential. A multiple-flow-direction accumulation surface was then routed from the mine outward to trace the sediment corridor and identify exposed settlements. The results indicate a continuous sediment-transport pathway of approximately <span class="kn">45 km</span> from the mine to the protected wetland, passing directly through four settlements; Dereköy, Sarıköy, Ayvalıdere, and Gebeçınar, of which <span class="kn">Dereköy</span> is the most exposed, lying only <span class="kn">15 m</span> from the river channel on the valley floor.</p>
+    </div>
+
+    <h2 id="intro">1. Introduction and Motivation</h2>
+    <figure>
+      <img src="../assets/img/projects-content/sediment_routing/map_2.png" alt="The Keçidere catchment">
+      <figcaption><b>Figure 2.</b> The Keçidere catchment, showing the Strahler stream-order hierarchy, settlement locations, and the Şaroluk mining area.</figcaption>
+    </figure>
+    <p>The Keçidere is a fourth-order tributary catchment of the Gönen River in the Marmara region of Türkiye, draining a forested and agricultural upland stretching from Dereköy in the northeast to Beyoluk and Alacaoluk in the southwest. Within this catchment, the Şaroluk Linyit Ocağı, an open-cast lignite operation run by Mansuroğlu Madencilik, has removed vegetation cover and exposed loose overburden across a substantial footprint straddling the upper reaches of the drainage network. Bare, disturbed surfaces of this kind are disproportionate sediment sources relative to their area: rainfall striking exposed spoil detaches and mobilises fine material far more readily than it does on vegetated or consolidated ground, and the steep internal slopes of active pit faces and haul roads accelerate that mobilisation further.</p>
+    <p>Once mobilised, sediment does not stay local. It is routed downstream through the drainage network, following the same flow paths that carry floodwater, and it can carry adsorbed contaminants such as trace metals, hydrocarbons, and fine particulates associated with mining activity. Downstream of the mine, the Keçidere joins the Gönen River, which flows north past the settlements of <span class="kn">Dereköy</span>, <span class="kn">Sarıköy</span>, <span class="kn">Ayvalıdere</span>, and <span class="kn">Gebeçınar</span> before discharging into the Gönen Çayı Deltası Sulak Alanı Koruma Alanı, a legally protected wetland at the river mouth. Any of these downstream receptors, village water supplies, floodplain agriculture, or the wetland ecosystem itself could be affected if sediment and associated pollutants are efficiently routed from the mine site.</p>
+    <p>This project therefore asks a specific, terrain-driven question: given the topography of the Keçidere catchment, how efficiently is sediment routed from the mine to downstream receptors, and which settlements sit most directly in that pathway? The analysis isolates the structural (terrain-controlled) component of this risk, independent of mine-specific operational or water-treatment practices.</p>
+
+    <h2 id="method">2. Methodology</h2>
+    <p>A reproducible terrain-analysis workflow was applied in SAGA GIS to an ALOS PALSAR-derived DEM, proceeding from hydrological pre-processing to the routing of a sediment-transport-potential surface from the mine to the catchment outlet.</p>
+    <figure>
+      <img src="../assets/img/projects-content/sediment_routing/map_3.png" alt="Extracted stream network">
+      <figcaption><b>Figure 3.</b> Extracted stream network draining through and around the Şaroluk mining footprint, showing the upstream–downstream flow path.</figcaption>
+    </figure>
+
+    <p><strong>Datasets used:</strong></p>
+    <div class="tbl">
+    <table class="desc">
+      <thead><tr><th>Dataset</th><th></th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td>ALOS PALSAR DEM</td><td></td><td>Terrain surface for hydrological and geomorphometric processing</td></tr>
+        <tr><td>OpenStreetMap</td><td></td><td>Settlement locations, road network, and cartographic reference</td></tr>
+        <tr><td>CHIRPS 2.0</td><td></td><td>Annual rainfall estimate for the Keçidere catchment (2023)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p><strong>Workflow:</strong></p>
+    <div class="tbl">
+    <table class="desc">
+      <thead><tr><th>Step</th><th>Stage</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>01</td><td>Sink Filling</td><td>Depressions in the raw DEM are filled (Wang &amp; Liu algorithm) to produce a hydrologically continuous surface, from which flow direction is derived.</td></tr>
+        <tr><td>02</td><td>Stream Ordering</td><td>Strahler stream order is computed from the flow-direction grid, classifying the drainage hierarchy of the Keçidere network.</td></tr>
+        <tr><td>03</td><td>Channel &amp; Basin Extraction</td><td>Channels are extracted using a flow-accumulation threshold of 6 contributing cells, and drainage basins are delineated accordingly.</td></tr>
+        <tr><td>04</td><td>Catchment Delineation</td><td>Upslope contributing area is traced from a snapped pour point (549878.28 E, 4447652.09 N) to delineate the full Keçidere catchment boundary.</td></tr>
+        <tr><td>05</td><td>Terrain Attribute Grids</td><td>Slope, aspect, and curvature are computed per cell (Zevenbergen &amp; Thorne, 1987).</td></tr>
+        <tr><td>06</td><td>LS Factor</td><td>The one-step LS factor is computed per cell (Desmet &amp; Govers, 1996) and sampled by its average value over the mining footprint.</td></tr>
+        <tr><td>07</td><td>Flow Accumulation</td><td>A top-down, multiple-flow-direction accumulation surface routes sediment-transport potential from the mine outward across the catchment.</td></tr>
+        <tr><td>08</td><td>Exposure Mapping</td><td>The resulting sediment flow-accumulation surface is overlaid with settlement points to identify communities within the sediment-transport corridor.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="theory">3. Theoretical Framework</h2>
+    <p>Five terrain-analysis procedures underpin the workflow above. Each is defined below with its governing formulation and source.</p>
+
+    <h3 id="t-fill">3.1 Depression Filling and Flow Direction</h3>
+    <div class="eq">$$z'_{i,j} = \max\left(z_{i,j},\ \min_{(k,l)\,\in\,N(i,j)} z'_{k,l}\right)$$</div>
+    <p class="eqvars">where $z_{i,j}$ is the original cell elevation, $z'_{i,j}$ is the filled elevation, and $N(i,j)$ is the eight-cell neighbourhood. Filling is applied iteratively until every cell has a downslope, unbroken path to the catchment outlet. Flow direction is then assigned by the steepest-descent (D8) rule:</p>
+    <div class="eq">$$D8_{i,j} = \underset{k=1,\dots,8}{\arg\max} \left(\frac{z_{i,j} - z_k}{d_k}\right)$$</div>
+    <p class="eqvars">where $z_k$ is the elevation of neighbour $k$ and $d_k$ is the horizontal distance to that neighbour (cell size for cardinal neighbours, cell size $\times \sqrt{2}$ for diagonals).</p>
+    <p class="ref-inline">References: Wang &amp; Liu (2006); O'Callaghan &amp; Mark (1984).</p>
+
+    <h3 id="t-order">3.2 Strahler Stream Order</h3>
+    <p>Stream segments are classified hierarchically: a channel with no tributaries is assigned order 1. Where two segments of equal order $u$ converge, the resulting downstream segment is assigned order $u+1$. Where two segments of unequal order converge, the downstream segment retains the higher of the two orders. Order does not increase from an unequal confluence.</p>
+    <div class="eq">$$u_{downstream} = \begin{cases} u+1 & \text{if both tributaries have order } u \\ \max(u_1, u_2) & \text{if } u_1 \neq u_2 \end{cases}$$</div>
+    <p class="ref-inline">Reference: Strahler (1957).</p>
+
+    <h3 id="t-slope">3.3 Slope, Aspect, and Curvature</h3>
+    <p>Within a 3×3 moving window, a quadratic surface is fitted to elevation values:</p>
+    <div class="eq">$$z = Ax^2y^2 + Bx^2y + Cxy^2 + Dx^2 + Ey^2 + Fxy + Gx + Hy + I$$</div>
+    <p class="eqvars">Slope $S$ and profile / plan curvature are then derived from the fitted coefficients:</p>
+    <div class="eq">$$S = \arctan\!\left(\sqrt{G^2 + H^2}\right)$$</div>
+    <div class="eq">$$\kappa_{profile} = \frac{-2\left(DG^2 + EH^2 + FGH\right)}{G^2 + H^2} \qquad \kappa_{plan} = \frac{2\left(DH^2 + EG^2 - FGH\right)}{G^2 + H^2}$$</div>
+    <p class="eqvars">Aspect is recovered from the ratio of the $G$ and $H$ coefficients, giving the compass direction of steepest descent at each cell.</p>
+    <p class="ref-inline">Reference: Zevenbergen &amp; Thorne (1987).</p>
+
+    <h3 id="t-acc">3.4 Upslope Contributing Area (Flow Accumulation)</h3>
+    <p>Rather than routing all flow to a single steepest neighbour, the multiple flow direction (MFD) approach partitions each cell's outflow across all downslope neighbours in proportion to slope:</p>
+    <div class="eq">$$p_{i,j} = \frac{(\tan\beta_j)^{p}}{\displaystyle\sum_{k \,\in\, D} (\tan\beta_k)^{p}}$$</div>
+    <p class="eqvars">where $\beta_j$ is the slope angle toward downslope neighbour $j$, $D$ is the set of downslope neighbours, and $p \approx 1.1$ is Freeman's convergence exponent. The upslope contributing area at each cell accumulates recursively from upstream to downstream:</p>
+    <div class="eq">$$A_i = a_i + \sum_{j \,\in\, U(i)} p_{j,i}\, A_j$$</div>
+    <p class="eqvars">where $a_i$ is the cell's own area and $U(i)$ is the set of cells draining into $i$. This produces a continuous, non-branching surface of contributing area used both for channel extraction and for routing the sediment-transport-potential surface downstream of the mine.</p>
+    <p class="ref-inline">References: Freeman (1991); Moore, Grayson &amp; Ladson (1991).</p>
+
+    <h3 id="t-ls">3.5 LS Factor (Erosion / Sediment-Mobilisation Potential)</h3>
+    <p>The LS factor combines slope length and slope steepness into a single dimensionless index of a cell's erosion and sediment-mobilisation potential, following the one-step unit-contributing-area formulation:</p>
+    <div class="eq">$$LS_{i,j} = \frac{\left(A_{i,j\text{-}in} + D^2\right)^{m+1} - A_{i,j\text{-}in}^{\,m+1}}{D^{m+2} \cdot x_{i,j}^{\,m} \cdot 22.13^{m}}$$</div>
+    <p class="eqvars">where $A_{i,j\text{-}in}$ is the upslope contributing area at the inlet of cell $(i,j)$ (m²), $D$ is the grid cell size (m), and $x_{i,j} = |\sin\alpha_{i,j}| + |\cos\alpha_{i,j}|$, with $\alpha_{i,j}$ the cell's aspect. The slope-length exponent $m$ is itself a function of local slope steepness $\theta$:</p>
+    <div class="eq">$$m = \frac{\beta}{1+\beta}, \qquad \beta = \frac{\sin\theta / 0.0896}{3(\sin\theta)^{0.8} + 0.56}$$</div>
+    <p class="eqvars">Higher LS values indicate cells where both slope steepness and upslope contributing area combine to produce greater potential for sediment detachment and downslope transport — the mining footprint, with its steep exposed faces and haul-road cuts, is expected to register well above the surrounding vegetated terrain.</p>
+    <p class="ref-inline">Reference: Desmet &amp; Govers (1996).</p>
+
+    <h2 id="results">4. Results</h2>
+    <figure>
+      <img src="../assets/img/projects-content/sediment_routing/map_4.png" alt="Sediment flow-accumulation surface">
+      <figcaption><b>Figure 4.</b> Sediment flow-accumulation surface routed from the Şaroluk mine to the Gönen River Delta Wetland Protection Area, with settlements and vulnerable-area extent.</figcaption>
+    </figure>
+
+    <h3 id="r-terrain">4.1 Terrain and Climate Parameters — Mining Footprint</h3>
+    <div class="tbl">
+    <table>
+      <caption>Table 1 — Average terrain and climate parameters sampled over the mining footprint / catchment.</caption>
+      <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Average LS Factor (mining area)</td><td class="win">13</td></tr>
+        <tr><td>Average slope (mining area)</td><td>15°</td></tr>
+        <tr><td>Average annual rainfall, Keçidere catchment (2023, CHIRPS 2.0)</td><td>633 mm/yr</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="r-length">4.2 Sediment Routing Distance</h3>
+    <div class="tbl">
+    <table>
+      <caption>Table 2 — Source-to-outlet sediment corridor length.</caption>
+      <thead><tr><th>Segment</th><th>Length</th></tr></thead>
+      <tbody>
+        <tr><td>Şaroluk Linyit Ocağı (source) → Gönen Çayı Deltası Sulak Alanı Koruma Alanı (outlet)</td><td class="win">44,965.13 m (≈ 45.0 km)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="r-settle">4.3 Downstream Settlement Exposure</h3>
+    <div class="tbl">
+    <table class="desc">
+      <caption>Table 3 — Settlements within the sediment-transport corridor, ordered by proximity to the Gönen River.</caption>
+      <thead><tr><th>#</th><th>Settlement</th><th>Distance / Position</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td class="cell-strong">Dereköy</td><td>~15 m from the Gönen River — directly on the valley floor, immediately adjacent to the channel. Highest direct exposure.</td></tr>
+        <tr><td>2</td><td>Gebeçınar</td><td>~300 m — set back from the channel but within the immediate floodplain corridor.</td></tr>
+        <tr><td>3</td><td>Ayvalıdere</td><td>~400 m — set back from the channel but within the immediate floodplain corridor.</td></tr>
+        <tr><td>4</td><td>Sarıköy</td><td>~1,000 m — furthest of the four, but situated on the wide Gönen River plain, where floodwater and suspended sediment can spread laterally beyond the channel.</td></tr>
+        <tr><td>—</td><td><em>Gönen Çayı Deltası Sulak Alanı Koruma Alanı</em></td><td>Terminal receptor — protected river-delta wetland.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 id="r-interp">4.4 Interpretation</h3>
+    <figure>
+      <img src="../assets/img/projects-content/sediment_routing/map_5.png" alt="Vulnerable settlements.">
+      <figcaption><b>Figure 5.</b> Close-up satellite views of the four exposed settlements and the Gönen River Delta, showing each community's position relative to the channel.</figcaption>
+    </figure>
+    <div class="notes">
+      <p><strong>LS Factor and slope.</strong> An average LS factor of <span class="kn">13</span> over the mining footprint, combined with a <span class="kn">15° average slope</span>, indicates a surface with substantially elevated erosion potential relative to the forested and agricultural land that dominates the rest of the catchment. Bare spoil at this gradient sheds fine sediment readily under rainfall impact, and with 633 mm of annual rainfall concentrated in the Marmara region's wet season, there is a recurring hydrological driver to mobilise and transport that material downstream.</p>
+      <p><strong>Routing continuity.</strong> The unbroken <span class="kn">~45 km</span> sediment corridor from the mine to the protected wetland confirms that the Keçidere–Gönen system provides a continuous hydrological pathway with no major depositional basin or lake to intercept sediment before it reaches the coast. Everything mobilised at the source has a direct route to the delta.</p>
+      <p><strong>Settlement exposure gradient.</strong> Proximity to the channel is the dominant control on exposure. <span class="kn">Dereköy's</span> position roughly 15 m from the river, directly on the lowland valley floor, gives it the highest and most direct exposure to elevated sediment loads and any associated waterborne contaminants. Gebeçınar and Ayvalıdere, though somewhat further back, remain within the active floodplain corridor. Sarıköy is the most distant in a straight-line sense, but its position on the broad Gönen River plain means that floodwater and suspended sediment are not confined to the channel. Lateral spreading during high-flow events could extend its effective exposure well beyond the nominal 1,000 m distance.</p>
+    </div>
+
+    <h2 id="discussion">5. Discussion</h2>
+    <p>The terrain evidence here isolates the structural component of pollution risk. The fact that gravity and the shape of the land guarantee an efficient transport pathway from the mine to sensitive downstream receptors. It does not, on its own, quantify the concentration or toxicity of any contaminants actually present in mine runoff, which would require water-quality sampling at the settlements and at the wetland inlet to confirm. What the terrain analysis does establish is that <em>if</em> pollutants are mobilised at the source, the catchment's morphology offers little natural attenuation: no major lake or wide low-gradient reach exists between the mine and the delta to allow settling or dilution before the protected wetland is reached. This makes the wetland, which is a designated conservation area as exposed, in structural terms, as the nearest village.</p>
+
+    <h2 id="conclusions">6. Conclusions</h2>
+    <ol class="fnd">
+      <li><strong>The mining footprint is a disproportionate sediment source.</strong> An average LS factor of 13 and 15° average slope over the exposed mine surface indicate substantially elevated erosion potential relative to the surrounding vegetated catchment.</li>
+      <li><strong>The sediment pathway is continuous and unbroken.</strong> No major depositional feature interrupts the ~45 km route from the Şaroluk mine to the Gönen River Delta Wetland Protection Area, meaning mobilised material has a direct route to a protected ecosystem.</li>
+      <li><strong>Four settlements sit within the sediment-transport corridor.</strong> Dereköy, Gebeçınar, Ayvalıdere, and Sarıköy all lie along the Gönen River downstream of the mine, at distances ranging from 15 m to 1,000 m from the channel.</li>
+      <li><strong>Proximity and floodplain position jointly determine exposure.</strong> Dereköy's near-channel, valley-floor position gives it the highest direct exposure; Sarıköy's floodplain setting means its greater distance may not translate into proportionally lower risk during high-flow events.</li>
+      <li><strong>Rainfall provides a recurring mobilisation driver.</strong> At <span class="kn">633 mm/yr</span>, the Keçidere catchment receives sufficient and regularly distributed rainfall to repeatedly mobilise sediment from the exposed mine surface rather than this being a one-off risk.</li>
+      <li><strong>Terrain analysis identifies exposure, not concentration.</strong> This assessment quantifies the structural (terrain-driven) likelihood of sediment and pollutant transport; confirming actual water-quality impact requires field sampling at the identified settlements and at the wetland inlet.</li>
+    </ol>
+
+    <h3 id="reco">6.1 Recommendation</h3>
+    <p>Erosion and sediment-control measures revegetation of inactive spoil surfaces, sediment retention structures at the mine perimeter, and buffer strips along the upper Keçidere channel should be prioritised at the <strong>Şaroluk mine site</strong> itself, since it is the single controllable point in an otherwise continuous, unattenuated transport pathway. Water-quality monitoring should be established at <strong>Dereköy</strong>, given its combination of closest proximity and lowland valley-floor position, and at the inlet to the <strong>Gönen Çayı Deltası Sulak Alanı Koruma Alanı</strong>, as the terminal and most sensitive receptor in the system.</p>
+
+    <h2 id="refs">Key References</h2>
+    <div class="refs">
+      <p>Conrad, O., Bechtel, B., Bock, M., Dietrich, H., Fischer, E., Gerlitz, L., Wehberg, J., Wichmann, V., &amp; Böhner, J. (2015). System for Automated Geoscientific Analyses (SAGA) v. 2.1.4. <em>Geoscientific Model Development</em>, 8, 1991–2007. <a href="https://doi.org/10.5194/gmd-8-1991-2015">https://doi.org/10.5194/gmd-8-1991-2015</a></p>
+      <p>Desmet, P. J. J., &amp; Govers, G. (1996). A GIS procedure for automatically calculating the USLE LS factor on topographically complex landscape units. <em>Journal of Soil and Water Conservation</em>, 51(5), 427–433.</p>
+      <p>Fisher, R., Hobgen, S., Mandaya, I., Kaho, N. R., &amp; Zulkarnain. (2017). <em>Satellite image analysis and terrain modelling: A practical manual for natural resource management, disaster risk and development planning using free geospatial data and software.</em></p>
+      <p>Freeman, G. T. (1991). Calculating catchment area with divergent flow based on a regular grid. <em>Computers &amp; Geosciences</em>, 17(3), 413–422.</p>
+      <p>Funk, C., Peterson, P., Landsfeld, M., Pedreros, D., Verdin, J., Shukla, S., Husak, G., Rowland, J., Harrison, L., Hoell, A., &amp; Michaelsen, J. (2015). The climate hazards infrared precipitation with stations — a new environmental record for monitoring extremes. <em>Scientific Data</em>, 2, 150066. <a href="https://doi.org/10.1038/sdata.2015.66">https://doi.org/10.1038/sdata.2015.66</a></p>
+      <p>Japan Aerospace Exploration Agency (JAXA). <em>ALOS PALSAR Global Digital Surface Model</em> [Data set]. OpenTopography.</p>
+      <p>Moore, I. D., Grayson, R. B., &amp; Ladson, A. R. (1991). Digital terrain modelling: A review of hydrological, geomorphological, and biological applications. <em>Hydrological Processes</em>, 5(1), 3–30.</p>
+      <p>O'Callaghan, J. F., &amp; Mark, D. M. (1984). The extraction of drainage networks from digital elevation data. <em>Computer Vision, Graphics, and Image Processing</em>, 28(3), 323–344.</p>
+      <p>OpenStreetMap contributors. (2024). <em>Planet dump</em> [Data set]. <a href="https://www.openstreetmap.org">https://www.openstreetmap.org</a></p>
+      <p>Strahler, A. N. (1957). Quantitative analysis of watershed geomorphology. <em>Eos, Transactions American Geophysical Union</em>, 38(6), 913–920.</p>
+      <p>Wang, L., &amp; Liu, H. (2006). An efficient method for identifying and filling surface depressions in digital elevation models for hydrologic analysis and modelling. <em>International Journal of Geographical Information Science</em>, 20(2), 193–213.</p>
+      <p>Zevenbergen, L. W., &amp; Thorne, C. R. (1987). Quantitative analysis of land surface topography. <em>Earth Surface Processes and Landforms</em>, 12(1), 47–56.</p>
+    </div>
+
+    <footer>© Izza Prasatya Arief — The Spatial Studio</footer>
+
+  </article>
+  </main>
+</div>
+
+<script>
+// TOC active-section highlight
+const links=[...document.querySelectorAll('#tocList a')];
+const map={};links.forEach(a=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)map[id]=a;});
+const spy=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=map[e.target.id];if(a)a.classList.add('active');}});
+},{rootMargin:'-10% 0px -75% 0px',threshold:0});
+Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el);});
+// mobile toggle
+const t=document.getElementById('tocToggle'),n=document.getElementById('toc');
+t.addEventListener('click',()=>n.classList.toggle('open'));
+document.getElementById('tocList').addEventListener('click',e=>{if(e.target.tagName==='A')n.classList.remove('open');});
+</script>
+</body>
+</html>
