@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analyzing Historical Landslide in Sarıpınar — A Contour-Based Geomorphometric Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+MathJax = { tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] }, svg:{fontCache:'global'} };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+:root{
+  --ink:#1a1a1a;
+  --ink-soft:#3d3d3d;
+  --muted:#6a6a6a;
+  --paper:#ffffff;
+  --bg:#fbfaf8;
+  --line:#e4e1da;
+  --line-soft:#efece6;
+  --accent:#8a4328;        /* landslide / hazard terracotta */
+  --accent-soft:#f6ece7;
+  --link:#1f6f7a;
+  --hl:#fff3cd;
+  --hl-line:#f0d98a;
+  --code-bg:#f5f3ee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+
+.layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:0;max-width:1180px;margin:0 auto}
+
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:46px 26px 46px 28px;border-right:1px solid var(--line);font-family:'JetBrains Mono',monospace}
+nav.toc .toc-head{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+nav.toc ul{list-style:none}
+nav.toc li{margin:0}
+nav.toc a{display:block;font-size:12.5px;line-height:1.45;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-left:2px solid transparent;border-radius:0 3px 3px 0;transition:.15s}
+nav.toc a:hover{color:var(--accent);background:var(--accent-soft)}
+nav.toc a.sub{padding-left:24px;font-size:11.5px;color:var(--muted)}
+nav.toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft);font-weight:600}
+
+main{background:var(--paper);min-height:100vh;padding:56px clamp(28px,5vw,72px) 90px;border-right:1px solid var(--line)}
+.doc{max-width:760px;margin:0 auto}
+
+h1{font-size:clamp(1.9rem,4vw,2.7rem);line-height:1.12;font-weight:700;letter-spacing:-.018em;margin:0 0 8px;text-wrap:balance}
+h2{font-size:1.62rem;font-weight:700;letter-spacing:-.012em;margin:54px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+h3{font-size:1.18rem;font-weight:600;margin:34px 0 10px;color:var(--ink);scroll-margin-top:24px}
+h4{font-size:1rem;font-weight:600;margin:22px 0 6px}
+p{margin:0 0 16px}
+strong{font-weight:600}
+em{font-style:italic}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid #cfe0e2}
+a:hover{border-bottom-color:var(--link)}
+
+.subhead{color:var(--muted);font-size:1.05rem;margin:0 0 18px}
+
+.kn{background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 1px;border-radius:1px;font-weight:600;white-space:nowrap}
+
+.abstract{font-size:.98rem;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:22px 26px;margin:22px 0 8px}
+.abstract .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.abstract p:last-child{margin-bottom:0}
+
+figure{margin:26px 0}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:10px}
+figcaption b{color:var(--ink-soft);font-weight:600}
+
+.eq{margin:14px 0;padding:10px 4px;overflow-x:auto}
+.eqvars{font-size:.95rem;color:var(--ink-soft);margin:6px 0 4px}
+.ref-inline{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);font-style:normal}
+
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:5px}
+table{border-collapse:collapse;width:100%;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.4}
+caption{caption-side:top;text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:10px 12px 8px}
+th,td{padding:8px 12px;text-align:right;border-bottom:1px solid var(--line-soft)}
+th:first-child,td:first-child{text-align:left}
+thead th{background:#f7f5f0;color:var(--ink);font-weight:600;border-bottom:1.5px solid var(--line);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#faf8f3}
+td.win{background:var(--hl);font-weight:600}
+
+.notes p{margin:0 0 14px}
+.notes p strong:first-child{color:var(--accent)}
+
+ul.causes{margin:10px 0 18px 0;padding-left:26px}
+ul.causes li{margin:0 0 8px}
+
+ol.fnd{margin:18px 0 18px 0;padding-left:26px}
+ol.fnd li{margin:0 0 13px;padding-left:6px}
+ol.fnd li strong:first-child{color:var(--accent)}
+
+ul.criteria{margin:10px 0 18px 0;padding-left:26px}
+ul.criteria li{margin:0 0 8px}
+
+.refs{font-size:13.5px;line-height:1.6;color:var(--ink-soft)}
+.refs p{margin:0 0 11px;padding-left:24px;text-indent:-24px}
+.refs a{font-size:12.5px;word-break:break-word}
+.refs .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin:26px 0 10px}
+.refs .lab:first-child{margin-top:0}
+
+hr.soft{border:none;border-top:1px solid var(--line);margin:40px 0}
+
+footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--muted);padding:30px 0 0;margin-top:44px;border-top:1px solid var(--line)}
+
+.toc-toggle{display:none}
+@media(max-width:920px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:18px 22px}
+  nav.toc ul{display:none;margin-top:10px}
+  nav.toc.open ul{display:block}
+  .toc-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:none;border:none;font-family:'JetBrains Mono',monospace}
+  main{border-right:none;padding:34px 22px 70px}
+  body{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <nav class="toc" id="toc">
+    <button class="toc-toggle" id="tocToggle">▸ Contents</button>
+    <div class="toc-head" style="display:block">Contents</div>
+    <ul id="tocList">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#intro">1 · Introduction</a></li>
+      <li><a href="#study-area">2 · Study Area and Data</a></li>
+      <li><a href="#method">3 · Interpretive Criteria for Scar Identification</a></li>
+      <li><a href="#theory">4 · Geomorphometric Framework</a></li>
+      <li><a class="sub" href="#t-slope">4.1 Contour-Derived Slope Gradient</a></li>
+      <li><a class="sub" href="#t-shape">4.2 Planform Shape Index</a></li>
+      <li><a class="sub" href="#t-fs">4.3 Slope Stability: The Infinite Slope Model</a></li>
+      <li><a class="sub" href="#t-vol">4.4 Depth–Area–Volume Scaling</a></li>
+      <li><a href="#results">5 · Results</a></li>
+      <li><a href="#discussion">6 · Discussion</a></li>
+      <li><a href="#conclusion">7 · Conclusion</a></li>
+      <li><a href="#refs">References</a></li>
+    </ul>
+  </nav>
+
+  <main>
+  <article class="doc">
+
+    <h1>Analyzing Historical Landslide in Sarıpınar</h1>
+    <p class="subhead">A Contour-Based Geomorphometric Assessment of Landslide Scars</p>
+
+    <figure>
+      <img src="../assets/img/projects-content/landslide_scars/map_1.webp" alt="Identification of landslide area using contour lines" loading="lazy">
+      <figcaption><b>Figure 1.</b> Identification of the landslide area using contour lines.</figcaption>
+    </figure>
+
+    <h2 id="abstract">Abstract</h2>
+    <div class="abstract">
+      <span class="lab">Abstract</span>
+      <p>Contour lines remain one of the most accessible instruments for the preliminary recognition of slope instability, requiring neither specialised software nor high-resolution remote-sensing products. This study applies contour-based interpretive criteria to identify and delineate historical landslide scars near Sarıpınar Village, İnegöl District, Bursa Province, Türkiye, using a topographic map cross-referenced against a Digital Elevation Model (DEM). Diagnostic contour signatures like lobate deflection, terracette-like stepping, and irregular spacing within an otherwise regular contour field are used to isolate three discrete failure zones, digitised and quantified as 88 ha, 100 ha, and 20 ha respectively. The assessment is framed within established geomorphometric and geotechnical relationships, including the contour-derived slope-gradient equation, a planform compactness index for lobate landforms, and the infinite-slope stability model, to situate the empirical observations within a quantitative, reproducible framework rather than visual interpretation alone.</p>
+    </div>
+
+    <h2 id="intro">1. Introduction</h2>
+    <p>A topographic map depicts the physical and morphological condition of a given area, with terrain elevation encoded through contour lines, which are isolines connecting points of equal elevation at a fixed contour interval. The presence of contour lines is, by convention, definitional: a map without them cannot properly be regarded as topographic. Contour-based analysis permits a systematic reading of the earth's surface, including the preliminary assessment of geohazards and other environmentally significant processes.</p>
+    <p>Among the geohazards most widely distributed across terrestrial environments, with the notable exception of regions characterised by low precipitation and arid climatic regimes is the landslide: the downward and outward movement of soil, rock, and vegetation constituting a slope, driven primarily by the gravitational force acting on a mass whose resisting strength has been exceeded. Landslide initiation is governed by a combination of predisposing and triggering factors, which typically include:</p>
+    <ul class="causes">
+      <li>Structural or lithological weakness in the underlying geology or soil mantle</li>
+      <li>Elevated or prolonged precipitation</li>
+      <li>Fluctuation in groundwater levels and pore-water pressure</li>
+      <li>Seismic activity</li>
+      <li>Anthropogenic disturbance, including construction and mining activity</li>
+      <li>Additional static or dynamic loading imposed on the slope</li>
+      <li>Over-steepening of the slope profile, whether natural or artificial</li>
+      <li>Alteration of surface-water runoff pathways</li>
+    </ul>
+    <p>These conditioning factors converge disproportionately in terrain characterised by high relative relief and steep gradients, which is accordingly disproportionately susceptible to slope failure. This study addresses a specific methodological question: how may historical landslide scars be systematically delineated from contour-line geometry alone, and to what extent can that delineation be supported by quantitative geomorphometric reasoning?</p>
+
+    <h2 id="study-area">2. Study Area and Data</h2>
+    <figure>
+      <img src="../assets/img/projects-content/landslide_scars/map_2.webp" alt="Topographic map of the study area, Sarıpınar Village" loading="lazy">
+      <figcaption><b>Figure 2.</b> Topographic map of the study area, Sarıpınar Village, İnegöl District, Bursa Province.</figcaption>
+    </figure>
+    <p>The analysis requires, at minimum, a topographic map of the area in which the landslide occurred; a Digital Elevation Model (DEM) may substitute for or supplement this in a GIS environment. In the present study, the primary interpretive surface is a topographic map of the terrain surrounding Sarıpınar Village, İnegöl District, Bursa Province, Türkiye; the accompanying DEM is used solely for three-dimensional visualisation and cross-validation, not as the primary interpretive source.</p>
+    <p>From the topographic map, candidate landslide zones are identified and extracted for further analysis. This may be performed manually, tracing the boundary directly on the printed or scanned map, or preferably, through digitisation within a GIS environment, which affords greater positional precision and facilitates subsequent quantitative analysis.</p>
+
+    <h2 id="method">3. Interpretive Criteria for Scar Identification</h2>
+    <figure>
+      <img src="../assets/img/projects-content/landslide_scars/map_3.webp" alt="How to identify landslide on topographic map" loading="lazy">
+      <figcaption><b>Figure 3.</b> Diagnostic scheme for identifying a landslide scar on a topographic map (mediakron.bc.edu).</figcaption>
+    </figure>
+    <p>Slope processes are most active where contour lines are closely spaced, indicating steep local gradients, and landslides are correspondingly more probable in such zones. However, contour spacing alone is an insufficient diagnostic criterion; the following morphological signatures must be evaluated jointly:</p>
+    <ul class="criteria">
+      <li>Whether the contour pattern resembles a flattened, terrace-like or "slumped-step" structure, indicative of rotational block displacement;</li>
+      <li>Whether the contours exhibit a lobate, tongue-like deflection consistent with a debris or earth-flow depositional lobe; and</li>
+      <li>Whether the contour spacing and orientation deviate irregularly from the surrounding, otherwise regular contour field.</li>
+    </ul>
+    <p>Where these three conditions are jointly satisfied, the likelihood of a historical landslide at that location is considered high. Independent survey or field-verification data, where available, further strengthens this interpretation.</p>
+    <figure>
+      <img src="../assets/img/projects-content/landslide_scars/map_4.webp" alt="Places where landslide occurred, shown inside the bounding box" loading="lazy">
+      <figcaption><b>Figure 4.</b> Locations of inferred landslide occurrence, indicated within the bounding boxes.</figcaption>
+    </figure>
+    <p>Within the bounding boxes in Figure 4, the contour pattern satisfies all three diagnostic criteria: irregular spacing, lobate deflection, and a flattened terrace-like structure. Superimposing the DEM beneath the topographic map, rendered with a multiply blend mode, substantially improves the legibility of these signatures by restoring a continuous, shaded representation of the terrain.</p>
+    <figure>
+      <img src="../assets/img/projects-content/landslide_scars/map_5.webp" alt="Topographic map above DEM" loading="lazy">
+      <figcaption><b>Figure 5.</b> Topographic map superimposed on the DEM, rendered with a multiply blend mode.</figcaption>
+    </figure>
+    <p>Under this composite visualisation, the morphology of the failure zones becomes considerably more legible, and several additional, smaller-scale landslides can be discerned across the wider study area. The present analysis, however, is restricted to the principal failure zone delineated by the bounding box, given its comparatively large extent. Digitisation of this zone, performed manually or within a GIS environment, yields the characteristic lobate polygon shown below.</p>
+    <figure>
+      <img src="../assets/img/projects-content/landslide_scars/map_6.webp" alt="Landslide area extracted from topographic map" loading="lazy">
+      <figcaption><b>Figure 6.</b> Landslide-affected area extracted from the topographic map.</figcaption>
+    </figure>
+
+    <h2 id="theory">4. Geomorphometric Framework</h2>
+    <p>The visual criteria established in Section 3 are supported here by four quantitative relationships drawn from geomorphometry and slope-stability geotechnics, allowing the interpretation to move beyond qualitative pattern recognition.</p>
+
+    <h3 id="t-slope">4.1 Contour-Derived Slope Gradient</h3>
+    <p>The local slope gradient between two adjacent contour lines is a direct function of the contour interval and the horizontal ground distance separating them:</p>
+    <div class="eq">$$S\,(\%) = \frac{CI}{GD} \times 100$$</div>
+    <p class="eqvars">where $CI$ is the contour interval (the constant vertical distance between successive contours, in metres) and $GD$ is the true horizontal ground distance between the two contours, obtained by scaling the map distance according to the map's representative fraction. The corresponding slope angle follows directly:</p>
+    <div class="eq">$$\theta = \arctan\!\left(\frac{CI}{GD}\right)$$</div>
+    <p class="eqvars">Closely spaced contours ($GD \to 0$ relative to $CI$) therefore correspond to steep gradients ($\theta \to 90°$), consistent with the qualitative criterion in Section 3 that slope failure concentrates where contour spacing tightens.</p>
+    <p class="ref-inline">Reference: Huggett &amp; Shuttleworth (2022).</p>
+
+    <h3 id="t-shape">4.2 Planform Shape Index</h3>
+    <p>The lobate, tongue-like planform noted as a diagnostic criterion in Section 3 can be expressed quantitatively through a compactness (shape) index, which compares the perimeter of a delineated scar to that of a circle of equal area:</p>
+    <div class="eq">$$I_c = \frac{P}{2\sqrt{\pi A}}$$</div>
+    <p class="eqvars">where $P$ is the perimeter of the digitised landslide polygon and $A$ is its planimetric area. A value of $I_c = 1$ describes a perfectly circular form; values increasingly greater than 1 describe progressively more elongated or lobate outlines, consistent with the debris-flow-like morphology typically associated with earth-flow and translational failure deposits.</p>
+
+    <h3 id="t-fs">4.3 Slope Stability: The Infinite Slope Model</h3>
+    <p>The predisposing factors listed in Section 1, cohesion loss, pore-water pressure, over-steepening, converge in the infinite-slope stability model, the standard first-order approximation for shallow, planar slope failures where the failure plane is approximately parallel to the ground surface and slope length substantially exceeds failure depth:</p>
+    <div class="eq">$$FS = \frac{c' + \left(\gamma - m\,\gamma_w\right) z \cos^{2}\beta \tan\phi'}{\gamma\, z \sin\beta \cos\beta}$$</div>
+    <p class="eqvars">where $FS$ is the factor of safety, $c'$ is the effective cohesion of the soil, $\gamma$ is the unit weight of the soil mass, $\gamma_w$ is the unit weight of water, $z$ is the vertical depth to the potential failure plane, $\beta$ is the slope angle (obtainable directly from Section 4.1), $\phi'$ is the effective angle of internal friction, and $m$ is the proportion of $z$ that is saturated by groundwater ($0 \le m \le 1$). Slope failure is indicated where $FS < 1$; values approaching unity denote marginal stability. In the simplified case of a dry, cohesionless slope ($c' = 0$, $m = 0$), the expression reduces to the classical form:</p>
+    <div class="eq">$$FS = \frac{\tan\phi'}{\tan\beta}$$</div>
+    <p class="eqvars">This reduced form shows directly why over-steepening ($\beta$ increasing toward $\phi'$) and saturation (raising $m$, which reduces the effective normal stress term) are, independently, sufficient conditions to drive $FS$ toward or below unity — consistent with the causal factors enumerated in Section 1.</p>
+    <p class="ref-inline">Reference: Huggett &amp; Shuttleworth (2022).</p>
+
+    <h3 id="t-vol">4.4 Depth–Area–Volume Scaling</h3>
+    <p>Where subsurface geotechnical data (borehole logs, failure-plane depth) are unavailable as in the present, purely contour-based assessment, landslide volume may nonetheless be approximated from planimetric area alone using the empirical power-law scaling relationship established across global landslide inventories:</p>
+    <div class="eq">$$V = \alpha\, A^{\gamma}$$</div>
+    <p class="eqvars">where $V$ is the estimated landslide volume (m³), $A$ is the planimetric area (m²), and $\alpha$ and $\gamma$ are empirically derived scaling coefficients that vary by landslide type and regional dataset. This relationship is presented here as the appropriate theoretical bridge between the area measurements obtained in Section 5 and a first-order volume estimate; its application requires calibration against a regional or type-specific coefficient set, which lies beyond the scope of the present contour-based assessment.</p>
+
+    <h2 id="results">5. Results</h2>
+    <figure>
+      <img src="../assets/img/projects-content/landslide_scars/map_7.webp" alt="3D visualization of the landslide area using DEM" loading="lazy">
+      <figcaption><b>Figure 7.</b> Three-dimensional visualisation of the landslide area using the DEM.</figcaption>
+    </figure>
+    <p>Application of the contour-based interpretive criteria (Section 3) to the study area, cross-validated against the DEM, resolves the principal failure zone into three discrete lobes of unequal extent. Using GIS-based planimetric measurement, the delineated areas are quantified as follows:</p>
+    <div class="tbl">
+    <table>
+      <caption>Table 1 — Planimetric area of the delineated landslide lobes.</caption>
+      <thead><tr><th>Lobe</th><th>Area (ha)</th><th>Relative extent</th></tr></thead>
+      <tbody>
+        <tr><td>Lobe 1</td><td class="win">88</td><td>Second-largest</td></tr>
+        <tr><td>Lobe 2</td><td class="win">100</td><td>Largest</td></tr>
+        <tr><td>Lobe 3</td><td class="win">20</td><td>Smallest</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>208</strong></td><td>—</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Lobe 2 constitutes the dominant failure surface within the study area, accounting for approximately 48% of the total delineated extent, while Lobe 3, an order of magnitude smaller than Lobes 1 and 2, most plausibly represents either a distinct, later-stage retrogressive failure or a secondary lobe developed within the debris apron of the principal slide mass.</p>
+    <figure>
+      <img src="../assets/img/projects-content/landslide_scars/map_8.webp" alt="Slide direction and terrain profile" loading="lazy">
+      <figcaption><b>Figure 8.</b> Slide direction and terrain profile across the failure zone.</figcaption>
+    </figure>
+
+    <h2 id="discussion">6. Discussion</h2>
+    <div class="notes">
+      <p><strong>Contour signature and process interpretation.</strong> The joint presence of lobate deflection, terracette-like stepping, and irregular contour spacing within Lobes 1 and 2 is consistent with a rotational-to-translational failure mechanism transitioning into a debris-flow-like runout, rather than a single planar slip, a distinction that a purely visual reading of the contour map would not, on its own, fully substantiate without reference to the diagnostic criteria formalised in Section 4.2.</p>
+      <p><strong>Gradient control.</strong> Consistent with the contour-derived slope-gradient relationship in Section 4.1, the failure zones are concentrated where contour spacing on the source map tightens most markedly, reinforcing the interpretive principle that steep local gradients are a necessary, though not individually sufficient, precondition for the slope instability recorded here.</p>
+      <p><strong>Stability framework.</strong> The infinite-slope model (Section 4.3) offers a physically grounded explanation for why the causal factors enumerated in Section 1; precipitation-driven saturation, over-steepening, and loss of cohesion, converge specifically at this location: each acts on a distinct term of the same governing equation, and their concurrence is what most plausibly reduced the historical factor of safety below unity.</p>
+      <p><strong>Limits of the present assessment.</strong> Because subsurface data are unavailable, the factor-of-safety and depth–area–volume relationships presented in Section 4 remain diagnostic and illustrative rather than computed; their principal value here is to demonstrate that the qualitative, contour-based identification is consistent with, and reproducible under, established quantitative geomorphometric theory.</p>
+    </div>
+
+    <h2 id="conclusion">7. Conclusion</h2>
+    <ol class="fnd">
+      <li><strong>Contour-based interpretation reliably delineates historical landslide scars</strong> when three diagnostic criteria; lobate deflection, terracette-like stepping, and irregular contour spacing are jointly evaluated rather than considered individually.</li>
+      <li><strong>The study area near Sarıpınar Village hosts a composite failure zone</strong> comprising three lobes of unequal extent, totalling <span class="kn">208 ha</span>, with Lobe 2 (100 ha) constituting the dominant failure surface.</li>
+      <li><strong>The interpretive criteria are grounded in reproducible geomorphometric theory</strong>: contour spacing maps directly to slope gradient (Section 4.1), planform lobateness can be expressed quantitatively via a compactness index (Section 4.2), and slope failure is governed by the infinite-slope stability model (Section 4.3).</li>
+      <li><strong>Quantitative confirmation of stability state and volume requires subsurface data</strong> not available from contour analysis alone; the factor-of-safety and depth–area–volume relationships presented here define the framework within which such data, if obtained, should be evaluated.</li>
+    </ol>
+
+    <h2 id="refs">References</h2>
+    <div class="refs">
+      <span class="lab">References</span>
+      <p>[1] Geospatial School. (2019, August 13). <em>QGIS contours and contour labels</em> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=0oyZ0gwLKXY">https://www.youtube.com/watch?v=0oyZ0gwLKXY</a></p>
+      <p>[2] Huggett, R., &amp; Shuttleworth, E. (2022). <em>Fundamentals of geomorphology.</em> Routledge.</p>
+      <p>[3] Landslide science and types. (n.d.). <a href="https://www.gsa.state.al.us/gsa/geologic/hazards/landslides">https://www.gsa.state.al.us/gsa/geologic/hazards/landslides</a></p>
+      <p>[4] VL2 how-to: How to identify a landslide scar/deposit on a topographic map. (n.d.). <a href="https://mediakron.bc.edu/environmentalissues/topic-3-natural-hazards-slope-pocesses-and-subsidence/how-to-identify-a-landslide-scardeposit-on-a-topographic-map">mediakron.bc.edu</a></p>
+
+      <span class="lab">Software</span>
+      <p>[1] Conrad, O., Bechtel, B., Bock, M., Dietrich, H., Fischer, E., Gerlitz, L., Wehberg, J., Wichmann, V., &amp; Böhner, J. (2015). System for Automated Geoscientific Analyses (SAGA) v. 2.1.4. <em>Geoscientific Model Development</em>, 8, 1991–2007. <a href="https://doi.org/10.5194/gmd-8-1991-2015">https://doi.org/10.5194/gmd-8-1991-2015</a></p>
+      <p>[2] QGIS.org (2024). <em>QGIS Geographic Information System.</em> Open Source Geospatial Foundation Project. <a href="http://qgis.org">http://qgis.org</a></p>
+
+      <span class="lab">Dataset</span>
+      <p>[1] ALOS PALSAR DEM</p>
+      <p>[2] Türkiye's General Directorate of Mapping</p>
+    </div>
+
+    <footer>© Izza Prasatya Arief — The Spatial Studio</footer>
+
+  </article>
+  </main>
+</div>
+
+<script>
+const links=[...document.querySelectorAll('#tocList a')];
+const map={};links.forEach(a=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)map[id]=a;});
+const spy=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=map[e.target.id];if(a)a.classList.add('active');}});
+},{rootMargin:'-10% 0px -75% 0px',threshold:0});
+Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el);});
+const t=document.getElementById('tocToggle'),n=document.getElementById('toc');
+t.addEventListener('click',()=>n.classList.toggle('open'));
+document.getElementById('tocList').addEventListener('click',e=>{if(e.target.tagName==='A')n.classList.remove('open');});
+</script>
+</body>
+</html>
