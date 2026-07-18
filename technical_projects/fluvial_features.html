@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapping Fluvial Features of the Filyos River — A Geomorphological Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+MathJax = { tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] }, svg:{fontCache:'global'} };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+:root{
+  --ink:#1a1a1a;
+  --ink-soft:#3d3d3d;
+  --muted:#6a6a6a;
+  --paper:#ffffff;
+  --bg:#fbfaf8;
+  --line:#e4e1da;
+  --line-soft:#efece6;
+  --accent:#245a8c;        /* river blue */
+  --accent-soft:#e9f1f8;
+  --link:#1f6f7a;
+  --hl:#fff3cd;
+  --hl-line:#f0d98a;
+  --code-bg:#f5f3ee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+
+.layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:0;max-width:1180px;margin:0 auto}
+
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:46px 26px 46px 28px;border-right:1px solid var(--line);font-family:'JetBrains Mono',monospace}
+nav.toc .toc-head{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+nav.toc ul{list-style:none}
+nav.toc li{margin:0}
+nav.toc a{display:block;font-size:12.5px;line-height:1.45;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-left:2px solid transparent;border-radius:0 3px 3px 0;transition:.15s}
+nav.toc a:hover{color:var(--accent);background:var(--accent-soft)}
+nav.toc a.sub{padding-left:24px;font-size:11.5px;color:var(--muted)}
+nav.toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft);font-weight:600}
+
+main{background:var(--paper);min-height:100vh;padding:56px clamp(28px,5vw,72px) 90px;border-right:1px solid var(--line)}
+.doc{max-width:760px;margin:0 auto}
+
+h1{font-size:clamp(1.9rem,4vw,2.7rem);line-height:1.12;font-weight:700;letter-spacing:-.018em;margin:0 0 8px;text-wrap:balance}
+h2{font-size:1.62rem;font-weight:700;letter-spacing:-.012em;margin:54px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+h3{font-size:1.18rem;font-weight:600;margin:34px 0 10px;color:var(--ink);scroll-margin-top:24px}
+h4{font-size:1rem;font-weight:600;margin:22px 0 6px}
+p{margin:0 0 16px}
+strong{font-weight:600}
+em{font-style:italic}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid #cfe0e2}
+a:hover{border-bottom-color:var(--link)}
+
+.subhead{color:var(--muted);font-size:1.05rem;margin:0 0 18px}
+
+.kn{background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 1px;border-radius:1px;font-weight:600;white-space:nowrap}
+
+.abstract{font-size:.98rem;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:22px 26px;margin:22px 0 8px}
+.abstract .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.abstract p:last-child{margin-bottom:0}
+
+figure{margin:26px 0}
+figure img{width:100%;display:block;border:1px solid var(--line);border-radius:4px}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:10px}
+figcaption b{color:var(--ink-soft);font-weight:600}
+
+.eq{margin:14px 0;padding:10px 4px;overflow-x:auto}
+.eqvars{font-size:.95rem;color:var(--ink-soft);margin:6px 0 4px}
+.ref-inline{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);font-style:normal}
+
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:5px}
+table{border-collapse:collapse;width:100%;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.4}
+caption{caption-side:top;text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:10px 12px 8px}
+th,td{padding:8px 12px;text-align:right;border-bottom:1px solid var(--line-soft)}
+th:first-child,td:first-child{text-align:left}
+thead th{background:#f7f5f0;color:var(--ink);font-weight:600;border-bottom:1.5px solid var(--line);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#faf8f3}
+td.win{background:var(--hl);font-weight:600}
+
+.notes p{margin:0 0 14px}
+.notes p strong:first-child{color:var(--accent)}
+
+.refs{font-size:13.5px;line-height:1.6;color:var(--ink-soft)}
+.refs p{margin:0 0 11px;padding-left:24px;text-indent:-24px}
+.refs a{font-size:12.5px;word-break:break-word}
+.refs .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin:26px 0 10px}
+.refs .lab:first-child{margin-top:0}
+
+hr.soft{border:none;border-top:1px solid var(--line);margin:40px 0}
+
+footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--muted);padding:30px 0 0;margin-top:44px;border-top:1px solid var(--line)}
+
+.toc-toggle{display:none}
+@media(max-width:920px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:18px 22px}
+  nav.toc ul{display:none;margin-top:10px}
+  nav.toc.open ul{display:block}
+  .toc-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:none;border:none;font-family:'JetBrains Mono',monospace}
+  main{border-right:none;padding:34px 22px 70px}
+  body{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <nav class="toc" id="toc">
+    <button class="toc-toggle" id="tocToggle">▸ Contents</button>
+    <div class="toc-head" style="display:block">Contents</div>
+    <ul id="tocList">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#intro">1 · Introduction</a></li>
+      <li><a href="#gis">2 · GIS as an Analytical Instrument</a></li>
+      <li><a href="#data">3 · Data and Software</a></li>
+      <li><a href="#features">4 · Identification of Fluvial Landforms</a></li>
+      <li><a class="sub" href="#bars">4.1 Depositional Landforms: Bars and Alluvial Fans</a></li>
+      <li><a href="#sinuosity">5 · Channel Sinuosity Analysis</a></li>
+      <li><a href="#why-meander">6 · Controls on Meander Development</a></li>
+      <li><a class="sub" href="#floodplain">6.1 Floodplain Character and Confinement</a></li>
+      <li><a href="#conclusion">7 · Conclusion</a></li>
+      <li><a href="#sources">References</a></li>
+    </ul>
+  </nav>
+
+  <main>
+  <article class="doc">
+
+    <h1>Mapping Fluvial Features of the Filyos River</h1>
+    <p class="subhead">A Geomorphological Analysis of Fluvial Landforms and Channel Sinuosity</p>
+
+    <figure>
+      <img src="../assets/img/projects-content/fluvial_features/map_1.png" alt="Topographic map of Filyos River" loading="lazy">
+      <figcaption><b>Figure 1.</b> Topographic map of the Filyos River, Zonguldak (Türkiye's General Directorate of Mapping).</figcaption>
+    </figure>
+
+    <h2 id="abstract">Abstract</h2>
+    <div class="abstract">
+      <span class="lab">Abstract</span>
+      <p>The Filyos River, draining the North Anatolian mountain range southward and discharging into the Black Sea, exhibits a well-developed suite of fluvial landforms within its lower reach, including a meandering channel, an actively accreting floodplain, and discrete depositional bars. This study applies topographic-map and Digital Elevation Model (DEM) interpretation, supported by GIS-based geometric measurement, to identify and characterise these landforms across the downstream portion of the Filyos River basin. Channel sinuosity is quantified through the ratio of channel length to valley length, yielding a sinuosity index of 1.57, confirming a genuinely meandering planform rather than a merely irregular one. The meandering pattern is further interpreted in relation to upstream basin conditions, sediment-load character, and the degree of lateral confinement imposed on the floodplain by the surrounding valley geology.</p>
+    </div>
+
+    <h2 id="intro">1. Introduction</h2>
+    <p>The topographic map presented in Figure 1 depicts the Filyos River in northern Türkiye as it flows from the North Anatolian mountains, in the south, to its outlet at the Black Sea, in the north. The map renders several fluvial features with clarity, including the meandering channel, the surrounding floodplain, and sediment deposits distributed intermittently along the riverbank. A Geographic Information System (GIS) provides an effective analytical framework through which these features may be identified, measured, and interpreted, allowing the underlying formative processes and their interactions to be examined in greater depth than visual inspection alone permits.</p>
+
+    <h2 id="gis">2. GIS as an Analytical Instrument</h2>
+    <p>A Geographic Information System (GIS) is a computational framework for the analysis and manipulation of spatial data according to a defined analytical objective. Such systems are indispensable to geographers and geoscientists more broadly, providing the tools required to characterise physical phenomena at the Earth's surface and, where appropriate, to model them directly — sediment-flow modelling, hydrological modelling, and geological modelling among them. Software such as SAGA GIS offers an extensive suite of modules for terrain analysis and process modelling; its effective use requires principally a working knowledge of geoscience and appropriately structured raster or vector data. Proprietary platforms such as ArcGIS Pro and open-source alternatives such as QGIS differ chiefly in interface design rather than in underlying analytical capability, and both are suitable for the present study.</p>
+
+    <h2 id="data">3. Data and Software</h2>
+    <p>The identification and mapping of fluvial features from a topographic map requires, at minimum, a scanned reproduction of the source map, preferably in an uncompressed raster format such as .jpg or .png, suitable for direct import into a GIS environment. In this study, QGIS was employed for geomorphological and hydrological analysis, and SAGA GIS for terrain visualisation and modelling. QGIS was selected for its open-source availability, analytical capability, and broad community support, while SAGA GIS was selected for its particular suitability to geoscientific applications, having been developed within the Department of Physical Geography at the University of Göttingen.</p>
+    <p>The topographic map was georeferenced to the UTM Zone 36N coordinate system, referenced to the WGS 1984 datum. Georeferencing accuracy was high, owing to the clear legibility of coordinate tick marks on the source map, and the resulting registration aligns closely with the underlying DEM.</p>
+    <figure>
+      <img src="../assets/img/projects-content/fluvial_features/map_2.png" alt="Georeferenced topo map and DEM" loading="lazy">
+      <figcaption><b>Figure 2.</b> Georeferenced topographic map overlaid on the DEM. The hillslope landforms flanking the river channel align precisely with the topographic map above.</figcaption>
+    </figure>
+    <p>The topographic map is rendered with a multiply blend mode over the DEM, allowing its correspondence with the underlying elevation surface to be assessed directly. This composite visualisation permits the identification of several fluvial features without requiring further quantitative analysis, including the floodplain, valley slope, sandbars, point bars, lateral bars, sediment deposits, and the meandering channel itself.</p>
+    <figure>
+      <img src="../assets/img/projects-content/fluvial_features/map_3.png" alt="3D terrain modelling of the topo map" loading="lazy">
+      <figcaption><b>Figure 3.</b> Three-dimensional terrain model derived from the topographic map.</figcaption>
+    </figure>
+
+    <h2 id="features">4. Identification of Fluvial Landforms</h2>
+    <p>More detailed analysis of the topographic map, supported by the DEM, allows a fuller inventory of the fluvial features present within the study area — the downstream reach of the Filyos River.</p>
+    <figure>
+      <img src="../assets/img/projects-content/fluvial_features/map_4.png" alt="Fluvial Features Map of Filyos River" loading="lazy">
+      <figcaption><b>Figure 4.</b> Fluvial features map of the Filyos River.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/img/projects-content/fluvial_features/map_5.png" alt="3D modelling of the features" loading="lazy">
+      <figcaption><b>Figure 5.</b> Three-dimensional model of the identified features.</figcaption>
+    </figure>
+    <p>Nine landforms are identified within the study area (Figure 4), the majority of which are unambiguously fluvial in origin, including bars, alluvial fans, and the floodplain itself. These features result from the coupled action of erosion and deposition along the river's course. Bars and alluvial fans are, specifically, depositional landforms: as channel gradient decreases toward the downstream reach, the flow's capacity to transport boulders, gravel, and finer sediment diminishes correspondingly, favouring deposition over continued transport. Erosion, by contrast, predominates in the upstream reach, where steeper topography sustains higher flow velocity and discharge, enabling more effective incision of valley slopes. Material eroded upstream is subsequently transported downstream and deposited once the flow's competence declines under the flatter downstream gradient, forming deposits along the channel margin <span class="kn">(side bar)</span>, within the interior of meander bends <span class="kn">(point bar)</span>, and along the channel centreline, elongated in the direction of flow <span class="kn">(longitudinal bar)</span>.</p>
+
+    <h3 id="bars">4.1 Depositional Landforms: Bars and Alluvial Fans</h3>
+    <p>Alluvial fans within the study area are formed principally by ephemeral streams — channels that convey water only during, or immediately following, precipitation events — moving sediment along the valley slope. Given the prevailing topographic conditions, it is probable that these alluvial fans reflect the limited transport capacity of ephemeral flow: rather than conveying sediment as far as the main river channel, the streams deposit their load along the valley slope itself, their discharge being insufficient to sustain transport over greater distances.</p>
+    <figure>
+      <img src="../assets/img/projects-content/fluvial_features/map_6.png" alt="Bars found in the downstream Filyos River" loading="lazy">
+      <figcaption><b>Figure 6.</b> Bars identified in the downstream reach of the Filyos River (riverstyles.com).</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/img/projects-content/fluvial_features/map_7.png" alt="Detailed diagram of alluvial fan" loading="lazy">
+      <figcaption><b>Figure 7.</b> Schematic diagram of an alluvial fan (Giles et al., 2018).</figcaption>
+    </figure>
+
+    <h2 id="sinuosity">5. Channel Sinuosity Analysis</h2>
+    <p>Attention is now turned to the most distinctive characteristic of the channel: its meandering planform. Prior to interpreting the causes of this pattern, however, it is necessary to establish, quantitatively, whether the channel meets the formal definition of a meandering river, since visual impression alone may not correspond reliably to a rigorous geometric classification. Geometrical analysis of meander form provides the appropriate basis for this determination.</p>
+    <figure>
+      <img src="../assets/img/projects-content/fluvial_features/map_8.png" alt="Channel Sinuosity diagram" loading="lazy">
+      <figcaption><b>Figure 8.</b> Definition diagram for channel sinuosity (netmaptools.org).</figcaption>
+    </figure>
+    <p>Determination of the sinuosity ratio requires measurement of both channel length and valley length. The ratio indicates the degree of channel curvature and is obtained by dividing the length of a given channel reach by the straight-line distance spanned by the valley over the same reach (Charlton, 2007):</p>
+    <div class="eq">$$SI = \frac{L_{channel}}{L_{valley}}$$</div>
+    <p class="eqvars">where $L_{channel}$ is the measured length of the channel reach and $L_{valley}$ is the straight-line valley length over the equivalent reach. A channel is conventionally classified as meandering where $SI > 1.5$.</p>
+    <figure>
+      <img src="../assets/img/projects-content/fluvial_features/map_9.png" alt="Sinuosity ratio definition" loading="lazy">
+      <figcaption><b>Figure 9.</b> Sinuosity-ratio classification thresholds (Akbar &amp; Setiawan, 2019).</figcaption>
+    </figure>
+    <p>Channel length and valley length were measured directly within the GIS environment, as illustrated below.</p>
+    <figure>
+      <img src="../assets/img/projects-content/fluvial_features/map_10.png" alt="Channel length and valley length of Filyos River" loading="lazy">
+      <figcaption><b>Figure 10.</b> Measured channel length and valley length for the Filyos River study reach.</figcaption>
+    </figure>
+    <p>The valley length of the study reach measures <span class="kn">7 km</span>, and the channel length measures <span class="kn">11 km</span>, yielding a sinuosity index of <span class="kn">$SI = 11/7 \approx 1.57$</span>. As this value exceeds the conventional meandering threshold of 1.5, the Filyos River, over the study reach, is confirmed to be genuinely meandering rather than merely irregular in plan. It should be noted, however, that the sinuosity ratio and its associated classification thresholds (Figure 9) do not account for underlying physical or geological variation between rivers, and the threshold values themselves, though widely applied, remain somewhat arbitrary conventions rather than physically derived constants.</p>
+
+    <h2 id="why-meander">6. Controls on Meander Development</h2>
+    <p>Having established that the channel meets the geometric definition of a meandering river, attention turns to the underlying controls on this planform — specifically, why the Filyos River develops a meandering pattern rather than an anabranching or braided one. The explanation is found principally in the conditions prevailing in the upstream portion of the basin.</p>
+    <figure>
+      <img src="../assets/img/projects-content/fluvial_features/map_11.png" alt="Filyos River basin" loading="lazy">
+      <figcaption><b>Figure 11.</b> The Filyos River basin; the present study area lies to the west.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/img/projects-content/fluvial_features/map_12.png" alt="Upstream area of the Filyos River basin" loading="lazy">
+      <figcaption><b>Figure 12.</b> The upstream portion of the Filyos River basin.</figcaption>
+    </figure>
+    <p>The upstream basin is characterised by mountainous, markedly hilly terrain. Under these conditions, discharge is high and the flow possesses sufficient competence to erode the valley slopes along the river's course, entraining the eroded material and transporting it downstream predominantly as suspended load. This mode of transport is characteristically associated with the formation of meandering channels, in contrast to bed-load-dominated transport, which is more typically associated with braided channel patterns. Figure 13 illustrates the principal modes of fluvial sediment transport.</p>
+    <figure>
+      <img src="../assets/img/projects-content/fluvial_features/map_13.png" alt="Process of transportation by a river" loading="lazy">
+      <figcaption><b>Figure 13.</b> Modes of fluvial sediment transport (internetgeography.net).</figcaption>
+    </figure>
+
+    <h3 id="floodplain">6.1 Floodplain Character and Confinement</h3>
+    <p>In addition to sediment-load character, geological setting exerts a significant control on meander development. The floodplain within the study area is comparatively narrow, constrained by valley-margin boundary conditions that place the Filyos River channel in a partly confined setting. Although the channel is able to develop a floodplain and migrate laterally to a limited degree, further migration is restricted by the adjacent valley or hillslope, a constraint governed by the geological and lithological resistance of the bounding material: the more resistant the rock structure, the more effectively it inhibits channel erosion and lateral migration.</p>
+    <p>Floodplain deposits along the Filyos channel range from gravel to fine sand, characterising the floodplain as a medium-energy, non-cohesive depositional environment. Specific stream power within this environment ranges from <span class="kn">10 to 300 W·m⁻²</span>, and floodplain construction proceeds principally through point-bar and lateral-bar accretion (see Figure 6).</p>
+
+    <h2 id="conclusion">7. Conclusion</h2>
+    <p>The downstream reach of the Filyos River exhibits a well-developed suite of fluvial landforms, comprising a meandering channel, an actively accreting floodplain, and depositional bars and alluvial fans, all identifiable through combined topographic-map and DEM interpretation. Quantitative analysis of channel geometry confirms a sinuosity index of 1.57, substantiating the channel's classification as genuinely meandering rather than merely irregular. This planform is most plausibly attributable to the suspended-load-dominated sediment regime generated by the steep, high-discharge conditions of the upstream basin, while the comparatively narrow floodplain reflects a degree of lateral confinement imposed by the resistant valley-margin geology. Together, these observations illustrate how topographic-map interpretation, supported by GIS-based geometric measurement, can substantiate qualitative geomorphological observation with a reproducible quantitative basis.</p>
+
+    <h2 id="sources">References</h2>
+    <div class="refs">
+      <span class="lab">References</span>
+      <p>[1] Akbar, I., &amp; Setiawan, B. (2019). <em>Morphometric analysis for evaluation of environmental change and disaster reduction of flood.</em></p>
+      <p>[2] Charlton, R. (2007). <em>Fundamentals of fluvial geomorphology.</em> Routledge.</p>
+      <p>[3] Giles, P. T., Whitehouse, B. M., &amp; Karymbalis, E. (2018). Interactions between alluvial fans and axial rivers in Yukon, Canada and Alaska, USA. <em>Geological Society, London, Special Publications</em>, 440(1), 23–43.</p>
+
+      <span class="lab">Software &amp; Plugin</span>
+      <p>[1] Conrad, O., Bechtel, B., Bock, M., Dietrich, H., Fischer, E., Gerlitz, L., Wehberg, J., Wichmann, V., &amp; Böhner, J. (2015). System for Automated Geoscientific Analyses (SAGA) v. 2.1.4. <em>Geoscientific Model Development</em>, 8, 1991–2007. <a href="https://doi.org/10.5194/gmd-8-1991-2015">https://doi.org/10.5194/gmd-8-1991-2015</a></p>
+      <p>[2] QGIS.org (2024). <em>QGIS Geographic Information System.</em> Open Source Geospatial Foundation Project. <a href="http://qgis.org">http://qgis.org</a></p>
+
+      <span class="lab">Dataset</span>
+      <p>[1] ALOS PALSAR DEM</p>
+      <p>[2] Copernicus Global DSM</p>
+      <p>[3] Türkiye's General Directorate of Mapping</p>
+    </div>
+
+    <footer>© Izza Prasatya Arief — The Spatial Studio</footer>
+
+  </article>
+  </main>
+</div>
+
+<script>
+const links=[...document.querySelectorAll('#tocList a')];
+const map={};links.forEach(a=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)map[id]=a;});
+const spy=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=map[e.target.id];if(a)a.classList.add('active');}});
+},{rootMargin:'-10% 0px -75% 0px',threshold:0});
+Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el);});
+const t=document.getElementById('tocToggle'),n=document.getElementById('toc');
+t.addEventListener('click',()=>n.classList.toggle('open'));
+document.getElementById('tocList').addEventListener('click',e=>{if(e.target.tagName==='A')n.classList.remove('open');});
+</script>
+</body>
+</html>
